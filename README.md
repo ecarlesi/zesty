@@ -83,7 +83,3 @@ app.ConfigureZesty();
 ```
 
 ## TODO ##
-
-1. Change password
-1. List of domain per user
-1. List of role per user and domain

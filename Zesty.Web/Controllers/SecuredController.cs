@@ -18,7 +18,7 @@ namespace Zesty.Web.Controllers
 
         public ActionResult Login()
         {
-            LoginOutput output = Core.Business.User.Login("eca", "Domain A", "password");
+            LoginOutput output = Core.Business.User.Login("eca", "password");
 
             if (output != null && output.Result == LoginResult.Success && output.User != null)
             {

@@ -1,23 +1,25 @@
-﻿using Zesty.Core.Common;
+﻿using System;
+using System.Collections.Generic;
+using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
-    public class Login : ApiHandlerBase
+    public class Roles : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            LoginRequest request = GetEntity<LoginRequest>(input);
+            RolesRequest request = GetEntity<RolesRequest>(input);
 
-            LoginResponse response = new LoginResponse()
+            if (Context.Current == null || Context.Current.User == null || String.IsNullOrWhiteSpace(Context.Current.User.Username) || request == null || String.IsNullOrWhiteSpace(request.Domain))
             {
-                Output = Business.User.Login(request.Username, request.Password)
-            };
-
-            if (response.Output != null && response.Output.Result == LoginResult.Success && response.Output.User != null)
-            {
-                input.Context.Session.Set(response.Output.User);
+                throw new ApiApplicationErrorException("User or domain not found");
             }
+
+            RolesResponse response = new RolesResponse();
+
+            response.Roles = Business.User.GetRoles(Context.Current.User.Username, request.Domain);
 
             return new ApiHandlerOutput()
             {
@@ -39,15 +41,13 @@ namespace Zesty.Core.Api.System
         }
     }
 
-    public class LoginRequest
+    public class RolesResponse
     {
-        public string Username { get; set; }
-        public string Domain { get; set; }
-        public string Password { get; set; }
+        public List<string> Roles { get; set; }
     }
 
-    public class LoginResponse
+    public class RolesRequest
     {
-        public LoginOutput Output { get; set; }
+        public string Domain { get; set; }
     }
 }

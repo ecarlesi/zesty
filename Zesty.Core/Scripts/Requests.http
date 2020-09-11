@@ -1,33 +1,40 @@
 ﻿GET https://localhost:47084/sample.free.api
-
 ###
-
 GET https://localhost:47084/sample.private.api
-
 ###
-
 POST https://localhost:47084/system.login.api
 Content-Type: application/json
 
 {
     "username": "eca",
-    "domain": "Domain A",
     "password": "password"
 }
-
 ###
-
 GET https://localhost:47084/system.logout.api
-
 ###
-
 POST https://localhost:47084/system.token.api
 Content-Type: application/json
 
 {
     "isreusable": true
 }
-
 ###
+GET https://localhost:47084/system.check.api?t=78f7ee77d4934bc4b583ddd207a5c0d616d7685ea668430f9b30935aebe63d66
+###
+GET https://localhost:47084/system.domains.api
+###
+POST https://localhost:47084/system.roles.api
+Content-Type: application/json
 
-GET https://localhost:47084/system.check.api?t=d357cbd2e498419e91365471a54a333436976e2e4d2348878543f1b938cb21cf
+{
+    "domain": "domain a"
+}
+###
+GET https://localhost:47084/system.info.api?t=78f7ee77d4934bc4b583ddd207a5c0d616d7685ea668430f9b30935aebe63d66
+###
+POST https://localhost:47084/system.domain.api?t=78f7ee77d4934bc4b583ddd207a5c0d616d7685ea668430f9b30935aebe63d66
+Content-Type: application/json
+
+{
+    "domain": "domain a"
+}

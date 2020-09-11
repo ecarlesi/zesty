@@ -1,23 +1,23 @@
-﻿using Zesty.Core.Common;
+﻿using System;
+using System.Collections.Generic;
+using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
-    public class Login : ApiHandlerBase
+    public class Domains : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            LoginRequest request = GetEntity<LoginRequest>(input);
+            DomainsResponse response = new DomainsResponse();
 
-            LoginResponse response = new LoginResponse()
+            if (Context.Current == null || Context.Current.User == null || String.IsNullOrWhiteSpace(Context.Current.User.Username))
             {
-                Output = Business.User.Login(request.Username, request.Password)
-            };
-
-            if (response.Output != null && response.Output.Result == LoginResult.Success && response.Output.User != null)
-            {
-                input.Context.Session.Set(response.Output.User);
+                throw new ApiApplicationErrorException("User not found");
             }
+
+            response.Domains = Business.User.GetDomains(Context.Current.User.Username);
 
             return new ApiHandlerOutput()
             {
@@ -39,15 +39,8 @@ namespace Zesty.Core.Api.System
         }
     }
 
-    public class LoginRequest
+    public class DomainsResponse
     {
-        public string Username { get; set; }
-        public string Domain { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class LoginResponse
-    {
-        public LoginOutput Output { get; set; }
+        public List<string> Domains { get; set; }
     }
 }

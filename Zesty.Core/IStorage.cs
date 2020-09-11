@@ -12,7 +12,10 @@ namespace Zesty.Core
         bool IsPublicResource(string path);
         void Save(Entities.HistoryItem resource);
         string GetType(string resourceName);
-        Entities.User Login(string username, string domain, string password);
+        Entities.User Login(string username, string password);
         Dictionary<string, string> LoadProperties(Entities.User user);
+        List<string> GetDomains(string username);
+        List<string> GetRoles(string username, string domain);
+        bool ChangePassword(string username, string currentPassword, string newPassword);
     }
 }

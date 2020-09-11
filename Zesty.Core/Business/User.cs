@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
@@ -9,14 +10,29 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
-        public static LoginOutput Login(string username, string domain, string password)
+        public static bool ChangePassword(string username, string currentPassword, string newPassword)
         {
-            logger.Info($"Login request for user {username} on domain {domain}");
+            return StorageManager.Instance.ChangePassword(username, currentPassword, newPassword);
+        }
+
+        public static List<string> GetDomains(string username)
+        {
+            return StorageManager.Instance.GetDomains(username);
+        }
+
+        public static List<string> GetRoles(string username, string domain)
+        {
+            return StorageManager.Instance.GetRoles(username, domain);
+        }
+
+        public static LoginOutput Login(string username, string password)
+        {
+            logger.Info($"Login request for user {username}");
 
             LoginOutput output = new LoginOutput()
             {
                 Result = LoginResult.Success,
-                User = StorageManager.Instance.Login(username, domain, password)
+                User = StorageManager.Instance.Login(username, password)
             };
 
             if (output.User == null)

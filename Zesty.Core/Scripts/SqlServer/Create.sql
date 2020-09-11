@@ -1,12 +1,12 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [Zesty]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Database [Zesty]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE DATABASE [Zesty]
  CONTAINMENT = NONE
  ON  PRIMARY 
 ( NAME = N'Zesty', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\Zesty.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'Zesty_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\Zesty_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'Zesty_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\Zesty_log.ldf' , SIZE = 73728KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 ALTER DATABASE [Zesty] SET COMPATIBILITY_LEVEL = 140
 GO
@@ -77,12 +77,12 @@ ALTER DATABASE [Zesty] SET QUERY_STORE = OFF
 GO
 USE [Zesty]
 GO
-/****** Object:  User [zestyUser]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  User [zestyUser]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE USER [zestyUser] FOR LOGIN [zestyUser] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [zestyUser]
 GO
-/****** Object:  Table [dbo].[Authorization]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[Authorization]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Authorization](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Domain]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[Domain]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[Domain](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[History]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[History]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[History](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Resource]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[Resource]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[Resource](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ResourceRole]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[ResourceRole]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -162,7 +162,7 @@ CREATE TABLE [dbo].[ResourceRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ResourceType]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[ResourceType]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +176,7 @@ CREATE TABLE [dbo].[ResourceType](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,7 +190,7 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -204,7 +204,7 @@ CREATE TABLE [dbo].[Token](
 	[Deleted] [datetime] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -224,7 +224,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserPassword]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[UserPassword]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -242,7 +242,7 @@ CREATE TABLE [dbo].[UserPassword](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserProperties]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Table [dbo].[UserProperties]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +260,7 @@ CREATE TABLE [dbo].[UserProperties](
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_Domain_Name]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_Domain_Name]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_Domain_Name] ON [dbo].[Domain]
 (
 	[Name] ASC
@@ -268,7 +268,7 @@ CREATE NONCLUSTERED INDEX [IX_Domain_Name] ON [dbo].[Domain]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_History]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_History]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_History] ON [dbo].[History]
 (
 	[Actor] ASC,
@@ -278,7 +278,7 @@ CREATE NONCLUSTERED INDEX [IX_History] ON [dbo].[History]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_Resource_Url]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_Resource_Url]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_Resource_Url] ON [dbo].[Resource]
 (
 	[Url] ASC
@@ -286,7 +286,7 @@ CREATE NONCLUSTERED INDEX [IX_Resource_Url] ON [dbo].[Resource]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_Token]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_Token]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_Token] ON [dbo].[Token]
 (
 	[UserId] ASC,
@@ -294,7 +294,7 @@ CREATE NONCLUSTERED INDEX [IX_Token] ON [dbo].[Token]
 	[Value] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_User_ResetToken]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_User_ResetToken]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_User_ResetToken] ON [dbo].[User]
 (
 	[ResetToken] ASC
@@ -302,7 +302,7 @@ CREATE NONCLUSTERED INDEX [IX_User_ResetToken] ON [dbo].[User]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_User_Username]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  Index [IX_User_Username]    Script Date: 9/11/2020 7:17:26 PM ******/
 CREATE NONCLUSTERED INDEX [IX_User_Username] ON [dbo].[User]
 (
 	[Username] ASC
@@ -343,7 +343,7 @@ REFERENCES [dbo].[User] ([Id])
 GO
 ALTER TABLE [dbo].[UserProperties] CHECK CONSTRAINT [FK_UserProperties_User]
 GO
-/****** Object:  StoredProcedure [dbo].[CanAccess]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[CanAccess]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,8 +356,7 @@ GO
 CREATE PROCEDURE [dbo].[CanAccess]
 
 	@path varchar(400),
-	@userid uniqueidentifier,
-	@domain varchar(200)
+	@userid uniqueidentifier
 
 AS
 BEGIN
@@ -374,11 +373,54 @@ join [Domain] d on a.DomainId = d.Id
 where 
 rs.Url = @path
 and u.Id = @userid
-and d.Name = @domain
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[ChangePassword]    Script Date: 9/11/2020 7:17:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[ChangePassword]
+
+	@userid uniqueidentifier,
+	@previousPassword varchar(100),
+	@newPassword varchar(100)
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	
+	IF EXISTS (SELECT * FROM [UserPassword] WHERE [UserId] = @userid AND [Password] = @previousPassword AND [Deleted] IS NULL) 
+	BEGIN
+
+		update [UserPassword] set Deleted = GETDATE() where [UserId] = @userid AND [Deleted] is null AND [Password] = @previousPassword;
+
+		insert into [UserPassword] ([Id], [UserId], [Password], [Created]) VALUES (newid(), @userid, @newPassword, GETDATE());
+
+		SELECT 'OK' as Status
+	END
+	ELSE
+	BEGIN
+		SELECT 'KO' as Status
+	END
+
+
+
+
+
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -410,7 +452,7 @@ INSERT INTO [dbo].[UserPassword] ([Id],[UserId],[Password],[Deleted],[Created]) 
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteExpiredTokens]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[DeleteExpiredTokens]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -433,7 +475,38 @@ DELETE FROM [dbo].[Token] WHERE DATEDIFF(minute, Created, GETDATE()) > 10;
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetProperties]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetDomains]    Script Date: 9/11/2020 7:17:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[GetDomains]
+
+	@username varchar(100)
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	
+select d.[Name] from 
+[Authorization] a
+join [Domain] d on d.Id = a.DomainId
+join [User] u on u.Id = a.UserId
+where 
+u.Username = username
+
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetProperties]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -462,7 +535,7 @@ WHERE
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetResourceType]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetResourceType]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -494,7 +567,41 @@ WHERE
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IsPublicResource]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetRoles]    Script Date: 9/11/2020 7:17:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[GetRoles]
+
+	@username varchar(100),
+	@domain varchar(100)
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+
+select r.[Name] from 
+[Authorization] a
+join [Domain] d on d.Id = a.DomainId
+join [Role] r on r.Id = a.RoleId
+join [User] u on u.Id = a.UserId
+where 
+u.Username = @username
+and d.[Name] = @domain
+
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[IsPublicResource]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -529,7 +636,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IsValid]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[IsValid]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -569,7 +676,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Login]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[Login]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -582,7 +689,6 @@ GO
 CREATE PROCEDURE [dbo].[Login]
 
 	@username varchar(300),
-	@domain varchar(200),
 	@password varchar(100)
 
 AS
@@ -602,10 +708,8 @@ select
 from [user] u
 join [UserPassword] p on u.Id = p.UserId
 join [Authorization] a on a.UserId = u.Id
-join [Domain] d on d.Id = a.DomainId
 where 
 [username] = @username
-and d.[Name] = @domain
 and p.Password = @password
 and p.Deleted is null
 and u.Deleted is null;
@@ -614,7 +718,7 @@ and u.Deleted is null;
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RequireToken]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[RequireToken]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -648,7 +752,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SaveHistory]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[SaveHistory]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -692,7 +796,7 @@ INSERT INTO [dbo].[History]
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SaveToken]    Script Date: 9/11/2020 12:43:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[SaveToken]    Script Date: 9/11/2020 7:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

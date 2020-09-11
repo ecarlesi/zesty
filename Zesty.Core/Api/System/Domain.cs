@@ -1,23 +1,23 @@
-﻿using Zesty.Core.Common;
+﻿using System;
+using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System
 {
-    public class Login : ApiHandlerBase
+    public class Domain : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            LoginRequest request = GetEntity<LoginRequest>(input);
+            DomainRequest request = GetEntity<DomainRequest>(input);
 
-            LoginResponse response = new LoginResponse()
+            Context.Current.User.Domain = request.Domain;
+
+            DomainResponse response = new DomainResponse()
             {
-                Output = Business.User.Login(request.Username, request.Password)
+                User = Context.Current.User
             };
 
-            if (response.Output != null && response.Output.Result == LoginResult.Success && response.Output.User != null)
-            {
-                input.Context.Session.Set(response.Output.User);
-            }
+            input.Context.Session.Set(Context.Current.User);
 
             return new ApiHandlerOutput()
             {
@@ -39,15 +39,13 @@ namespace Zesty.Core.Api.System
         }
     }
 
-    public class LoginRequest
+    public class DomainRequest
     {
-        public string Username { get; set; }
         public string Domain { get; set; }
-        public string Password { get; set; }
     }
 
-    public class LoginResponse
+    public class DomainResponse
     {
-        public LoginOutput Output { get; set; }
+        public User User { get; set; }
     }
 }

@@ -1,19 +1,17 @@
-﻿using Zesty.Core;
-using Zesty.Core.Common;
+﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Web.Api
+namespace Zesty.Core.Api.System
 {
-    public class Logout : ApiHandlerBase
+    public class Token : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            Core.Business.Authorization.Logout(input.Context);
+            TokenRequest request = GetEntity<TokenRequest>(input);
 
-            LogoutResponse response = new LogoutResponse()
-            {
-                Message = "done"
-            };
+            TokenResponse response = new TokenResponse();
+
+            response.Text = Business.Authorization.GetToken(input.Context.Session.Id, request == null ? false : request.IsReusable);
 
             return new ApiHandlerOutput()
             {
@@ -35,9 +33,13 @@ namespace Zesty.Web.Api
         }
     }
 
-
-    public class LogoutResponse
+    public class TokenResponse
     {
-        public string Message { get; set; }
+        public string Text { get; set; }
+    }
+
+    public class TokenRequest
+    {
+        public bool IsReusable { get; set; }
     }
 }

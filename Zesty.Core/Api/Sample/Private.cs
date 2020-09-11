@@ -1,31 +1,27 @@
-﻿using Zesty.Core;
-using Zesty.Core.Common;
+﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Web.Api
+namespace Zesty.Core.Api.Sample
 {
-    public class Login : ApiHandlerBase
+    public class Private : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            LoginRequest request = GetEntity<LoginRequest>(input);
-
-            LoginResponse response = new LoginResponse();
-
-            response.User = Core.Business.User.Login(request.Username, request.Domain, request.Password);
-
-            input.Context.Session.Set(response.User);
+            PrivateOutput output = new PrivateOutput()
+            {
+                Message = $"Response from private API: {Context.Current.User.Username}"
+            };
 
             return new ApiHandlerOutput()
             {
-                Output = response,
+                Output = output,
                 Type = ApiHandlerOutputType.JSon,
                 ResourceHistoryOutput = new ApiResourceHistoryOutput()
                 {
                     Item = new HistoryItem()
                     {
                         Resource = input.Resource,
-                        Text = JsonHelper.Serialize(response),
+                        Text = JsonHelper.Serialize(output),
                         User = Context.Current.User,
                         Actor = this.GetType().ToString()
                     },
@@ -36,15 +32,8 @@ namespace Zesty.Web.Api
         }
     }
 
-    public class LoginRequest
+    public class PrivateOutput
     {
-        public string Username { get; set; }
-        public string Domain { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class LoginResponse
-    {
-        public User User { get; set; }
+        public string Message { get; set; }
     }
 }

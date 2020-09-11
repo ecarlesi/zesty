@@ -1,39 +1,41 @@
-﻿using Zesty.Core;
-using Zesty.Core.Common;
+﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Web.Api
+namespace Zesty.Core.Api.System
 {
-    public class Free : ApiHandlerBase
+    public class Logout : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            FreeOutput output = new FreeOutput()
+            Business.Authorization.Logout(input.Context);
+
+            LogoutResponse response = new LogoutResponse()
             {
-                Message = "Response from free API"
+                Message = "done"
             };
 
             return new ApiHandlerOutput()
             {
-                Output = output,
+                Output = response,
                 Type = ApiHandlerOutputType.JSon,
                 ResourceHistoryOutput = new ApiResourceHistoryOutput()
                 {
                     Item = new HistoryItem()
                     {
                         Resource = input.Resource,
-                        Text = JsonHelper.Serialize(output),
+                        Text = JsonHelper.Serialize(response),
                         User = Context.Current.User,
                         Actor = this.GetType().ToString()
                     },
-                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.Save
+                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
                 },
-                CachePolicy = ApiCachePolicy.Enable
+                CachePolicy = ApiCachePolicy.Disable
             };
         }
     }
 
-    public class FreeOutput
+
+    public class LogoutResponse
     {
         public string Message { get; set; }
     }

@@ -1,8 +1,11 @@
+using System;
+using System.Security;
 using Microsoft.AspNetCore.Mvc;
 using Zesty.Core;
 using Zesty.Core.Business;
 using Zesty.Core.Common;
 using Zesty.Core.Controllers;
+using Zesty.Core.Entities;
 
 namespace Zesty.Web.Controllers
 {
@@ -15,18 +18,34 @@ namespace Zesty.Web.Controllers
 
         public ActionResult Login()
         {
-            Context.Current.User = Core.Business.User.Login("eca", "Domain A", "password");
+            LoginOutput output = Core.Business.User.Login("eca", "Domain A", "password");
 
-            Session.Set(Context.Current.User);
+            if (output != null && output.Result == LoginResult.Success && output.User != null)
+            {
+                Context.Current.User = output.User;
+                Session.Set(Context.Current.User);
 
-            return Redirect("Hello");
+                return Redirect("Hello");
+            }
+            else if (output.Result == LoginResult.Failed)
+            {
+                throw new SecurityException("Login failed");
+            }
+            else if (output.Result == LoginResult.PasswordExpired)
+            {
+                throw new SecurityException("Password expired");
+            }
+            else
+            {
+                throw new Exception("Login error");
+            }
         }
 
         public ActionResult Logout()
         {
             Authorization.Logout(base.CurrentHttpContext);
 
-            return Content($"Logged out!", "text/html");
+            return Content($"Logged out :)", "text/html");
         }
     }
 }

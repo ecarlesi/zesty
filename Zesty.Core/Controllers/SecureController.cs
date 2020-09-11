@@ -1,14 +1,15 @@
 ﻿using System.Linq;
 using System.Security;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Zesty.Core.Business;
 using Zesty.Core.Common;
 using Zesty.Core.Entities.Settings;
-using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Controllers
 {
+    [ResponseCache(Duration = -1, Location = ResponseCacheLocation.None, NoStore = true)]
     public class SecureController : AnonymousController
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();

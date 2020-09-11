@@ -1,12 +1,12 @@
-﻿GET https://localhost:47084/free.api
+﻿GET https://localhost:47084/sample.free.api
 
 ###
 
-GET https://localhost:47084/private.api
+GET https://localhost:47084/sample.private.api
 
 ###
 
-POST https://localhost:47084/login.api
+POST https://localhost:47084/system.login.api
 Content-Type: application/json
 
 {
@@ -17,17 +17,17 @@ Content-Type: application/json
 
 ###
 
-GET https://localhost:47084/logout.api
+GET https://localhost:47084/system.logout.api
 
 ###
 
-POST https://localhost:47084/token.api
+POST https://localhost:47084/system.token.api
 Content-Type: application/json
 
 {
-    "isreusable": false
+    "isreusable": true
 }
 
 ###
 
-GET https://localhost:47084/check.api?t=1fd83338b8084c05a4c38da2173844b5d83416706d7b446dbdbfcb4da254b409
+GET https://localhost:47084/system.check.api?t=d357cbd2e498419e91365471a54a333436976e2e4d2348878543f1b938cb21cf

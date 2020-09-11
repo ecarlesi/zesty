@@ -1,7 +1,7 @@
 ﻿using System;
 using Zesty.Core.Common;
+using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
-using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Business
 {
@@ -9,31 +9,39 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
-        public static Entities.User Login(string username, string domain, string password)
+        public static LoginOutput Login(string username, string domain, string password)
         {
             logger.Info($"Login request for user {username} on domain {domain}");
 
-            Entities.User user = StorageManager.Instance.Login(username, domain, password);
-
-            if (user == null)
+            LoginOutput output = new LoginOutput()
             {
-                return null;
+                Result = LoginResult.Success,
+                User = StorageManager.Instance.Login(username, domain, password)
+            };
+
+            if (output.User == null)
+            {
+                output.Result = LoginResult.Failed;
+            }
+            else
+            {
+                int passwordDays = (int)DateTime.Now.Subtract(output.User.PasswordChanged).TotalDays;
+
+                if (passwordDays >= Settings.Current.PasswordLifetimeInDays)
+                {
+                    output.Result = LoginResult.PasswordExpired;
+                }
+                else
+                {
+                    output.User.Properties = StorageManager.Instance.LoadProperties(output.User);
+                }
             }
 
-            int passwordDays = (int)DateTime.Now.Subtract(user.PasswordChanged).TotalDays;
-
-            if (passwordDays >= Settings.Current.PasswordLifetimeInDays)
-            {
-                throw new PasswordExpiredException();
-            }
-
-            user.Properties = StorageManager.Instance.LoadProperties(user);
-
-            string json = JsonHelper.Serialize(user);
+            string json = JsonHelper.Serialize(output);
 
             logger.Info(json);
 
-            return user;
+            return output;
         }
     }
 }

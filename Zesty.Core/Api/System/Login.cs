@@ -1,17 +1,23 @@
-﻿using Zesty.Core;
-using Zesty.Core.Common;
+﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Web.Api
+namespace Zesty.Core.Api.System
 {
-    public class Check : ApiHandlerBase
+    public class Login : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            CheckResponse response = new CheckResponse()
+            LoginRequest request = GetEntity<LoginRequest>(input);
+
+            LoginResponse response = new LoginResponse()
             {
-                Message = "Check OK"
+                Output = Business.User.Login(request.Username, request.Domain, request.Password)
             };
+
+            if (response.Output != null && response.Output.Result == LoginResult.Success && response.Output.User != null)
+            {
+                input.Context.Session.Set(response.Output.User);
+            }
 
             return new ApiHandlerOutput()
             {
@@ -33,8 +39,15 @@ namespace Zesty.Web.Api
         }
     }
 
-    public class CheckResponse
+    public class LoginRequest
     {
-        public string Message { get; set; }
+        public string Username { get; set; }
+        public string Domain { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class LoginResponse
+    {
+        public LoginOutput Output { get; set; }
     }
 }

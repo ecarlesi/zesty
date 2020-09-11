@@ -1,28 +1,27 @@
-﻿using Zesty.Core;
-using Zesty.Core.Common;
+﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Web.Api
+namespace Zesty.Core.Api.System
 {
-    public class Private : ApiHandlerBase
+    public class Check : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            PrivateOutput output = new PrivateOutput()
+            CheckResponse response = new CheckResponse()
             {
-                Message = $"Response from private API: {Context.Current.User.Username}"
+                Message = "Check OK"
             };
 
             return new ApiHandlerOutput()
             {
-                Output = output,
+                Output = response,
                 Type = ApiHandlerOutputType.JSon,
                 ResourceHistoryOutput = new ApiResourceHistoryOutput()
                 {
                     Item = new HistoryItem()
                     {
                         Resource = input.Resource,
-                        Text = JsonHelper.Serialize(output),
+                        Text = JsonHelper.Serialize(response),
                         User = Context.Current.User,
                         Actor = this.GetType().ToString()
                     },
@@ -33,7 +32,7 @@ namespace Zesty.Web.Api
         }
     }
 
-    public class PrivateOutput
+    public class CheckResponse
     {
         public string Message { get; set; }
     }

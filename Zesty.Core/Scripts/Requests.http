@@ -1,0 +1,33 @@
+﻿GET https://localhost:47084/free.api
+
+###
+
+GET https://localhost:47084/private.api
+
+###
+
+POST https://localhost:47084/login.api
+Content-Type: application/json
+
+{
+    "username": "eca",
+    "domain": "Domain A",
+    "password": "password"
+}
+
+###
+
+GET https://localhost:47084/logout.api
+
+###
+
+POST https://localhost:47084/token.api
+Content-Type: application/json
+
+{
+    "isreusable": false
+}
+
+###
+
+GET https://localhost:47084/check.api?t=1fd83338b8084c05a4c38da2173844b5d83416706d7b446dbdbfcb4da254b409

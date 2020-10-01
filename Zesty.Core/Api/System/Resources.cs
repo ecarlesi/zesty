@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
-using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
-    public class Domains : ApiHandlerBase
+    public class Resources : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            DomainsResponse response = new DomainsResponse();
-
-            if (Context.Current == null || Context.Current.User == null || String.IsNullOrWhiteSpace(Context.Current.User.Username))
+            ResourcesResponse response = new ResourcesResponse()
             {
-                throw new ApiApplicationErrorException("User not found");
-            }
-
-            response.Domains = Business.User.GetDomains(Context.Current.User.Username);
+                Resources = Business.Resource.GetResources(Context.Current.User.Username, Context.Current.User.Domain)
+            };
 
             return new ApiHandlerOutput()
             {
@@ -39,8 +34,8 @@ namespace Zesty.Core.Api.System
         }
     }
 
-    public class DomainsResponse
+    public class ResourcesResponse
     {
-        public List<Entities.Domain> Domains { get; set; }
+        public List<Resource> Resources { get; set; }
     }
 }

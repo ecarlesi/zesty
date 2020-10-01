@@ -15,7 +15,7 @@ namespace Zesty.Core.Business
             return StorageManager.Instance.ChangePassword(username, currentPassword, newPassword);
         }
 
-        public static List<string> GetDomains(string username)
+        public static List<Entities.Domain> GetDomains(string username)
         {
             return StorageManager.Instance.GetDomains(username);
         }

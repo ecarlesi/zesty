@@ -43,7 +43,6 @@ namespace Zesty.Core.Middleware
             logger.Info($"Session ID: {session.Id}");
 #endif
 
-
             ApiInputHandler input = new ApiInputHandler()
             {
                 Body = body,
@@ -118,6 +117,16 @@ namespace Zesty.Core.Middleware
                 logger.Error(e.Message);
 
                 statusCode = 502; // TODO check this code
+                contentType = "application/json";
+                content = JsonHelper.Serialize(new { e.Message });
+
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            }
+            catch (SecurityException e)
+            {
+                logger.Error(e.Message);
+
+                statusCode = 403; // TODO check this code
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
 

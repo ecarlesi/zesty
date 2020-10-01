@@ -11,6 +11,47 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public List<Resource> GetResources(string username, string domainName)
+        {
+            string statement = @"GetResources";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = username });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domainName", Value = domainName });
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Resource> list = new List<Resource>();
+
+                        while (reader.Read())
+                        {
+                            Resource resource = new Resource();
+
+                            resource.Id = reader.Get<Guid>("Id");
+                            resource.ParentId = reader.Get<Guid>("ParentId");
+                            resource.Image = reader.Get<string>("Image");
+                            resource.Label = reader.Get<string>("Label");
+                            resource.Title = reader.Get<string>("Title");
+                            resource.Url = reader.Get<string>("Url");
+                            resource.IsPublic = reader.Get<bool>("IsPublic");
+                            resource.RequireToken = reader.Get<bool>("RequireToken");
+
+                            list.Add(resource);
+                        }
+
+                        return list;
+                    }
+                }
+            }
+        }
+
         public bool ChangePassword(string username, string currentPassword, string newPassword)
         {
             string statement = @"ChangePassword";
@@ -50,11 +91,11 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public List<string> GetDomains(string username)
+        public List<Domain> GetDomains(string username)
         {
             string statement = @"GetDomains";
 
-            List<string> list = new List<string>();
+            List<Domain> list = new List<Domain>();
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
             {
@@ -70,7 +111,13 @@ namespace Zesty.Core.Storage
                     {
                         while (reader.Read())
                         {
-                            list.Add(reader.Get<string>("Name"));
+                            Domain domain = new Domain();
+
+                            domain.Name = reader.Get<string>("Name");
+                            domain.Id = reader.Get<Guid>("Id");
+                            domain.ParentDomainId = reader.Get<Guid>("ParentDomainId");
+
+                            list.Add(domain);
                         }
 
                         return list;

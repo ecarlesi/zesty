@@ -19,7 +19,7 @@ Content-Type: application/json
     "isreusable": true
 }
 ###
-GET https://localhost:47084/system.check.api?t=491a6a7a812b40d19640e7a9632b7bf9db8b3c1eda0d4835a62ea5d0d5e30d69
+GET https://localhost:47084/system.check.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
 ###
 GET https://localhost:47084/system.domains.api
 ###
@@ -30,9 +30,9 @@ Content-Type: application/json
     "domain": "domain a"
 }
 ###
-GET https://localhost:47084/system.info.api?t=16670b4500bf4ca59326ec7c67fc0e6435f66610163d4f4eb591b9bad09faf37
+GET https://localhost:47084/system.info.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
 ###
-POST https://localhost:47084/system.domain.api?t=16670b4500bf4ca59326ec7c67fc0e6435f66610163d4f4eb591b9bad09faf37
+POST https://localhost:47084/system.domain.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
 Content-Type: application/json
 
 {

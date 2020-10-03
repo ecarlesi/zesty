@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
@@ -252,15 +253,14 @@ namespace Zesty.Core.Storage
 
         public List<Domain> GetDomains(string username)
         {
-            string statement = @"GetDomains";
-
+            List<Domain> all = new List<Domain>();
             List<Domain> list = new List<Domain>();
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("GetDomains", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -278,10 +278,49 @@ namespace Zesty.Core.Storage
 
                             list.Add(domain);
                         }
-
-                        return list;
                     }
                 }
+
+                using (SqlCommand command = new SqlCommand("GetDomainsList", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Domain domain = new Domain();
+
+                            domain.Name = reader.Get<string>("Name");
+                            domain.Id = reader.Get<Guid>("Id");
+                            domain.ParentDomainId = reader.Get<Guid>("ParentDomainId");
+
+                            all.Add(domain);
+                        }
+                    }
+                }
+
+                foreach (Domain domain in list)
+                {
+                    Populate(domain, all);
+                }
+            }
+
+            return list;
+        }
+
+        private static void Populate(Domain domain, List<Domain> domains)
+        {
+            if (domain == null)
+            {
+                return;
+            }
+
+            domain.Childs = domains.Where(x => x.ParentDomainId == domain.Id).ToList();
+
+            foreach (Domain child in domain.Childs)
+            {
+                Populate(child, domains);
             }
         }
 

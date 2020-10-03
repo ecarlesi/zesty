@@ -10,6 +10,21 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public static Guid SetResetToken(string email)
+        {
+            return StorageManager.Instance.SetResetToken(email);
+        }
+
+        public static bool ResetPassword(Guid token, string password)
+        {
+            return StorageManager.Instance.ResetPassword(token, password);
+        }
+
+        public static Entities.User Get(Guid resetToken)
+        {
+            return StorageManager.Instance.GetUserByResetToken(resetToken);
+        }
+
         public static bool ChangePassword(string username, string currentPassword, string newPassword)
         {
             return StorageManager.Instance.ChangePassword(username, currentPassword, newPassword);

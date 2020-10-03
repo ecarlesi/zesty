@@ -10,6 +10,19 @@ delete from [dbo].[Role];
 delete from [dbo].[User];
 delete from [dbo].[Resource];
 delete from [dbo].[Token];
+delete from [dbo].[Translation];
+delete from [dbo].[Language];
+
+insert into [dbo].[Language] ([Name],[Description],[Direction]) values ('en', 'English', 'R');
+insert into [dbo].[Language] ([Name],[Description],[Direction]) values ('it', 'Italiano', 'R');
+
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'en'), 'Username', 'Username');
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'en'), 'Access denied', 'Access denied');
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'en'), 'Invalid credentials', 'Invalid credentials');
+
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'it'), 'Username', 'Nome utente');
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'it'), 'Access denied', 'Accesso negato');
+INSERT INTO [dbo].[Translation] ([LanguageId],[Original],[Translated]) VALUES ((select [Id] from [Language] where [Name] = 'it'), 'Invalid credentials', 'Nome utente o password errati');
 
 INSERT INTO [dbo].[User] ([Id],[Username],[Email],[Firstname],[Lastname],[ResetToken],[Deleted],[Created]) VALUES (newid(),'eca','emiliano.carlesi@gmail.com','Emiliano','Carlesi',null,null,getdate());
 
@@ -34,6 +47,11 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newi
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.roles.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.domain.api',0,1);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.info.api',0,1);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.languages.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.translations.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.userresettoken.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.resetpassword.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.setresettoken.api',1,0);
 
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/Secured/Hello'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/sample.private.api'), (select id from [role] where [name] = 'Administrators'));
@@ -61,6 +79,11 @@ INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.domain.api'),'Zesty.Core.Api.System.Domain, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.resources.api'),'Zesty.Core.Api.System.Resources, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.info.api'),'Zesty.Core.Api.System.Info, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.languages.api'),'Zesty.Core.Api.System.Languages, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.translations.api'),'Zesty.Core.Api.System.Translations, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.userresettoken.api'),'Zesty.Core.Api.System.UserByResetToken, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.resetpassword.api'),'Zesty.Core.Api.System.ResetPassword, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.setresettoken.api'),'Zesty.Core.Api.System.SetResetToken, Zesty.Core');
 
 INSERT INTO [dbo].[UserPassword] ([Id],[UserId],[Password],[Deleted],[Created]) VALUES (newid(),(select id from [user] where [username] = 'eca'),'5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8',null,getdate());
 

@@ -11,5 +11,6 @@
         internal static readonly string WrongApiOutput = "Wrong API output";
         internal static readonly string SettingsLoaded = "Application settings loaded";
         internal static readonly string TokenMissing = "Required token is missing";
+        internal static readonly string LanguageMissing = "Required argument is missing";
     }
 }

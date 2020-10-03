@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Zesty.Core.Handlers
 {
@@ -9,6 +10,18 @@ namespace Zesty.Core.Handlers
         public void Process(HttpContext context)
         {
             logger.Info($"PreLogger executed");
+
+#if DEBUG
+
+            ISession session = context.Session;
+
+            string resourceName = context.Request.Path.Value;
+            string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
+
+            logger.Info($"Resource: {resourceName}");
+            logger.Info($"Body: {body}");
+            logger.Info($"Session ID: {session.Id}");
+#endif
         }
     }
 }

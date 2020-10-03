@@ -1,42 +1,62 @@
-﻿GET https://localhost:47084/sample.free.api
-###
-GET https://localhost:47084/sample.private.api
-###
-POST https://localhost:47084/system.login.api
+﻿@hostname = localhost
+@port = 47084
+
+### invoke a public api that return a GUID
+GET https://{{hostname}}:{{port}}/sample.free.api
+### invoke a private api that return a message composed with the username of the user in session
+GET https://{{hostname}}:{{port}}/sample.private.api
+### execute the login with username and password
+POST https://{{hostname}}:{{port}}/system.login.api
 Content-Type: application/json
 
 {
     "username": "eca",
     "password": "password"
 }
-###
-GET https://localhost:47084/system.logout.api
-###
-POST https://localhost:47084/system.token.api
+### execute the logout and terminate the session
+GET https://{{hostname}}:{{port}}/system.logout.api
+### request a token to be used to invoke method that need it. if reusable the token can survive all api call during the same session
+POST https://{{hostname}}:{{port}}/system.token.api
 Content-Type: application/json
 
 {
     "isreusable": true
 }
-###
-GET https://localhost:47084/system.check.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
-###
-GET https://localhost:47084/system.domains.api
-###
-POST https://localhost:47084/system.roles.api
+### check the token
+GET https://{{hostname}}:{{port}}/system.check.api?t=03582c055ea24e91b895dd3385a49ab9a2458d71cdef4a6b92c48e89e0d94581
+### return the list of domains related the user session
+GET https://{{hostname}}:{{port}}/system.domains.api
+### return the list of rules related with the user session and the specific domain
+POST https://{{hostname}}:{{port}}/system.roles.api
 Content-Type: application/json
 
 {
     "domain": "domain a"
 }
-###
-GET https://localhost:47084/system.info.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
-###
-POST https://localhost:47084/system.domain.api?t=97e8d73bceca44c09618e14c3798b225fc9fecde28fa4ce9b5e30f26844fcc35
+### return user information
+GET https://{{hostname}}:{{port}}/system.info.api?t=03582c055ea24e91b895dd3385a49ab9a2458d71cdef4a6b92c48e89e0d94581
+### set the current user in session
+POST https://{{hostname}}:{{port}}/system.domain.api?t=03582c055ea24e91b895dd3385a49ab9a2458d71cdef4a6b92c48e89e0d94581
 Content-Type: application/json
 
 {
     "domain": "domain a"
 }
-###
-GET https://localhost:47084/system.resources.api
+### return the list of resource related to the user in session
+GET https://{{hostname}}:{{port}}/system.resources.api
+### return the list of languages supported
+GET https://{{hostname}}:{{port}}/system.languages.api
+### return the list of messages in the specified language
+GET https://{{hostname}}:{{port}}/system.translations.api?language=it
+### get a user from a reset token
+GET https://{{hostname}}:{{port}}/system.userresettoken.api?token=dbe67d4c-c6ee-4add-b344-98ceb73f15ae
+### set a password with a reset token
+POST https://{{hostname}}:{{port}}/system.resetpassword.api
+Content-Type: application/json
+
+{
+    "token": "dbe67d4c-c6ee-4add-b344-98ceb73f15ae",
+    "password": "password"
+}
+### get the reset token starting from an email
+GET https://{{hostname}}:{{port}}/system.setresettoken.api?email=emiliano.carlesi@gmail.com

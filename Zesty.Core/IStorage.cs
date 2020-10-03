@@ -6,6 +6,11 @@ namespace Zesty.Core
 {
     public interface IStorage
     {
+        Guid SetResetToken(string email);
+        bool ResetPassword(Guid resetToken, string password);
+        User GetUserByResetToken(Guid resetToken);
+        List<Translation> GetTranslations(string language);
+        List<Language> GetLanguages();
         List<Resource> GetResources(string username, string domainName);
         void SaveToken(Entities.User user, string sessionId, string tokenValue, bool reusable);
         bool CanAccess(string path, Entities.User user);

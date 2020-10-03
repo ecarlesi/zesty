@@ -25,12 +25,14 @@ namespace Zesty.Core.Business
 
             if (isPublic)
             {
+                logger.Info($"The resource {path} is public");
+
                 return true;
             }
 
             if (user == null)
             {
-                logger.Warn($"Access denied for resource {path}");
+                logger.Warn($"Access denied for resource {path} for null user");
 
                 throw new SecurityException(Messages.AccessDenied);
             }

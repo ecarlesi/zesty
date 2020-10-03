@@ -3,6 +3,7 @@ using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Zesty.Core.Entities.Settings;
 using Zesty.Core.Middleware;
 
 namespace Zesty.Core.Common
@@ -55,7 +56,7 @@ namespace Zesty.Core.Common
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

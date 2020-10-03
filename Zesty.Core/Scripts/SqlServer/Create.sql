@@ -540,7 +540,7 @@ BEGIN
 	
 select d.[Id], d.[ParentDomainId], d.[Name] from 
 [Authorization] a
-join [Domain] d on d.Id = a.DomainId or a.DomainId = d.ParentDomainId
+join [Domain] d on d.Id = a.DomainId 
 join [User] u on u.Id = a.UserId
 where 
 u.Username = @username

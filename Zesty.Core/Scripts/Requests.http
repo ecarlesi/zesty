@@ -1,12 +1,12 @@
-﻿@hostname = localhost
-@port = 47084
+﻿@hostname = 2.236.112.207
+@port = 19888
 
 ### invoke a public api that return a GUID
-GET https://{{hostname}}:{{port}}/sample.free.api
+GET http://{{hostname}}:{{port}}/sample.free.api
 ### invoke a private api that return a message composed with the username of the user in session
 GET https://{{hostname}}:{{port}}/sample.private.api
 ### execute the login with username and password
-POST https://{{hostname}}:{{port}}/system.login.api
+POST http://{{hostname}}:{{port}}/system.login.api
 Content-Type: application/json
 
 {

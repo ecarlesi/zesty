@@ -37,11 +37,10 @@ namespace Zesty.Core.Middleware
             string resourceName = context.Request.Path.Value;
             string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
 
-#if DEBUG
             logger.Info($"Resource: {resourceName}");
             logger.Info($"Body: {body}");
             logger.Info($"Session ID: {session.Id}");
-#endif
+            logger.Info($"HTTP method: {context.Request.Method}");
 
             ApiInputHandler input = new ApiInputHandler()
             {
@@ -56,30 +55,43 @@ namespace Zesty.Core.Middleware
 
             try
             {
-                HandlerProcessor.Process(Settings.Current.PreExecutionHandler, context);
-
-                ApiHandlerOutput output = Process(input);
-
-                HandlerProcessor.Process(Settings.Current.PostExecutionHandler, context);
-
-                if (output.Type == ApiHandlerOutputType.JSon)
+                if (context.Request.Method == "OPTIONS")
                 {
-                    contentType = "application/json";
-                    content = JsonHelper.Serialize(output.Output);
-                }
-                else if (output.Type == ApiHandlerOutputType.TextAsJson)
-                {
-                    contentType = "application/json";
-                    content = output.Output as string;
-                }
-                else if (output.Type == ApiHandlerOutputType.Text)
-                {
-                    contentType = "plain/text";
-                    content = output.Output as string;
+                    //TODO improve this poor code :D
+                    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+                    context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+                    contentType = "text/plain";
+                    content = ":)";
                 }
                 else
                 {
-                    throw new Exception(Messages.WrongApiOutput);
+                    HandlerProcessor.Process(Settings.Current.PreExecutionHandler, context);
+
+                    ApiHandlerOutput output = Process(input);
+
+                    HandlerProcessor.Process(Settings.Current.PostExecutionHandler, context);
+
+                    if (output.Type == ApiHandlerOutputType.JSon)
+                    {
+                        contentType = "application/json";
+                        content = JsonHelper.Serialize(output.Output);
+                    }
+                    else if (output.Type == ApiHandlerOutputType.TextAsJson)
+                    {
+                        contentType = "application/json";
+                        content = output.Output as string;
+                    }
+                    else if (output.Type == ApiHandlerOutputType.Text)
+                    {
+                        contentType = "plain/text";
+                        content = output.Output as string;
+                    }
+                    else
+                    {
+                        throw new Exception(Messages.WrongApiOutput);
+                    }
                 }
             }
             catch (ApiInvalidArgumentException e)
@@ -144,10 +156,10 @@ namespace Zesty.Core.Middleware
             }
             finally
             {
-#if DEBUG
                 logger.Info($"ContentType: {contentType}");
                 logger.Info($"Content: {content}");
-#endif
+
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;

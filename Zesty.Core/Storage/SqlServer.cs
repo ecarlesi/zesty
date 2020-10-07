@@ -12,6 +12,36 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public Dictionary<string, string> GetClientSettings()
+        {
+            string statement = @"GetClientSettings";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        Dictionary<string, string> pairs = new Dictionary<string, string>();
+
+                        while (reader.Read())
+                        {
+                            string k = reader.Get<string>("Key");
+                            string v = reader.Get<string>("Value");
+
+                            pairs.Add(k, v);
+                        }
+
+                        return pairs;
+                    }
+                }
+            }
+        }
+
         public Guid SetResetToken(string email)
         {
             string statement = @"SetResetToken";

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
@@ -10,10 +12,27 @@ namespace Zesty.Core.Api.System
         {
             string email = input.Context.Request.Query["email"];
 
-            SetResetTokenResponse response = new SetResetTokenResponse()
+            SetResetTokenResponse response = new SetResetTokenResponse();
+
+            try
             {
-                Token = Business.User.SetResetToken(email)
-            };
+                Guid token = Business.User.SetResetToken(email);
+
+                List<Translation> translations = StorageManager.Instance.GetTranslations("en");
+
+                string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
+                string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;
+
+                body = String.Format(body, token.ToString());
+
+                Common.SmtpClient.Send(email, subject, body);
+
+                response.Message = Messages.Success;
+            }
+            catch
+            {
+                response.Message = Messages.Failure;
+            }
 
             return new ApiHandlerOutput()
             {
@@ -37,6 +56,6 @@ namespace Zesty.Core.Api.System
 
     public class SetResetTokenResponse
     {
-        public Guid Token { get; set; }
+        public string Message { get; set; }
     }
 }

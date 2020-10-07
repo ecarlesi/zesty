@@ -12,5 +12,7 @@
         internal static readonly string SettingsLoaded = "Application settings loaded";
         internal static readonly string TokenMissing = "Required token is missing";
         internal static readonly string LanguageMissing = "Required argument is missing";
+        internal static readonly string Success = "Success";
+        internal static readonly string Failure = "Failure";
     }
 }

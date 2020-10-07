@@ -1,5 +1,7 @@
 ﻿@hostname = 2.236.112.207
+###2.236.112.207
 @port = 19888
+###19888
 @protocol = http
 
 ### invoke a public api that return a GUID
@@ -24,7 +26,7 @@ Content-Type: application/json
     "isreusable": true
 }
 ### check the token
-GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=03582c055ea24e91b895dd3385a49ab9a2458d71cdef4a6b92c48e89e0d94581
+GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
 ### return the list of domains related the user session
 GET {{protocol}}://{{hostname}}:{{port}}/system.domains.api
 ### return the list of rules related with the user session and the specific domain
@@ -35,9 +37,9 @@ Content-Type: application/json
     "domain": "domain a"
 }
 ### return user information
-GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=0579d0a40b2a427183a5d0f8c2c96b0146248eb8408e49b2a29e792997db3cd7
+GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
 ### set the current user in session
-POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=0579d0a40b2a427183a5d0f8c2c96b0146248eb8408e49b2a29e792997db3cd7
+POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
 Content-Type: application/json
 
 {
@@ -50,14 +52,16 @@ GET {{protocol}}://{{hostname}}:{{port}}/system.languages.api
 ### return the list of messages in the specified language
 GET {{protocol}}://{{hostname}}:{{port}}/system.translations.api?language=it
 ### get a user from a reset token
-GET {{protocol}}://{{hostname}}:{{port}}/system.userresettoken.api?token=dbe67d4c-c6ee-4add-b344-98ceb73f15ae
+GET {{protocol}}://{{hostname}}:{{port}}/system.userresettoken.api?token=9658ffba-922a-4d7d-91b8-540fbcecf871
 ### set a password with a reset token
 POST {{protocol}}://{{hostname}}:{{port}}/system.resetpassword.api
 Content-Type: application/json
 
 {
-    "token": "dbe67d4c-c6ee-4add-b344-98ceb73f15ae",
+    "token": "9658ffba-922a-4d7d-91b8-540fbcecf871",
     "password": "password"
 }
 ### get the reset token starting from an email
 GET {{protocol}}://{{hostname}}:{{port}}/system.setresettoken.api?email=emiliano.carlesi@gmail.com
+### get the client settings
+GET {{protocol}}://{{hostname}}:{{port}}/system.clientsettings.api

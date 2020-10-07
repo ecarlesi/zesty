@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Threading.Tasks;
@@ -14,11 +13,6 @@ namespace Zesty.Core.Middleware
     public class ApiMiddleware
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-
-        static ApiMiddleware()
-        {
-            Settings.Load();
-        }
 
         public ApiMiddleware(RequestDelegate next)
         {
@@ -101,8 +95,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 501;
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             catch (ApiNotFoundException e)
             {
@@ -111,8 +103,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 404;
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             catch (ApiAccessDeniedException e)
             {
@@ -121,8 +111,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 403;
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             catch (CustomJsonException e)
             {
@@ -131,8 +119,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 502; // TODO check this code
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             catch (SecurityException e)
             {
@@ -141,8 +127,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 403; // TODO check this code
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             catch (Exception e)
             {
@@ -151,8 +135,6 @@ namespace Zesty.Core.Middleware
                 statusCode = 500;
                 contentType = "application/json";
                 content = JsonHelper.Serialize(new { e.Message });
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             }
             finally
             {

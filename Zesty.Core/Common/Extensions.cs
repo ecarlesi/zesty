@@ -56,7 +56,7 @@ namespace Zesty.Core.Common
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.IdleTimeout = TimeSpan.FromMinutes(Settings.Current.SessionLifetimeInMinutes);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

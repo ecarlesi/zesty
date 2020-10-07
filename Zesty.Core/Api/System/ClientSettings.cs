@@ -1,20 +1,16 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System
 {
-    public class ResetPassword : ApiHandlerBase
+    public class ClientSettings : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            ResetPasswordRequest request = base.GetEntity<ResetPasswordRequest>(input);
-
-            bool result = Business.User.ResetPassword(request.Token, request.Password);
-
-            ResetPasswordResponse response = new ResetPasswordResponse()
+            ClientSettingsResponse response = new ClientSettingsResponse()
             {
-                Result = result ? Messages.Success : Messages.Failure
+                Settings = StorageManager.Instance.GetClientSettings()
             };
 
             return new ApiHandlerOutput()
@@ -32,19 +28,13 @@ namespace Zesty.Core.Api.System
                     },
                     ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
                 },
-                CachePolicy = ApiCachePolicy.Disable
+                CachePolicy = ApiCachePolicy.Enable
             };
         }
     }
 
-    public class ResetPasswordRequest
+    public class ClientSettingsResponse
     {
-        public Guid Token { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class ResetPasswordResponse
-    {
-        public string Result { get; set; }
+        public Dictionary<string, string> Settings { get; set; }
     }
 }

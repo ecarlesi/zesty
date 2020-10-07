@@ -13,11 +13,6 @@ namespace Zesty.Core.Controllers
 
         private TimeKeeper timeKeeper = new TimeKeeper();
 
-        static AnonymousController()
-        {
-            Settings.Load();
-        }
-
         protected ISession Session
         {
             get

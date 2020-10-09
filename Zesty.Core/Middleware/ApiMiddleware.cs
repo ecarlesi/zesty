@@ -90,7 +90,7 @@ namespace Zesty.Core.Middleware
             }
             catch (ApiInvalidArgumentException e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 501;
                 contentType = "application/json";
@@ -98,7 +98,7 @@ namespace Zesty.Core.Middleware
             }
             catch (ApiNotFoundException e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 404;
                 contentType = "application/json";
@@ -106,7 +106,7 @@ namespace Zesty.Core.Middleware
             }
             catch (ApiAccessDeniedException e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 403;
                 contentType = "application/json";
@@ -114,7 +114,7 @@ namespace Zesty.Core.Middleware
             }
             catch (CustomJsonException e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 502; // TODO check this code
                 contentType = "application/json";
@@ -122,7 +122,7 @@ namespace Zesty.Core.Middleware
             }
             catch (SecurityException e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 403; // TODO check this code
                 contentType = "application/json";
@@ -130,7 +130,7 @@ namespace Zesty.Core.Middleware
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e);
 
                 statusCode = 500;
                 contentType = "application/json";
@@ -148,7 +148,7 @@ namespace Zesty.Core.Middleware
                 context.Session = session;
                 await context.Response.WriteAsync(content);
 
-                logger.Info($"Request completed");
+                logger.Info($"Request completed in {timeKeeper.Stop().TotalMilliseconds} ms");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿USE [Zesty]
+﻿USE [Urbanvision]
 
 delete from [dbo].[ResourceType]
 delete from [dbo].[UserPassword];
@@ -64,11 +64,6 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newi
 
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/Secured/Hello'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/sample.private.api'), (select id from [role] where [name] = 'Administrators'));
-
--- INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/sample.free.api'), (select id from [role] where [name] = 'Administrators'));
--- INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.login.api'), (select id from [role] where [name] = 'Administrators'));
--- INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.logout.api'), (select id from [role] where [name] = 'Administrators'));
-
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.check.api'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.token.api'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.domains.api'), (select id from [role] where [name] = 'Administrators'));

@@ -7,5 +7,15 @@ namespace Zesty.Core.Entities
         public string Resource { get; set; }
         public string Body { get; set; }
         public HttpContext Context { get; set; }
+
+        public string Get(string parameterName)
+        {
+            if (Context == null || Context.Request == null)
+            {
+                return "";
+            }
+
+            return Context.Request.Query[parameterName];
+        }
     }
 }

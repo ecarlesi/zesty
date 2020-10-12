@@ -11,6 +11,27 @@ namespace Zesty.Core.Api.System
 
             StorageManager.Instance.SetProperty(request.Name, request.Value, Context.Current.User);
 
+            if (string.IsNullOrWhiteSpace(request.Value))
+            {
+                if (Context.Current.User.Properties.ContainsKey(request.Name))
+                {
+                    Context.Current.User.Properties.Remove(request.Name);
+                }
+            }
+            else
+            {
+                if (Context.Current.User.Properties.ContainsKey(request.Name))
+                {
+                    Context.Current.User.Properties[request.Name] = request.Value;
+                }
+                else
+                {
+                    Context.Current.User.Properties.Add(request.Name, request.Value);
+                }
+            }
+
+            input.Context.Session.Set(Context.Current.User);
+
             PropertyResponse response = new PropertyResponse() { Message = Messages.Success };
 
             return new ApiHandlerOutput()

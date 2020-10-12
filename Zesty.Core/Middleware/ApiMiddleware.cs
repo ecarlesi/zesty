@@ -52,11 +52,11 @@ namespace Zesty.Core.Middleware
                 if (context.Request.Method == "OPTIONS")
                 {
                     //TODO improve this poor code :D
-                    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-                    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-                    context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+                    context.Response.Headers.Add("Access-Control-Allow-Credentials", Settings.Current.AccessControlAllowCredentials);
+                    context.Response.Headers.Add("Access-Control-Allow-Methods", Settings.Current.AccessControlAllowMethods);
+                    context.Response.Headers.Add("Access-Control-Allow-Headers", Settings.Current.AccessControlAllowHeaders);
 
-                    contentType = "text/plain";
+                    contentType = ContentType.TextPlain;
                     content = ":)";
                 }
                 else
@@ -69,17 +69,17 @@ namespace Zesty.Core.Middleware
 
                     if (output.Type == ApiHandlerOutputType.JSon)
                     {
-                        contentType = "application/json";
+                        contentType = ContentType.ApplicationJson;
                         content = JsonHelper.Serialize(output.Output);
                     }
                     else if (output.Type == ApiHandlerOutputType.TextAsJson)
                     {
-                        contentType = "application/json";
+                        contentType = ContentType.ApplicationJson;
                         content = output.Output as string;
                     }
                     else if (output.Type == ApiHandlerOutputType.Text)
                     {
-                        contentType = "plain/text";
+                        contentType = ContentType.TextPlain;
                         content = output.Output as string;
                     }
                     else
@@ -93,7 +93,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 501;
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             catch (ApiNotFoundException e)
@@ -101,7 +101,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 404;
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             catch (ApiAccessDeniedException e)
@@ -109,7 +109,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 403;
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             catch (CustomJsonException e)
@@ -117,7 +117,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 502; // TODO check this code
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             catch (SecurityException e)
@@ -125,7 +125,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 403; // TODO check this code
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             catch (Exception e)
@@ -133,7 +133,7 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 500;
-                contentType = "application/json";
+                contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
             finally
@@ -141,7 +141,7 @@ namespace Zesty.Core.Middleware
                 logger.Info($"ContentType: {contentType}");
                 logger.Info($"Content: {content}");
 
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", Settings.Current.AccessControlAllowOrigin);
 
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;

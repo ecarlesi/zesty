@@ -1,6 +1,6 @@
 ﻿@hostname = localhost
-@port = 1080
-@protocol = http
+@port = 47084
+@protocol = https
 
 ### invoke a public api that return a GUID
 GET {{protocol}}://{{hostname}}:{{port}}/sample.free.api
@@ -21,8 +21,8 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.property.api
 Content-Type: application/json
 
 {
-    "name": "MyProp",
-    "value": "Sample value"
+    "name": "Nickname",
+    "value": "eca"
 }
 ### request a token to be used to invoke method that need it. if reusable the token can survive all api call during the same session
 POST {{protocol}}://{{hostname}}:{{port}}/system.token.api
@@ -32,7 +32,7 @@ Content-Type: application/json
     "isreusable": true
 }
 ### check the token
-GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
+GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=a4e18c7375384c39be90cc94b66031ef1ac5edf9a72946b4b89764abf36dd4b0
 ### return the list of domains related the user session
 GET {{protocol}}://{{hostname}}:{{port}}/system.domains.api
 ### return the list of rules related with the user session and the specific domain
@@ -43,7 +43,7 @@ Content-Type: application/json
     "domain": "domain a"
 }
 ### return user information
-GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
+GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=a4e18c7375384c39be90cc94b66031ef1ac5edf9a72946b4b89764abf36dd4b0
 ### set the current user in session
 POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
 Content-Type: application/json

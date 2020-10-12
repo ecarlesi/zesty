@@ -12,6 +12,32 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public void SetProperty(string name, string value, Entities.User user)
+        {
+            string statement = "SetProperty";
+
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                statement = "DeleteProperty";
+            }
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = user.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@propertyName", Value = name });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@propertyValue", Value = value });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public Dictionary<string, string> GetClientSettings()
         {
             string statement = @"GetClientSettings";

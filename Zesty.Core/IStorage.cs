@@ -6,6 +6,7 @@ namespace Zesty.Core
 {
     public interface IStorage
     {
+        void SetProperty(string name, string value, Entities.User user);
         Dictionary<string, string> GetClientSettings();
         Guid SetResetToken(string email);
         bool ResetPassword(Guid resetToken, string password);

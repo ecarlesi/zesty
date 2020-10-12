@@ -1,4 +1,4 @@
-﻿USE [Urbanvision]
+﻿USE [Zesty]
 
 delete from [dbo].[ResourceType]
 delete from [dbo].[UserPassword];
@@ -61,6 +61,7 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newi
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.userresettoken.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.resetpassword.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.setresettoken.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES (newid(),'/system.property.api',1,0);
 
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/Secured/Hello'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/sample.private.api'), (select id from [role] where [name] = 'Administrators'));
@@ -71,6 +72,7 @@ INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.roles.api'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.domain.api'), (select id from [role] where [name] = 'Administrators'));
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.info.api'), (select id from [role] where [name] = 'Administrators'));
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ((select id from [Resource] where [Url] = '/system.property.api'), (select id from [role] where [name] = 'Administrators'));
 
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/sample.private.api'),'Zesty.Core.Api.Sample.Private, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/sample.free.api'),'Zesty.Core.Api.Sample.Free, Zesty.Core');
@@ -89,6 +91,7 @@ INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.resetpassword.api'),'Zesty.Core.Api.System.ResetPassword, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.setresettoken.api'),'Zesty.Core.Api.System.SetResetToken, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.clientsettings.api'),'Zesty.Core.Api.System.ClientSettings, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ((select id from [Resource] where [Url] = '/system.property.api'),'Zesty.Core.Api.System.Property, Zesty.Core');
 
 INSERT INTO [dbo].[UserPassword] ([Id],[UserId],[Password],[Deleted],[Created]) VALUES (newid(),(select id from [user] where [username] = 'eca'),'5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8',null,getdate());
 

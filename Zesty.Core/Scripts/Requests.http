@@ -1,7 +1,5 @@
-﻿@hostname = 2.236.112.207
-###2.236.112.207
-@port = 19888
-###19888
+﻿@hostname = localhost
+@port = 1080
 @protocol = http
 
 ### invoke a public api that return a GUID
@@ -18,6 +16,14 @@ Content-Type: application/json
 }
 ### execute the logout and terminate the session
 GET {{protocol}}://{{hostname}}:{{port}}/system.logout.api
+### set and delete user property
+POST {{protocol}}://{{hostname}}:{{port}}/system.property.api
+Content-Type: application/json
+
+{
+    "name": "MyProp",
+    "value": "Sample value"
+}
 ### request a token to be used to invoke method that need it. if reusable the token can survive all api call during the same session
 POST {{protocol}}://{{hostname}}:{{port}}/system.token.api
 Content-Type: application/json

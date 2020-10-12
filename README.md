@@ -18,13 +18,18 @@ Be aware to edit the settings with your environment values.
 
 ```json
   "Zesty": {
-    "ConnectionString": "Data Source = 192.168.1.114; Initial Catalog = Zesty; User Id = zestyUser; Password = zesty.Password.",
+    "ConnectionString": "Data Source = 192.168.1.222; Initial Catalog = Zesty; User Id = zestyUser; Password = zesty.Password.",
     "StorageType": "Zesty.Core.Storage.SqlServer, Zesty.Core",
     "ThrowsOnAccessDenied": "true",
     "RedirectPathOnAccessDenied": "/",
     "ThrowsOnAuthorizationFailed": "true",
+    "AccessControlAllowOrigin": "*",
+    "AccessControlAllowCredentials": "true",
+    "AccessControlAllowMethods": "GET,HEAD,OPTIONS,POST,PUT",
+    "AccessControlAllowHeaders": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
     "PasswordLifetimeInDays": 10,
     "ApiCacheLifetimeInMinutes": 15,
+    "SessionLifetimeInMinutes": 30,
     "UrlWhitelist": [
       "/Secured/Login",
       "/Secured/Logout"
@@ -34,8 +39,16 @@ Be aware to edit the settings with your environment values.
     ],
     "PostExecutionHandler": [
       "Zesty.Core.Handlers.PostLogger, Zesty.Core"
-    ]
+    ],
+    "SmtpClient": {
+      "Host": "smtp.office365.com",
+      "Port": 587,
+      "Ssl": "true",
+      "Username": "",
+      "Password": ""
+    }
   }
+
 ```
 
 Add a file named **nlog.config**, set the build type as *Content*, set *Copy to output directory* and paste the following contents. 

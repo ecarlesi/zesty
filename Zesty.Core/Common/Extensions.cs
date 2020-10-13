@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Zesty.Core.Entities.Settings;
@@ -40,18 +41,36 @@ namespace Zesty.Core.Common
 
         public static void ConfigureZesty(this IApplicationBuilder builder)
         {
-            builder.UseSession();
-            builder.UseCors();
+            string[] origins = Settings.Current.CorsOrigins;
 
-            builder.MapWhen(
-                context => context.Request.Path.ToString().EndsWith(".api"), appBranch =>
-                {
-                    appBranch.UseMiddleware<ApiMiddleware>();
-                });
+            builder.UseCors(builder => builder
+                .WithOrigins(origins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            builder.UseSession(new SessionOptions() { Cookie = new CookieBuilder() { Name = ".AspNetCore.Session.MyApp1" } });
+
+
+            builder.UseCookiePolicy();
+
+            builder.MapWhen(context => context.Request.Path.ToString().EndsWith(".api"), appBranch => {
+                appBranch.UseMiddleware<ApiMiddleware>();
+            });
         }
 
         public static void ConfigureZesty(this IServiceCollection services)
         {
+            services.AddCors();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Secure = CookieSecurePolicy.None;
+                options.HttpOnly = HttpOnlyPolicy.None;
+            });
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>

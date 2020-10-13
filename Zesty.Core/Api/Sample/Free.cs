@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
@@ -12,6 +13,8 @@ namespace Zesty.Core.Api.Sample
             {
                 Message = Guid.NewGuid().ToString()
             };
+
+            input.Context.Session.SetString("test", "ttttt");
 
             return new ApiHandlerOutput()
             {

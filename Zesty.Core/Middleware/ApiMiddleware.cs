@@ -52,10 +52,6 @@ namespace Zesty.Core.Middleware
                 if (context.Request.Method == "OPTIONS")
                 {
                     //TODO improve this poor code :D
-                    context.Response.Headers.Add("Access-Control-Allow-Credentials", Settings.Current.AccessControlAllowCredentials);
-                    context.Response.Headers.Add("Access-Control-Allow-Methods", Settings.Current.AccessControlAllowMethods);
-                    context.Response.Headers.Add("Access-Control-Allow-Headers", Settings.Current.AccessControlAllowHeaders);
-
                     contentType = ContentType.TextPlain;
                     content = ":)";
                 }
@@ -140,8 +136,6 @@ namespace Zesty.Core.Middleware
             {
                 logger.Info($"ContentType: {contentType}");
                 logger.Info($"Content: {content}");
-
-                context.Response.Headers.Add("Access-Control-Allow-Origin", Settings.Current.AccessControlAllowOrigin);
 
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;

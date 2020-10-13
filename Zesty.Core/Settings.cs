@@ -28,11 +28,7 @@ namespace Zesty.Core.Entities.Settings
         public string ConnectionString { get; set; }
         public string RedirectPathOnAccessDenied { get; set; }
         public string StorageType { get; set; }
-
-        public string AccessControlAllowOrigin { get; set; }
-        public string AccessControlAllowCredentials { get; set; }
-        public string AccessControlAllowMethods { get; set; }
-        public string AccessControlAllowHeaders { get; set; }
+        public string[] CorsOrigins { get; set; }
 
         public int PasswordLifetimeInDays { get; set; }
         public int ApiCacheLifetimeInMinutes { get; set; }

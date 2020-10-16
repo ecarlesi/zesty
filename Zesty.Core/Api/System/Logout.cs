@@ -11,7 +11,7 @@ namespace Zesty.Core.Api.System
 
             LogoutResponse response = new LogoutResponse()
             {
-                Message = "done"
+                Message = Messages.Success
             };
 
             return new ApiHandlerOutput()

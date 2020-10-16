@@ -9,7 +9,7 @@ namespace Zesty.Core
 
         static StorageManager()
         {
-            Instance = InstanceHelper.Create<IStorage>(Settings.Current.StorageType);
+            Instance = InstanceHelper.Create<IStorage>(Settings.Current.StorageImplementationType);
         }
     }
 }

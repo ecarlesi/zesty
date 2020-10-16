@@ -29,8 +29,10 @@ namespace Zesty.Core.Api.System
 
                 response.Message = Messages.Success;
             }
-            catch
+            catch(Exception e)
             {
+                logger.Error(e);
+
                 response.Message = Messages.Failure;
             }
 

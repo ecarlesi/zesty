@@ -57,11 +57,11 @@ namespace Zesty.Core.Middleware
                 }
                 else
                 {
-                    HandlerProcessor.Process(Settings.Current.PreExecutionHandler, context);
+                    HandlerProcessor.Process(Settings.List("PreExecutionHandler"), context);
 
                     ApiHandlerOutput output = Process(input);
 
-                    HandlerProcessor.Process(Settings.Current.PostExecutionHandler, context);
+                    HandlerProcessor.Process(Settings.List("PostExecutionHandler"), context);
 
                     if (output.Type == ApiHandlerOutputType.JSon)
                     {
@@ -104,7 +104,7 @@ namespace Zesty.Core.Middleware
             {
                 logger.Error(e);
 
-                statusCode = 403;
+                statusCode = 401;
                 contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }

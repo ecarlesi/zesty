@@ -58,7 +58,7 @@ namespace Zesty.Core.Business
             {
                 int passwordDays = (int)DateTime.Now.Subtract(output.User.PasswordChanged).TotalDays;
 
-                if (passwordDays >= Settings.Current.PasswordLifetimeInDays)
+                if (passwordDays >= Settings.GetInt("PasswordLifetimeInDays"))
                 {
                     output.Result = LoginResult.PasswordExpired;
                 }

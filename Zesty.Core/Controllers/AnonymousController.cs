@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Zesty.Core.Common;
@@ -70,7 +71,7 @@ namespace Zesty.Core.Controllers
 
             logger.Info($"Request {url} with session id {Session.Id}");
 
-            HandlerProcessor.Process(Settings.Current.PreExecutionHandler, context.HttpContext);
+            HandlerProcessor.Process(Settings.List("PreExecutionHandler"), context.HttpContext);
         }
 
         public override void OnActionExecuted(ActionExecutedContext context)
@@ -81,7 +82,7 @@ namespace Zesty.Core.Controllers
 
             logger.Info($"Execution require {executionMS} ms");
 
-            HandlerProcessor.Process(Settings.Current.PostExecutionHandler, context.HttpContext);
+            HandlerProcessor.Process(Settings.List("PostExecutionHandler"), context.HttpContext);
         }
     }
 }

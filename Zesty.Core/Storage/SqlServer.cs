@@ -12,6 +12,40 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public List<SettingValue> GetSettingsValues()
+        {
+            string statement = "GetServerSettings";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<SettingValue> values = new List<SettingValue>();
+
+                        while (reader.Read())
+                        {
+                            SettingValue settingValue = new SettingValue();
+
+                            settingValue.Key = reader.Get<string>("Key");
+                            settingValue.Value = reader.Get<string>("Value");
+                            settingValue.Order = reader.Get<int>("Order");
+
+                            values.Add(settingValue);
+                        }
+
+                        return values;
+                    }
+                }
+            }
+
+        }
+
         public void SetProperty(string name, string value, Entities.User user)
         {
             string statement = "SetProperty";
@@ -21,7 +55,7 @@ namespace Zesty.Core.Storage
                 statement = "DeleteProperty";
             }
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -42,7 +76,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetClientSettings";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -72,7 +106,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"SetResetToken";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -97,7 +131,7 @@ namespace Zesty.Core.Storage
             logger.Info($"Password \"{password}\" become \"{hash}\"");
 #endif
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -127,7 +161,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetUserByResetToken";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -162,7 +196,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetTranslations";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -197,7 +231,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetLanguages";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -231,7 +265,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetResources";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -280,7 +314,7 @@ namespace Zesty.Core.Storage
             logger.Info($"Password \"{newPassword}\" become \"{newHash}\"");
 #endif
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -312,7 +346,7 @@ namespace Zesty.Core.Storage
             List<Domain> all = new List<Domain>();
             List<Domain> list = new List<Domain>();
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -386,7 +420,7 @@ namespace Zesty.Core.Storage
 
             List<string> list = new List<string>();
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -414,7 +448,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"CanAccess";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -437,7 +471,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetResourceType";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -464,7 +498,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"IsPublicResource";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -493,7 +527,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"IsValid";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -524,7 +558,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"GetProperties";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -562,7 +596,7 @@ namespace Zesty.Core.Storage
             logger.Info($"Password \"{password}\" become \"{hash}\"");
 #endif
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -599,7 +633,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"RequireToken";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -628,7 +662,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"SaveHistory";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
@@ -650,7 +684,7 @@ namespace Zesty.Core.Storage
         {
             string statement = @"SaveToken";
 
-            using (SqlConnection connection = new SqlConnection(Settings.Current.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 

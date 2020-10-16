@@ -1,6 +1,7 @@
 ﻿using System;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
@@ -13,6 +14,11 @@ namespace Zesty.Core.Api.System
             {
                 User = Business.User.Get(token)
             };
+
+            if (response.User == null)
+            {
+                throw new ApiNotFoundException(token.ToString());
+            }
 
             return new ApiHandlerOutput()
             {

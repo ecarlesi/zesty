@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -41,10 +42,10 @@ namespace Zesty.Core.Common
 
         public static void ConfigureZesty(this IApplicationBuilder builder)
         {
-            string[] origins = Settings.Current.CorsOrigins;
+            List<string> origins = Settings.List("CorsOrigins");
 
             builder.UseCors(builder => builder
-                .WithOrigins(origins)
+                .WithOrigins(origins.ToArray())
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
@@ -75,7 +76,7 @@ namespace Zesty.Core.Common
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(Settings.Current.SessionLifetimeInMinutes);
+                options.IdleTimeout = TimeSpan.FromMinutes(Settings.GetInt("SessionLifetimeInMinutes"));
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

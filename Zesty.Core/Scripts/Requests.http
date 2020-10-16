@@ -6,6 +6,8 @@
 GET {{protocol}}://{{hostname}}:{{port}}/sample.free.api
 ### invoke a private api that return a message composed with the username of the user in session
 GET {{protocol}}://{{hostname}}:{{port}}/sample.private.api
+### initialize the session
+GET {{protocol}}://{{hostname}}:{{port}}/system.init.api
 ### execute the login with username and password
 POST {{protocol}}://{{hostname}}:{{port}}/system.login.api
 Content-Type: application/json
@@ -32,7 +34,7 @@ Content-Type: application/json
     "isreusable": true
 }
 ### check the token
-GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=a4e18c7375384c39be90cc94b66031ef1ac5edf9a72946b4b89764abf36dd4b0
+GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
 ### return the list of domains related the user session
 GET {{protocol}}://{{hostname}}:{{port}}/system.domains.api
 ### return the list of rules related with the user session and the specific domain
@@ -43,9 +45,9 @@ Content-Type: application/json
     "domain": "domain a"
 }
 ### return user information
-GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=a4e18c7375384c39be90cc94b66031ef1ac5edf9a72946b4b89764abf36dd4b0
+GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
 ### set the current user in session
-POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=73ee209b21f3433f9574d9f7661e079d0599a5d82ad54b7cadeede43df3c707c
+POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
 Content-Type: application/json
 
 {

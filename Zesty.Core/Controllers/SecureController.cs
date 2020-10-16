@@ -27,7 +27,7 @@ namespace Zesty.Core.Controllers
 
             logger.Info($"Request: {url}");
 
-            string item = Settings.Current.UrlWhitelist.Where(x => x == path).FirstOrDefault();
+            string item = Settings.List("UrlWhitelist").Where(x => x == path).FirstOrDefault();
 
             if (item != null)
             {
@@ -42,7 +42,7 @@ namespace Zesty.Core.Controllers
 
                 Session.Clear();
 
-                if (Settings.Current.ThrowsOnAccessDenied)
+                if (Settings.GetBool("ThrowsOnAccessDenied"))
                 {
                     logger.Warn($"Access denied for resource {path}");
 
@@ -52,7 +52,7 @@ namespace Zesty.Core.Controllers
                 {
                     ErrorMessage = Messages.AccessDenied;
 
-                    Redirect(Settings.Current.RedirectPathOnAccessDenied);
+                    Redirect(Settings.Get("RedirectPathOnAccessDenied"));
                 }
             }
             else
@@ -65,7 +65,7 @@ namespace Zesty.Core.Controllers
                 {
                     Session.Clear();
 
-                    if (Settings.Current.ThrowsOnAuthorizationFailed)
+                    if (Settings.GetBool("ThrowsOnAuthorizationFailed"))
                     {
                         logger.Warn($"Access denied for resource {path}");
 
@@ -75,7 +75,7 @@ namespace Zesty.Core.Controllers
                     {
                         ErrorMessage = Messages.AuthorizationFailed;
 
-                        Redirect(Settings.Current.RedirectPathOnAccessDenied);
+                        Redirect(Settings.Get("RedirectPathOnAccessDenied"));
                     }
                 }
                 else
@@ -90,7 +90,7 @@ namespace Zesty.Core.Controllers
 
                         if (!Authorization.IsValid(user.Id, CurrentHttpContext.Session.Id, tokenValue))
                         {
-                            if (Settings.Current.ThrowsOnAuthorizationFailed)
+                            if (Settings.GetBool("ThrowsOnAuthorizationFailed"))
                             {
                                 logger.Warn($"Access denied for resource {path}");
 
@@ -100,7 +100,7 @@ namespace Zesty.Core.Controllers
                             {
                                 ErrorMessage = Messages.AuthorizationFailed;
 
-                                Redirect(Settings.Current.RedirectPathOnAccessDenied);
+                                Redirect(Settings.Get("RedirectPathOnAccessDenied"));
                             }
                         }
                     }

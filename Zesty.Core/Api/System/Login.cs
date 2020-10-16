@@ -1,5 +1,6 @@
 ﻿using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
@@ -9,15 +10,23 @@ namespace Zesty.Core.Api.System
         {
             LoginRequest request = GetEntity<LoginRequest>(input);
 
+            LoginOutput loginOutput = Business.User.Login(request.Username, request.Password);
+
+            if (loginOutput.Result == LoginResult.Failed)
+            {
+                throw new ApiAccessDeniedException(Messages.LoginFailed);
+            }
+            else if (loginOutput.Result == LoginResult.PasswordExpired)
+            {
+                throw new ApiAccessDeniedException(Messages.PasswordExpired);
+            }
+
             LoginResponse response = new LoginResponse()
             {
-                Output = Business.User.Login(request.Username, request.Password)
+                Output = loginOutput
             };
 
-            if (response.Output != null && response.Output.Result == LoginResult.Success && response.Output.User != null)
-            {
-                input.Context.Session.Set(response.Output.User);
-            }
+            input.Context.Session.Set(response.Output.User);
 
             return new ApiHandlerOutput()
             {

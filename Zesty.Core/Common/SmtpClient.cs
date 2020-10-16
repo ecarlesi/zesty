@@ -11,7 +11,7 @@ namespace Zesty.Core.Common
         {
             MailMessage message = new MailMessage();
 
-            message.From = new MailAddress(Settings.Current.SmtpClient.Username);
+            message.From = new MailAddress(Settings.Get("SmtpClient.Username"));
             message.To.Add(new MailAddress(to));
             message.Subject = subject;
             message.IsBodyHtml = false;
@@ -19,12 +19,12 @@ namespace Zesty.Core.Common
 
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
 
-            client.Host = Settings.Current.SmtpClient.Host;
-            client.Port = Settings.Current.SmtpClient.Port;
-            client.EnableSsl = Settings.Current.SmtpClient.Ssl;
+            client.Host = Settings.Get("SmtpClient.Host");
+            client.Port = Settings.GetInt("SmtpClient.Port");
+            client.EnableSsl = Settings.GetBool("SmtpClient.Ssl");
 
-            string username = Settings.Current.SmtpClient.Username;
-            string password = Settings.Current.SmtpClient.Password;
+            string username = Settings.Get("SmtpClient.Username");
+            string password = Settings.Get("SmtpClient.Password");
 
             if (!String.IsNullOrWhiteSpace(username))
             {

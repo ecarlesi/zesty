@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
@@ -9,6 +8,8 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
+            IsNotEmptyString(Context.Current.User.Domain, "domainName");
+
             ResourcesResponse response = new ResourcesResponse()
             {
                 Resources = Business.Resource.GetResources(Context.Current.User.Username, Context.Current.User.Domain)

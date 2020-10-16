@@ -9,7 +9,7 @@ namespace Zesty.Core.Api.System
         {
             CheckResponse response = new CheckResponse()
             {
-                Message = "Check OK"
+                Message = Messages.Success
             };
 
             return new ApiHandlerOutput()

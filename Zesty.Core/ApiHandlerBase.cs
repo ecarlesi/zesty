@@ -7,6 +7,8 @@ namespace Zesty.Core
 {
     public abstract class ApiHandlerBase
     {
+        protected static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
         public abstract ApiHandlerOutput Process(ApiInputHandler input);
 
         protected T GetEntity<T>(ApiInputHandler input, bool mandatory)

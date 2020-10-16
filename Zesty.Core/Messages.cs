@@ -8,10 +8,13 @@
         internal static readonly string ArgumentNotFound = "Required argument was not found";
         internal static readonly string Done = "Done";
         internal static readonly string LoginFailed = "Login failed";
+        internal static readonly string PasswordExpired = "Password expired";
         internal static readonly string WrongApiOutput = "Wrong API output";
         internal static readonly string SettingsLoaded = "Application settings loaded";
         internal static readonly string TokenMissing = "Required token is missing";
         internal static readonly string LanguageMissing = "Required argument is missing";
+        internal static readonly string KeyNotFound = "Key not found";
+        internal static readonly string SettingNotFound = "Setting not found with key {0}";
         internal static readonly string Success = "Success";
         internal static readonly string Failure = "Failure";
     }

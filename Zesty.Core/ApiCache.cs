@@ -10,7 +10,7 @@ namespace Zesty.Core
     {
         private static object LOCK = new object();
 
-        private static double lifetimeMS = Settings.Current.ApiCacheLifetimeInMinutes * 60 * 1000;
+        private static double lifetimeMS = Settings.GetInt("ApiCacheLifetimeInMinutes") * 60 * 1000;
 
         private static List<ApiCacheItem> cache = new List<ApiCacheItem>();
 
@@ -27,7 +27,10 @@ namespace Zesty.Core
             {
                 lock (LOCK)
                 {
-                    cache.Remove(item);
+                    if (cache.Contains(item))
+                    {
+                        cache.Remove(item);
+                    }
                 }
 
                 return null;

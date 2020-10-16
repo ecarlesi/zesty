@@ -1,16 +1,19 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
-namespace Zesty.Core.Api.Sample
+namespace Zesty.Core.Api.System
 {
-    public class Free : ApiHandlerBase
+    public class Init : ApiHandlerBase
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            FreeResponse response = new FreeResponse()
+            input.Context.Session.SetString("init", Guid.NewGuid().ToString());
+
+            InitResponse response = new InitResponse()
             {
-                Message = Guid.NewGuid().ToString()
+                Message = Messages.Success
             };
 
             return new ApiHandlerOutput()
@@ -33,7 +36,7 @@ namespace Zesty.Core.Api.Sample
         }
     }
 
-    public class FreeResponse
+    public class InitResponse
     {
         public string Message { get; set; }
     }

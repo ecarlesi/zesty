@@ -40,7 +40,7 @@ namespace Zesty.Core.Common
             return value == null ? default : JsonHelper.Deserialize<T>(value);
         }
 
-        public static void ConfigureZesty(this IApplicationBuilder builder)
+        public static void UseZesty(this IApplicationBuilder builder)
         {
             List<string> origins = Settings.List("CorsOrigins");
 
@@ -60,7 +60,7 @@ namespace Zesty.Core.Common
             });
         }
 
-        public static void ConfigureZesty(this IServiceCollection services)
+        public static void AddZesty(this IServiceCollection services)
         {
             services.AddCors();
 

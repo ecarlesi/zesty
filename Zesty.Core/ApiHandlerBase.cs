@@ -92,6 +92,23 @@ namespace Zesty.Core
                                 throw new MissingRequiredProperty(prop.Name);
                             }
                         }
+                        else if (prop.PropertyType == typeof(Guid))
+                        {
+                            //TODO fix
+                            //string s = prop.GetValue(t) as string;
+
+                            //if (string.IsNullOrWhiteSpace(s))
+                            //{
+                            //    throw new MissingRequiredProperty(prop.Name);
+                            //}
+
+                            //Guid g = Guid.Parse(s);
+
+                            //if (g == Guid.Empty)
+                            //{
+                            //    throw new MissingRequiredProperty(prop.Name);
+                            //}
+                        }
                     }
                 }
             }

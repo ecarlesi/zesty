@@ -28,6 +28,8 @@ namespace Zesty.Core.Middleware
 
             Context.Current.User = session.Get<Entities.User>(Keys.SessionUser);
 
+            bool propagateApplicationErrorInFault = Settings.GetBool("PropagateApplicationErrorInFault", false);
+
             string resourceName = context.Request.Path.Value;
             string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
 
@@ -90,7 +92,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 501;
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (ApiNotFoundException e)
             {
@@ -98,7 +101,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 404;
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (ApiAccessDeniedException e)
             {
@@ -106,7 +110,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 401;
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (MissingRequiredProperty e)
             {
@@ -114,7 +119,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 400;
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (CustomJsonException e)
             {
@@ -122,7 +128,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 502; // TODO check this code
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (SecurityException e)
             {
@@ -130,7 +137,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 403; // TODO check this code
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             catch (Exception e)
             {
@@ -138,7 +146,8 @@ namespace Zesty.Core.Middleware
 
                 statusCode = 500;
                 contentType = ContentType.ApplicationJson;
-                content = JsonHelper.Serialize(new { e.Message });
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
             }
             finally
             {

@@ -14,27 +14,18 @@ namespace Zesty.Core.Api.System
 
             SetResetTokenResponse response = new SetResetTokenResponse();
 
-            try
-            {
-                Guid token = Business.User.SetResetToken(email);
+            Guid token = Business.User.SetResetToken(email);
 
-                List<Translation> translations = StorageManager.Instance.GetTranslations("en");
+            List<Translation> translations = StorageManager.Instance.GetTranslations("en");
 
-                string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
-                string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;
+            string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
+            string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;
 
-                body = String.Format(body, token.ToString());
+            body = String.Format(body, token.ToString());
 
-                Common.SmtpClient.Send(email, subject, body);
+            Common.SmtpClient.Send(email, subject, body);
 
-                response.Message = Messages.Success;
-            }
-            catch(Exception e)
-            {
-                logger.Error(e);
-
-                response.Message = Messages.Failure;
-            }
+            response.Message = Messages.Success;
 
             return new ApiHandlerOutput()
             {

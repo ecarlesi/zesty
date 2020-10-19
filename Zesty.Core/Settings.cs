@@ -126,6 +126,18 @@ namespace Zesty.Core.Entities.Settings
             return int.Parse(s);
         }
 
+        public static bool GetBool(string key, bool defaultValue)
+        {
+            string s = Get(key, false);
+
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return defaultValue;
+            }
+
+            return bool.Parse(s);
+        }
+
         public static string Get(string key, string defaultValue)
         {
             string s = Get(key, false);

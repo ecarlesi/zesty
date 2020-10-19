@@ -1,6 +1,7 @@
 ﻿using System;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
@@ -10,11 +11,14 @@ namespace Zesty.Core.Api.System
         {
             ResetPasswordRequest request = base.GetEntity<ResetPasswordRequest>(input);
 
-            bool result = Business.User.ResetPassword(request.Token, request.Password);
+            if (!Business.User.ResetPassword(request.Token, request.Password))
+            {
+                throw new ApiInvalidArgumentException(Messages.TokenMissing);
+            }
 
             ResetPasswordResponse response = new ResetPasswordResponse()
             {
-                Result = result ? Messages.Success : Messages.Failure
+                Result = Messages.Success
             };
 
             return new ApiHandlerOutput()

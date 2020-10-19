@@ -106,7 +106,7 @@ INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('c62a6
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('d84ad49f-89ff-4ff6-a56e-1ca47cc333fc', 2, 'RedirectPathOnAccessDenied' , '/');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('2b43d7bb-f54c-4130-8722-4c8b6ecc998e', 3, 'ThrowsOnAuthorizationFailed' , 'true');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('ed5f3407-c25b-4da9-99af-ebeed7bd3508', 4, 'CorsOrigins' , 'https://localhost:4200');
-INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('b57bb065-f9fe-4b33-9227-7d35d83aadaf', 5, 'CorsOrigins' , 'https://sec.itattitude.com');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('b57bb065-f9fe-4b33-9227-7d35d83aadaf', 5, 'CorsOrigins' , 'https://localhost:1099');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('3823bd90-c229-48c3-8136-d1cd008aa2f6', 6, 'PasswordLifetimeInDays' , '10');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('815f81c9-104a-46f5-94f9-3e8eec9f32e7', 7, 'ApiCacheLifetimeInMinutes' , '15');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('f50c79f6-beca-4cbb-a929-94070913b007', 8, 'SessionLifetimeInMinutes' , '30');
@@ -119,5 +119,7 @@ INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('082ca
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('a837b293-9a6b-4c81-8000-943d0f1fd22a', 15, 'SmtpClient.Ssl' , 'true');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('aea0bfe5-a600-49e6-9804-48d4ff8aeb4b', 16, 'SmtpClient.Username' , '');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('638dac90-fd75-435a-9b8c-bf9221fe027d', 17, 'SmtpClient.Password' , '');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('0678d08c-ca66-4479-9d6b-2758d88f3536', 18, 'PropagateApplicationErrorInFault' , 'false');
+
 
 

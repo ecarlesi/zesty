@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Exceptions;
@@ -42,7 +45,58 @@ namespace Zesty.Core
                 return default;
             }
 
-            return JsonHelper.Deserialize<T>(input.Body);
+            T t = JsonHelper.Deserialize<T>(input.Body);
+
+            if (t == null)
+            {
+                throw new ApplicationException(Messages.RequestIsNull);
+            }
+
+            PropertyInfo[] props = t.GetType().GetProperties();
+
+            foreach (PropertyInfo prop in props)
+            {
+                IEnumerable<Attribute> attributes = prop.GetCustomAttributes();
+
+                foreach (Attribute attribute in attributes)
+                {
+                    if (attribute is RequiredAttribute)
+                    {
+                        if (prop.PropertyType == typeof(string))
+                        {
+                            string s = prop.GetValue(t) as string;
+
+                            if (string.IsNullOrWhiteSpace(s))
+                            {
+                                throw new MissingRequiredProperty(prop.Name);
+                            }
+                        }
+                        else if (prop.PropertyType == typeof(IList) || prop.PropertyType == typeof(Array))
+                        {
+                            if (prop.GetValue(t) == null)
+                            {
+                                throw new MissingRequiredProperty(prop.Name);
+                            }
+                        }
+                        else if (prop.PropertyType == typeof(IList) || prop.PropertyType == typeof(Array))
+                        {
+                            if (prop.GetValue(t) == null)
+                            {
+                                throw new MissingRequiredProperty(prop.Name);
+                            }
+                        }
+                        else if (prop.PropertyType == typeof(object))
+                        {
+                            if (prop.GetValue(t) == null)
+                            {
+                                throw new MissingRequiredProperty(prop.Name);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return t;
         }
 
         protected string Serialize(Object obj)

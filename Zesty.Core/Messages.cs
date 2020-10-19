@@ -15,6 +15,8 @@
         internal static readonly string LanguageMissing = "Required argument is missing";
         internal static readonly string KeyNotFound = "Key not found";
         internal static readonly string SettingNotFound = "Setting not found with key {0}";
+        internal static readonly string RequestIsNull = "Request is null";
+        internal static readonly string MissingRequireArgument = "The required argument {0} is null.";
         internal static readonly string Success = "Success";
         internal static readonly string Failure = "Failure";
     }

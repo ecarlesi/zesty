@@ -108,6 +108,14 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 content = JsonHelper.Serialize(new { e.Message });
             }
+            catch (MissingRequiredProperty e)
+            {
+                logger.Error(e);
+
+                statusCode = 400;
+                contentType = ContentType.ApplicationJson;
+                content = JsonHelper.Serialize(new { e.Message });
+            }
             catch (CustomJsonException e)
             {
                 logger.Error(e);

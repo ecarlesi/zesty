@@ -50,9 +50,13 @@ namespace Zesty.Core.Api.System
 
     public class LoginRequest
     {
+        [Required]
         public string Username { get; set; }
         public string Domain { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
+        public int Number { get; set; }
     }
 
     public class LoginResponse

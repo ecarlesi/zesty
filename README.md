@@ -60,12 +60,12 @@ using Zesty.Core.Common;
 
 In the **Startup.cs** file in the method *ConfigureServices* add this line of code
 ```c#
-services.ConfigureZesty();
+services.AddZesty();
 ```
 
 In the **Startup.cs** file in the method *Configure* add this line of code
 ```c#
-app.ConfigureZesty();
+app.UseZesty();
 ```
 
 ## TODO ##

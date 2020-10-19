@@ -40,8 +40,8 @@ INSERT INTO [dbo].[Role] ([Id],[Name])VALUES ('9e73b89c-e645-4084-b925-742818275
 
 INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('bc89e749-784b-479f-91e6-85708326558e', null, 'Domain A');
 INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('4434a180-3c64-4402-bf72-5380773dc43d', null, 'Domain B');
-INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('608a3cdf-96a3-4c48-870e-11213d0a15f8', null, 'Domain X');
-INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('12add769-1d0e-4448-9da1-1f467cd835b5', null, 'Domain Y');
+INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('608a3cdf-96a3-4c48-870e-11213d0a15f8', 'bc89e749-784b-479f-91e6-85708326558e', 'Domain X');
+INSERT INTO [dbo].[Domain] ([Id], [ParentDomainId], [Name])VALUES ('12add769-1d0e-4448-9da1-1f467cd835b5', '608a3cdf-96a3-4c48-870e-11213d0a15f8', 'Domain Y');
 
 INSERT INTO [dbo].[Authorization] ([UserId],[DomainId],[RoleId]) VALUES ('b81d0335-c175-4af8-89f1-ff4ccc79c666','bc89e749-784b-479f-91e6-85708326558e','62ef76b8-e39e-41c7-86dc-4801642dc655');
 

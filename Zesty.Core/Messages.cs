@@ -19,6 +19,6 @@
         internal static readonly string MissingRequireArgument = "The required argument {0} is null.";
         internal static readonly string Success = "Success";
         internal static readonly string Failure = "Failure";
-        internal static readonly string GenericFailure = "Something went wrong :( In the logs you will find the truth :)";
+        internal static readonly string GenericFailure = "Something went wrong :(";
     }
 }

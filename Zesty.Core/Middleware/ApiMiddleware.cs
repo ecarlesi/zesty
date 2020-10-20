@@ -176,7 +176,14 @@ namespace Zesty.Core.Middleware
 
             if (Business.Authorization.RequireToken(input.Resource))
             {
-                if (!Business.Authorization.IsValid(Context.Current.User.Id, input.Context.Session.Id, input.Context.Request.Query["t"]))
+                string token = input.Context.Request.Headers["ZestyApiToken"];
+
+                if (string.IsNullOrWhiteSpace(token))
+                {
+                    token = input.Context.Request.Query["t"];
+                }
+
+                if (!Business.Authorization.IsValid(Context.Current.User.Id, input.Context.Session.Id, token))
                 {
                     logger.Warn($"Invalid token for resource {input.Resource}");
 

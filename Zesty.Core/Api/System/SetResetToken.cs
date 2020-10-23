@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Zesty.Core.Common;
 using Zesty.Core.Entities;
+using Zesty.Core.Exceptions;
 
 namespace Zesty.Core.Api.System
 {
@@ -11,6 +11,11 @@ namespace Zesty.Core.Api.System
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
             string email = input.Context.Request.Query["email"];
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ApiInvalidArgumentException("email");
+            }
 
             SetResetTokenResponse response = new SetResetTokenResponse();
 
@@ -27,23 +32,7 @@ namespace Zesty.Core.Api.System
 
             response.Message = Messages.Success;
 
-            return new ApiHandlerOutput()
-            {
-                Output = response,
-                Type = ApiHandlerOutputType.JSon,
-                ResourceHistoryOutput = new ApiResourceHistoryOutput()
-                {
-                    Item = new HistoryItem()
-                    {
-                        Resource = input.Resource,
-                        Text = JsonHelper.Serialize(response),
-                        User = Context.Current.User,
-                        Actor = this.GetType().ToString()
-                    },
-                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
-                },
-                CachePolicy = ApiCachePolicy.Disable
-            };
+            return GetOutput(response);
         }
     }
 

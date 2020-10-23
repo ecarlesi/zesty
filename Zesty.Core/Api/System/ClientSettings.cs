@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System
@@ -17,17 +16,7 @@ namespace Zesty.Core.Api.System
             {
                 Output = response,
                 Type = ApiHandlerOutputType.JSon,
-                ResourceHistoryOutput = new ApiResourceHistoryOutput()
-                {
-                    Item = new HistoryItem()
-                    {
-                        Resource = input.Resource,
-                        Text = JsonHelper.Serialize(response),
-                        User = Context.Current.User,
-                        Actor = this.GetType().ToString()
-                    },
-                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
-                },
+                ResourceHistoryOutput = null,
                 CachePolicy = ApiCachePolicy.Enable
             };
         }

@@ -14,7 +14,7 @@ namespace Zesty.Core
         User GetUserByResetToken(Guid resetToken);
         List<Translation> GetTranslations(string language);
         List<Language> GetLanguages();
-        List<Resource> GetResources(string username, string domainName);
+        List<Resource> GetResources(string username, Guid domainId);
         void SaveToken(Entities.User user, string sessionId, string tokenValue, bool reusable);
         bool CanAccess(string path, Entities.User user);
         bool IsValid(Guid userId, string sessionId, string tokenValue);
@@ -25,7 +25,7 @@ namespace Zesty.Core
         Entities.User Login(string username, string password);
         Dictionary<string, string> LoadProperties(Entities.User user);
         List<Entities.Domain> GetDomains(string username);
-        List<string> GetRoles(string username, string domain);
+        List<string> GetRoles(string username, Guid domainId);
         bool ChangePassword(string username, string currentPassword, string newPassword);
     }
 }

@@ -1,6 +1,8 @@
 ﻿@hostname = localhost
-@port = 47084
 @protocol = https
+@port = 47084
+
+@token = edeee1972d3c48cd97f1627c88c2c3ffc69fa7cc5b944502988d30517e77b888
 
 ### invoke a public api that return a GUID
 GET {{protocol}}://{{hostname}}:{{port}}/sample.free.api
@@ -23,8 +25,8 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.property.api
 Content-Type: application/json
 
 {
-    "name": "Nickname",
-    "value": "eca"
+    "name": "Property 2",
+    "value": ""
 }
 ### request a token to be used to invoke method that need it. if reusable the token can survive all api call during the same session
 POST {{protocol}}://{{hostname}}:{{port}}/system.token.api
@@ -34,7 +36,8 @@ Content-Type: application/json
     "isreusable": true
 }
 ### check the token
-GET {{protocol}}://{{hostname}}:{{port}}/system.check.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
+GET {{protocol}}://{{hostname}}:{{port}}/system.check.api
+ZestyApiToken: {{token}}
 ### return the list of domains related the user session
 GET {{protocol}}://{{hostname}}:{{port}}/system.domains.api
 ### return the list of rules related with the user session and the specific domain
@@ -42,16 +45,17 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.roles.api
 Content-Type: application/json
 
 {
-    "domain": "domain a"
+    "domain": "bc89e749-784b-479f-91e6-85708326558e"
 }
 ### return user information
-GET {{protocol}}://{{hostname}}:{{port}}/system.info.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
+GET {{protocol}}://{{hostname}}:{{port}}/system.info.api
+ZestyApiToken: {{token}}
 ### set the current user in session
-POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api?t=c98090bdd2754d3eb3456c2b48ba7dbfd8d2c81bbad846d6a6788a6e729a3926
+POST {{protocol}}://{{hostname}}:{{port}}/system.domain.api
 Content-Type: application/json
 
 {
-    "domain": "domain a"
+    "domain": "bc89e749-784b-479f-91e6-85708326558e"
 }
 ### return the list of resource related to the user in session
 GET {{protocol}}://{{hostname}}:{{port}}/system.resources.api

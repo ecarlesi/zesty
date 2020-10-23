@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Zesty.Core.Common;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System
@@ -8,30 +7,14 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            IsNotEmptyString(Context.Current.User.Domain, "domainName");
+            IsNotNull(Context.Current.User.Domain, "domain");
 
             ResourcesResponse response = new ResourcesResponse()
             {
-                Resources = Business.Resource.GetResources(Context.Current.User.Username, Context.Current.User.Domain)
+                Resources = Business.Resource.GetResources(Context.Current.User.Username, Context.Current.User.Domain.Id)
             };
 
-            return new ApiHandlerOutput()
-            {
-                Output = response,
-                Type = ApiHandlerOutputType.JSon,
-                ResourceHistoryOutput = new ApiResourceHistoryOutput()
-                {
-                    Item = new HistoryItem()
-                    {
-                        Resource = input.Resource,
-                        Text = JsonHelper.Serialize(response),
-                        User = Context.Current.User,
-                        Actor = this.GetType().ToString()
-                    },
-                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
-                },
-                CachePolicy = ApiCachePolicy.Disable
-            };
+            return GetOutput(response);
         }
     }
 

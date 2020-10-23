@@ -165,6 +165,13 @@ namespace Zesty.Core.Middleware
 
         private ApiHandlerOutput Process(ApiInputHandler input)
         {
+            string typeName = Business.Resource.GetType(input.Resource);
+
+            if (string.IsNullOrWhiteSpace(typeName))
+            {
+                throw new ApiNotFoundException(input.Resource);
+            }
+
             bool canAccess = Business.Authorization.CanAccess(input.Resource, Context.Current.User);
 
             if (!canAccess)
@@ -201,8 +208,6 @@ namespace Zesty.Core.Middleware
             }
             else
             {
-                string typeName = Business.Resource.GetType(input.Resource);
-
                 ApiHandlerBase handler = InstanceHelper.Create<ApiHandlerBase>(typeName);
 
                 ApiHandlerOutput output = handler.Process(input);

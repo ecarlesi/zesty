@@ -11,7 +11,7 @@ namespace Zesty.Core.Entities
         public string Email { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public string Domain { get; set; }
+        public Entities.Domain Domain { get; set; }
         public DateTime PasswordChanged { get; set; }
         public Dictionary<string, string> Properties { get; set; }
     }

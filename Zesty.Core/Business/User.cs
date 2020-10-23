@@ -35,7 +35,7 @@ namespace Zesty.Core.Business
             return StorageManager.Instance.GetDomains(username);
         }
 
-        public static List<string> GetRoles(string username, string domain)
+        public static List<string> GetRoles(string username, Guid domain)
         {
             return StorageManager.Instance.GetRoles(username, domain);
         }

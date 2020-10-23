@@ -57,7 +57,7 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('594
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('98a8fada-b725-4011-a2fb-92c2cfeaa9d0','/system.resources.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('a4029d34-afef-49c9-89b3-cab33176a6a7','/system.clientsettings.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('f7a18444-1442-40e4-9b70-dbe14b5e573b','/system.roles.api',0,0);
-INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('ceb38502-f544-4b9d-bce6-601deff48f7a','/system.domain.api',0,1);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('ceb38502-f544-4b9d-bce6-601deff48f7a','/system.domain.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('1457b879-8dbc-424d-974d-67f5abc08d97','/system.info.api',0,1);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('29fbe0b5-b46f-4f5d-b1a8-061c52e9defb','/system.languages.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('1dbbd895-f887-4df9-b4f0-c322d43d4f20','/system.translations.api',1,0);
@@ -119,7 +119,7 @@ INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('082ca
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('a837b293-9a6b-4c81-8000-943d0f1fd22a', 15, 'SmtpClient.Ssl' , 'true');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('aea0bfe5-a600-49e6-9804-48d4ff8aeb4b', 16, 'SmtpClient.Username' , '');
 INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('638dac90-fd75-435a-9b8c-bf9221fe027d', 17, 'SmtpClient.Password' , '');
-INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('0678d08c-ca66-4479-9d6b-2758d88f3536', 18, 'PropagateApplicationErrorInFault' , 'false');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('0678d08c-ca66-4479-9d6b-2758d88f3536', 18, 'PropagateApplicationErrorInFault' , 'true');
 
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Zesty.Core.Business
 {
@@ -11,11 +12,11 @@ namespace Zesty.Core.Business
             return StorageManager.Instance.GetType(resourceName);
         }
 
-        internal static List<Entities.Resource> GetResources(string username, string domainName)
+        internal static List<Entities.Resource> GetResources(string username, Guid domainId)
         {
             //TODO add cache support
 
-            return StorageManager.Instance.GetResources(username, domainName);
+            return StorageManager.Instance.GetResources(username, domainId);
         }
     }
 }

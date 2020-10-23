@@ -261,7 +261,7 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public List<Resource> GetResources(string username, string domainName)
+        public List<Resource> GetResources(string username, Guid domainId)
         {
             string statement = @"GetResources";
 
@@ -274,7 +274,7 @@ namespace Zesty.Core.Storage
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = username });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domainName", Value = domainName });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domainId", Value = domainId });
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -414,7 +414,7 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public List<string> GetRoles(string username, string domain)
+        public List<string> GetRoles(string username, Guid domainId)
         {
             string statement = @"GetRoles";
 
@@ -429,7 +429,7 @@ namespace Zesty.Core.Storage
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = username });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domain", Value = domain });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domain", Value = domainId });
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

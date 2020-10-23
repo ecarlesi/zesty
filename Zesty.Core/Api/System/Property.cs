@@ -32,25 +32,10 @@ namespace Zesty.Core.Api.System
 
             input.Context.Session.Set(Context.Current.User);
 
-            PropertyResponse response = new PropertyResponse() { Message = Messages.Success };
-
-            return new ApiHandlerOutput()
+            return GetOutput(new PropertyResponse()
             {
-                Output = response,
-                Type = ApiHandlerOutputType.JSon,
-                ResourceHistoryOutput = new ApiResourceHistoryOutput()
-                {
-                    Item = new HistoryItem()
-                    {
-                        Resource = input.Resource,
-                        Text = JsonHelper.Serialize(response),
-                        User = Context.Current.User,
-                        Actor = this.GetType().ToString()
-                    },
-                    ResourceHistoryPolicy = ApiResourceHistoryPolicy.None
-                },
-                CachePolicy = ApiCachePolicy.Disable
-            };
+                Message = Messages.Success
+            });
         }
     }
 

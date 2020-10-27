@@ -67,6 +67,7 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('bea
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8','/system.property.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb','/system.password.api',0,0);
 
+--admin
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('28757f88-c9f3-40e0-ab28-f073fef63522', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ba86180d-11db-4778-81ff-6e1f13a4b7a2', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('1f3c9faa-468b-49b2-bb1c-fca8e74fe09b', '62ef76b8-e39e-41c7-86dc-4801642dc655');
@@ -78,6 +79,20 @@ INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ceb38502-f544-
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('1457b879-8dbc-424d-974d-67f5abc08d97', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+
+--user
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ba86180d-11db-4778-81ff-6e1f13a4b7a2', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('1f3c9faa-468b-49b2-bb1c-fca8e74fe09b', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('94724ee4-45fd-45ed-ba56-20e5771b96d1', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('5940baea-f548-4116-ac39-f195dc03c6bd', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('98a8fada-b725-4011-a2fb-92c2cfeaa9d0', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('a4029d34-afef-49c9-89b3-cab33176a6a7', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ceb38502-f544-4b9d-bce6-601deff48f7a', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('1457b879-8dbc-424d-974d-67f5abc08d97', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb', '9e73b89c-e645-4084-b925-742818275df5');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('f7a18444-1442-40e4-9b70-dbe14b5e573b', '9e73b89c-e645-4084-b925-742818275df5');
+
 
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('ba86180d-11db-4778-81ff-6e1f13a4b7a2','Zesty.Core.Api.Sample.Private, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('0eaba387-43b6-4b3d-b834-d042fa33f013','Zesty.Core.Api.Sample.Free, Zesty.Core');

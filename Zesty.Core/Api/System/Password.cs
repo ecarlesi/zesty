@@ -17,6 +17,16 @@ namespace Zesty.Core.Api.System
                 throw new ApiAccessDeniedException(Messages.WrongPassword);
             }
 
+            if (request.Old == request.New)
+            {
+                throw new ApplicationException(Messages.PasswordChangeSame);
+            }
+
+            if (request.New != request.Confirm)
+            {
+                throw new ApplicationException(Messages.PasswordDontMatch);
+            }
+
             Business.User.ChangePassword(Context.Current.User.Id, request.Old, request.New);
 
             return GetOutput(new PasswordResponse()

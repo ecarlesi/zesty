@@ -18,6 +18,15 @@ Content-Type: application/json
     "username": "eca",
     "password": "password"
 }
+### change password
+POST {{protocol}}://{{hostname}}:{{port}}/system.password.api
+Content-Type: application/json
+
+{
+    "old": "password",
+    "new": "password.1",
+    "confirm": "password.1"
+}
 ### execute the logout and terminate the session
 GET {{protocol}}://{{hostname}}:{{port}}/system.logout.api
 ### set and delete user property

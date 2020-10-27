@@ -12,6 +12,27 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public void ChangePassword(Guid id, string oldPassword, string password)
+        {
+            string statement = @"ChangePassword";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@previousPassword", Value = HashHelper.GetSha256(oldPassword) });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@newPassword", Value = HashHelper.GetSha256(password) });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<SettingValue> GetSettingsValues()
         {
             string statement = "GetServerSettings";

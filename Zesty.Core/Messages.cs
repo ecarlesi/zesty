@@ -20,5 +20,6 @@
         internal static readonly string Success = "Success";
         internal static readonly string Failure = "Failure";
         internal static readonly string GenericFailure = "Something went wrong :(";
+        internal static readonly string WrongPassword = "Wrong password";
     }
 }

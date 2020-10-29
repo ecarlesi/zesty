@@ -14,14 +14,26 @@ namespace Zesty.Core
 
         public abstract ApiHandlerOutput Process(ApiInputHandler input);
 
-        protected ApiHandlerOutput GetOutput(object response)
+        protected string Get(ApiInputHandler input, string parameterName, bool required = true)
+        {
+            string s = input.Context.Request.Query[parameterName];
+
+            if (string.IsNullOrWhiteSpace(s) && required)
+            {
+                throw new ApiInvalidArgumentException(parameterName);
+            }
+
+            return s;
+        }
+
+        protected ApiHandlerOutput GetOutput(object response, bool cache = false)
         {
             return new ApiHandlerOutput()
             {
                 Output = response,
                 Type = ApiHandlerOutputType.JSon,
                 ResourceHistoryOutput = null,
-                CachePolicy = ApiCachePolicy.Disable
+                CachePolicy = cache ? ApiCachePolicy.Enable : ApiCachePolicy.Disable
             };
         }
 

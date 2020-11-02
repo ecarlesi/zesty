@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
@@ -18,7 +19,12 @@ namespace Zesty.Core.Api.System
 
             if (domain == null)
             {
-                throw new ApiInvalidArgumentException(request.Domain);
+                domain = NestSearch(domains, request.Domain);
+
+                if (domain == null)
+                {
+                    throw new ApiNotFoundException(request.Domain);
+                }
             }
 
             Context.Current.User.Domain = domain;
@@ -31,6 +37,26 @@ namespace Zesty.Core.Api.System
             input.Context.Session.Set(Context.Current.User);
 
             return GetOutput(response);
+        }
+
+        private Entities.Domain NestSearch(List<Entities.Domain> domains, string domain)
+        {
+            foreach (Entities.Domain d in domains)
+            {
+                if (d.Id.ToString() == domain || d.Name == domain)
+                {
+                    return d;
+                }
+
+                Entities.Domain inner = NestSearch(d.Childs, domain);
+
+                if (inner != null)
+                {
+                    return inner;
+                }
+            }
+
+            return null;
         }
     }
 

@@ -15,7 +15,7 @@ namespace Zesty.Core.Api.System
 
             List<Entities.Domain> domains = Business.User.GetDomains(Context.Current.User.Username);
 
-            Entities.Domain domain = domains.Where(x => x.Id.ToString() == request.Domain || x.Name == request.Domain).FirstOrDefault();
+            Entities.Domain domain = domains.Where(x => x.Id.ToString().ToLower() == request.Domain.ToLower() || x.Name.ToLower() == request.Domain.ToLower()).FirstOrDefault();
 
             if (domain == null)
             {

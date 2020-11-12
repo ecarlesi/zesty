@@ -34,7 +34,7 @@ namespace Zesty.Core.Middleware
             string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
 
             logger.Info($"Resource: {resourceName}");
-            logger.Info($"Body: {body}");
+            logger.Debug($"Body: {body}");
             logger.Info($"Session ID: {session.Id}");
             logger.Info($"HTTP method: {context.Request.Method}");
 
@@ -151,8 +151,9 @@ namespace Zesty.Core.Middleware
             }
             finally
             {
-                logger.Info($"ContentType: {contentType}");
-                logger.Info($"Content: {content}");
+                logger.Debug($"ContentType: {contentType}");
+                logger.Debug($"Content: {content}");
+                logger.Info($"statusCode: {statusCode}");
 
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;

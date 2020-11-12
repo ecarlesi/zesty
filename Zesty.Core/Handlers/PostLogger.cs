@@ -19,9 +19,9 @@ namespace Zesty.Core.Handlers
             string resourceName = context.Request.Path.Value;
             string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
 
-            logger.Info($"Resource: {resourceName}");
-            logger.Info($"Body: {body}");
-            logger.Info($"Session ID: {session.Id}");
+            logger.Debug($"Resource: {resourceName}");
+            logger.Debug($"Body: {body}");
+            logger.Debug($"Session ID: {session.Id}");
 #endif
         }
     }

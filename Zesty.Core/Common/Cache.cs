@@ -11,6 +11,7 @@ namespace Zesty.Core.Common
         private static object Lock = new object();
         private static int LifetimeInMinutes = 5;
         private static List<CacheItem> items = new List<CacheItem>();
+        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
         static Cache()
         {
@@ -27,10 +28,14 @@ namespace Zesty.Core.Common
                 }
                 catch { }
             }
+
+            logger.Info($"LifetimeInMinutes: {LifetimeInMinutes}");
         }
 
         public static void Store<T>(CacheKey key, T value, StorePolicy storePolicy)
         {
+            logger.Debug($"Request to store with key {key.Key}@{key.Domain}");
+
             T present = Get<T>(key);
 
             if (present == null)
@@ -49,6 +54,8 @@ namespace Zesty.Core.Common
                         };
 
                         items.Add(cacheItem);
+
+                        logger.Debug($"Stored with key {key.Key}@{key.Domain}");
                     }
                 }
             }
@@ -56,6 +63,8 @@ namespace Zesty.Core.Common
             {
                 if (storePolicy == StorePolicy.SkipIfExists)
                 {
+                    logger.Debug($"Store skipped with key {key.Key}@{key.Domain}");
+
                     return;
                 }
 
@@ -75,6 +84,8 @@ namespace Zesty.Core.Common
                         };
 
                         items.Add(cacheItem);
+
+                        logger.Debug($"Stored with key {key.Key}@{key.Domain}");
                     }
                 }
             }
@@ -82,6 +93,8 @@ namespace Zesty.Core.Common
 
         private static void Remove(CacheKey key)
         {
+            logger.Debug($"Remove with key {key.Key}@{key.Domain}");
+
             CacheItem present = items.Where(x => x.Key.Domain == key.Domain && x.Key.Key == key.Key).FirstOrDefault();
 
             if (present != null)
@@ -93,6 +106,8 @@ namespace Zesty.Core.Common
                     if (present != null)
                     {
                         items.Remove(present);
+
+                        logger.Debug($"Removed key {key.Key}@{key.Domain}");
                     }
                 }
             }
@@ -100,25 +115,39 @@ namespace Zesty.Core.Common
 
         public static T Get<T>(CacheKey key)
         {
+            logger.Debug($"Get with key {key.Key}@{key.Domain}");
+
             CacheItem present = items.Where(x => x.Key.Domain == key.Domain && x.Key.Key == key.Key).FirstOrDefault();
 
             if (present == null)
             {
+                logger.Debug($"Key not found {key.Key}@{key.Domain}");
+
                 return default;
             }
 
-            if (present.Inserted.AddMinutes(LifetimeInMinutes) > DateTime.Now)
+            DateTime expired = present.Inserted.AddMinutes(LifetimeInMinutes);
+
+            logger.Debug($"Object with key {key.Key}@{key.Domain} expire at {expired}");
+
+            if (expired < DateTime.Now)
             {
+                logger.Debug($"Object expired with key {key.Key}@{key.Domain}");
+
                 lock (Lock)
                 {
                     if (items.Contains(present))
                     {
                         items.Remove(present);
+
+                        logger.Debug($"Object expired removed with key {key.Key}@{key.Domain}");
                     }
                 }
 
                 return default;
             }
+
+            logger.Debug($"Object found with key {key.Key}@{key.Domain}");
 
             return (T)present.Value;
         }

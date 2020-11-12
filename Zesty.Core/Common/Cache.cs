@@ -1,15 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Zesty.Core.Entities.Settings;
+using Microsoft.Extensions.Configuration;
 
 namespace Zesty.Core.Common
 {
     public static class Cache
     {
         private static object Lock = new object();
-        private static int LifetimeInMinutes = Settings.GetInt("CacheLifetimeInMinutes", 5);
+        private static int LifetimeInMinutes = 5;
         private static List<CacheItem> items = new List<CacheItem>();
+
+        static Cache()
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            IConfigurationRoot config = builder.Build();
+
+            string minute = config["Zesty:CacheLifetimeInMinutes"];
+
+            if (!string.IsNullOrWhiteSpace(minute))
+            {
+                try
+                {
+                    LifetimeInMinutes = int.Parse(minute);
+                }
+                catch { }
+            }
+        }
 
         public static void Store<T>(CacheKey key, T value, StorePolicy storePolicy)
         {

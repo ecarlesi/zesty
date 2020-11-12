@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Zesty.Core.Common;
 
 namespace Zesty.Core.Entities.Settings
 {
@@ -10,8 +11,8 @@ namespace Zesty.Core.Entities.Settings
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        private static CacheKey cacheKey = new CacheKey() { Key = "Settings", Domain = CacheDomains.Settings };
         private static object Lock = new object();
-        private static List<SettingValue> values = null;
 
         static Settings()
         {
@@ -28,20 +29,24 @@ namespace Zesty.Core.Entities.Settings
         public string StorageImplementationType { get; set; }
         public string StorageSource { get; set; }
 
-        private static void Load()
+        private static List<SettingValue> Load()
         {
-            //TODO add cache
+            List<SettingValue> settingValues = Cache.Get<List<SettingValue>>(cacheKey);
 
-            if (values == null)
+            if (settingValues == null)
             {
                 lock (Lock)
                 {
-                    if (values == null)
+                    if (settingValues == null)
                     {
-                        values = StorageManager.Instance.GetSettingsValues();
+                        settingValues = StorageManager.Instance.GetSettingsValues();
+
+                        Cache.Store<List<SettingValue>>(cacheKey, settingValues, StorePolicy.SkipIfExists);
                     }
                 }
             }
+
+            return settingValues;
         }
 
         private static string PrivateGet(string key, bool required = true)
@@ -53,7 +58,7 @@ namespace Zesty.Core.Entities.Settings
 
             Load();
 
-            SettingValue settingValue = values.Where(x => x.Key == key).FirstOrDefault();
+            SettingValue settingValue = Load().Where(x => x.Key == key).FirstOrDefault();
 
             if (settingValue == null)
             {
@@ -75,9 +80,7 @@ namespace Zesty.Core.Entities.Settings
                 throw new ApplicationException(Messages.KeyNotFound);
             }
 
-            Load();
-
-            List<SettingValue> settingValues = values.Where(x => x.Key == key).ToList();
+            List<SettingValue> settingValues = Load().Where(x => x.Key == key).ToList();
 
             if (settingValues == null || settingValues.Count == 0)
             {

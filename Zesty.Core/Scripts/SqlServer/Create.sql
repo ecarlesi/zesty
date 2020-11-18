@@ -90,6 +90,7 @@ CREATE TABLE [dbo].[Resource](
 	[ParentId] [uniqueidentifier] NULL,
 	[IsPublic] [bit] NOT NULL,
 	[RequireToken] [bit] NOT NULL,
+	[Order] [int] NULL,
 	[Url] [varchar](400) NOT NULL,
 	[Label] [varchar](50) NULL,
 	[Image] [varchar](300) NULL,
@@ -629,6 +630,8 @@ where
 (u.Username = @username
 and d.[Id] = @domainId)
 OR rs.IsPublic = 1
+
+order by rs.[Order]
 
 END
 GO

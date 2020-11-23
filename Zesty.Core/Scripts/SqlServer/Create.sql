@@ -1159,3 +1159,37 @@ BEGIN
 	select @token;
 END
 GO
+/****** Object:  StoredProcedure [dbo].[GetUserByUsername]    Script Date: 11/23/2020 9:50:44 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+ALTER PROCEDURE [dbo].[GetUserByUsername]
+
+	@username varchar(200)
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	
+select 
+	u.Id,
+	u.Username,
+	u.Email,
+	u.Firstname,
+	u.Lastname
+from [user] u
+where 
+[username] = @username
+
+
+END
+GO

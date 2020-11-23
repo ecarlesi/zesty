@@ -65,7 +65,7 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('437
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('d707997a-5493-4e5c-b086-66f10e75a890','/system.resetpassword.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('bea3ee18-85c5-43ba-b969-a437cd4b4348','/system.setresettoken.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8','/system.property.api',0,0);
-INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb','/system.password.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb','/system.password.api',1,0);
 
 --admin
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('28757f88-c9f3-40e0-ab28-f073fef63522', '62ef76b8-e39e-41c7-86dc-4801642dc655');

@@ -10,7 +10,14 @@ namespace Zesty.Core.Api.System
         {
             PasswordRequest request = GetEntity<PasswordRequest>(input);
 
-            LoginOutput loginOutput = Business.User.Login(Context.Current.User.Username, request.Old);
+            string username = request.Username;
+
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                username = Context.Current.User.Username;
+            }
+
+            LoginOutput loginOutput = Business.User.Login(username, request.Old);
 
             if (loginOutput.Result == LoginResult.Failed)
             {
@@ -27,7 +34,7 @@ namespace Zesty.Core.Api.System
                 throw new ApplicationException(Messages.PasswordDontMatch);
             }
 
-            Business.User.ChangePassword(Context.Current.User.Id, request.Old, request.New);
+            Business.User.ChangePassword(username, request.Old, request.New);
 
             return GetOutput(new PasswordResponse()
             {
@@ -38,6 +45,8 @@ namespace Zesty.Core.Api.System
 
     public class PasswordRequest
     {
+        [Required]
+        public string Username { get; set; }
         [Required]
         public string Old { get; set; }
         [Required]

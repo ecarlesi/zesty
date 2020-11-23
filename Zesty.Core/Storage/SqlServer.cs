@@ -325,41 +325,35 @@ namespace Zesty.Core.Storage
 
         public bool ChangePassword(string username, string currentPassword, string newPassword)
         {
-            string statement = @"ChangePassword";
-
-            string currentHash = HashHelper.GetSha256(currentPassword);
-            string newHash = HashHelper.GetSha256(newPassword);
-
-#if DEBUG
-            logger.Info($"Password \"{currentPassword}\" become \"{currentHash}\"");
-            logger.Info($"Password \"{newPassword}\" become \"{newHash}\"");
-#endif
+            Guid userid = Guid.Empty;
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("GetUserByUsername", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = username });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@currentPassword", Value = currentHash });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@newPassword", Value = newHash });
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            string status = reader.Get<string>("Status");
-
-                            return status == "OK" ? true : false;
+                            userid = reader.Get<Guid>("Id");
                         }
-
-                        return false;
+                        else
+                        {
+                            throw new ApplicationException(Messages.UserNotFound);
+                        }
                     }
                 }
             }
+
+            ChangePassword(userid, currentPassword, newPassword);
+
+            return true;
         }
 
         public List<Domain> GetDomains(string username)

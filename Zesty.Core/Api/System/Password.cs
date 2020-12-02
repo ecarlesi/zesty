@@ -45,7 +45,6 @@ namespace Zesty.Core.Api.System
 
     public class PasswordRequest
     {
-        [Required]
         public string Username { get; set; }
         [Required]
         public string Old { get; set; }

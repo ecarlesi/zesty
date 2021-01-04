@@ -18,6 +18,9 @@
     <Folder Include="Api\System\" />
     <Folder Include="Api\Sample\" />
     <Folder Include="Scripts\SqlServer\" />
+    <Folder Include="Api\System\Admin\" />
+    <Folder Include="Api\System\Admin\User\" />
+    <Folder Include="Api\System\Admin\Role\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,6 +12,238 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public List<Entities.Role> GetRoles()
+        {
+            string statement = @"GetRolesList";
+
+            List<Entities.Role> list = new List<Entities.Role>();
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Entities.Role role = new Entities.Role();
+
+                            role.Id = reader.Get<Guid>("Id");
+                            role.Name = reader.Get<string>("Name");
+
+                            list.Add(role);
+                        }
+
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public void Remove(User user, Authorization authorization)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(@"UserDeauthorize", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@user", Value = user.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domain", Value = authorization.Domain.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@role", Value = authorization.Role.Id });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Add(User user, Authorization authorization)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(@"UserAuthorize", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@user", Value = user.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domain", Value = authorization.Domain.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@role", Value = authorization.Role.Id });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Update(Entities.User user)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(@"UserUpdate", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = user.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = user.Username });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = user.Email });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@firstname", Value = user.Firstname });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@lastname", Value = user.Lastname });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public Entities.User GetUser(string user)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UserGet", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@user", Value = user });
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        Entities.User u = null;
+
+                        if (reader.Read())
+                        {
+                            u = new User();
+
+                            u.Id = reader.Get<Guid>("Id");
+                            u.Username = reader.Get<string>("Username");
+                            u.Email = reader.Get<string>("Email");
+                            u.Firstname = reader.Get<string>("Firstname");
+                            u.Lastname = reader.Get<string>("Lastname");
+                            u.Deleted = reader.Get<DateTime>("Deleted");
+                            u.Created = reader.Get<DateTime>("Created");
+                        }
+
+                        return u;
+                    }
+                }
+            }
+
+        }
+
+        public List<Entities.User> Users()
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UserList", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Entities.User> users = new List<User>();
+
+                        while (reader.Read())
+                        {
+                            Entities.User user = new User();
+
+                            user.Id = reader.Get<Guid>("Id");
+                            user.Username = reader.Get<string>("Username");
+                            user.Email = reader.Get<string>("Email");
+                            user.Firstname = reader.Get<string>("Firstname");
+                            user.Lastname = reader.Get<string>("Lastname");
+                            user.Deleted = reader.Get<DateTime>("Deleted");
+                            user.Created = reader.Get<DateTime>("Created");
+
+                            users.Add(user);
+                        }
+
+                        return users;
+                    }
+                }
+            }
+        }
+
+        public void HardDeleteUser(Guid userId)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UserHardDelete", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = userId });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteUser(Guid userId)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UserDelete", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = userId });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Add(Entities.User user)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UserAlreadyExists", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = user.Username });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = user.Email });
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            throw new ApplicationException(Messages.UserCannotCreateBecauseAlreadyExists);
+                        }
+                    }
+                }
+
+                using (SqlCommand command = new SqlCommand(@"UserAdd", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = user.Username });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = user.Email });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@firstname", Value = user.Firstname });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@lastname", Value = user.Lastname });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void ChangePassword(Guid id, string oldPassword, string password)
         {
             string statement = @"ChangePassword";
@@ -429,11 +661,11 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public List<string> GetRoles(string username, Guid domainId)
+        public List<Entities.Role> GetRoles(string username, Guid domainId)
         {
             string statement = @"GetRoles";
 
-            List<string> list = new List<string>();
+            List<Entities.Role> list = new List<Entities.Role>();
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
@@ -450,7 +682,12 @@ namespace Zesty.Core.Storage
                     {
                         while (reader.Read())
                         {
-                            list.Add(reader.Get<string>("Name"));
+                            Entities.Role role = new Entities.Role();
+
+                            role.Id = reader.Get<Guid>("Id");
+                            role.Name = reader.Get<string>("Name");
+
+                            list.Add(role);
                         }
 
                         return list;

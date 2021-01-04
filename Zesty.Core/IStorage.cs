@@ -6,6 +6,16 @@ namespace Zesty.Core
 {
     public interface IStorage
     {
+        void Remove(User user, Authorization authorization);
+        void Add(User user, Authorization authorization);
+        void Update(Entities.User user);
+        Entities.User GetUser(string user);
+        List<Entities.User> Users();
+        void HardDeleteUser(Guid userId);
+        void DeleteUser(Guid userId);
+        void Add(Entities.User user);
+
+        List<Entities.Role> GetRoles();
         void ChangePassword(Guid id, string oldPassword, string password);
         List<SettingValue> GetSettingsValues();
         void SetProperty(string name, string value, Entities.User user);
@@ -26,7 +36,7 @@ namespace Zesty.Core
         Entities.User Login(string username, string password);
         Dictionary<string, string> LoadProperties(Entities.User user);
         List<Entities.Domain> GetDomains(string username);
-        List<string> GetRoles(string username, Guid domainId);
+        List<Entities.Role> GetRoles(string username, Guid domainId);
         bool ChangePassword(string username, string currentPassword, string newPassword);
     }
 }

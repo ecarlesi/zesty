@@ -22,7 +22,7 @@ namespace Zesty.Core.Api.System
 
     public class RolesResponse
     {
-        public List<string> Roles { get; set; }
+        public List<Entities.Role> Roles { get; set; }
     }
 
     public class RolesRequest

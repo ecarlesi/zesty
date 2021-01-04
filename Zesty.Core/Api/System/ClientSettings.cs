@@ -9,7 +9,7 @@ namespace Zesty.Core.Api.System
         {
             ClientSettingsResponse response = new ClientSettingsResponse()
             {
-                Settings = StorageManager.Instance.GetClientSettings()
+                Settings = Business.ClientSettings.All()
             };
 
             return new ApiHandlerOutput()

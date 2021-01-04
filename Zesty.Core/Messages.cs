@@ -24,5 +24,6 @@
         internal static readonly string PasswordChangeSame = "Old and new password are the same";
         internal static readonly string PasswordDontMatch = "New password e confirm don't match";
         internal static readonly string UserNotFound = "User not found";
+        internal static readonly string UserCannotCreateBecauseAlreadyExists = "User already exists";
     }
 }

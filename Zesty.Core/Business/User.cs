@@ -10,6 +10,81 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        internal static void Authorize(Entities.User user, Entities.Authorization authorization)
+        {
+            StorageManager.Instance.Add(user, authorization);
+        }
+
+        internal static void Deauthorize(Entities.User user, Entities.Authorization authorization)
+        {
+            StorageManager.Instance.Remove(user, authorization);
+        }
+
+        internal static void Update(Entities.User user)
+        {
+            StorageManager.Instance.Update(user);
+        }
+
+        internal static Entities.User Get(string user)
+        {
+            Entities.User u = StorageManager.Instance.GetUser(user);
+
+            u.Authorizations = new List<Entities.Authorization>();
+
+            List<Entities.Domain> domains = StorageManager.Instance.GetDomains(u.Username);
+
+            foreach (Entities.Domain domain in domains)
+            {
+                List<Entities.Role> roles = GetRoles(u.Username, domain.Id);
+
+                foreach (Entities.Role role in roles)
+                {
+                    u.Authorizations.Add(new Entities.Authorization() { Domain = domain, Role = role });
+                }
+            }
+
+            return u;
+        }
+
+        internal static List<Entities.User> List()
+        {
+            List<Entities.User> users = StorageManager.Instance.Users();
+
+            foreach (Entities.User user in users)
+            {
+                user.Authorizations = new List<Entities.Authorization>();
+
+                List<Entities.Domain> domains = StorageManager.Instance.GetDomains(user.Username);
+
+                foreach (Entities.Domain domain in domains)
+                {
+                    List<Entities.Role> roles = GetRoles(user.Username, domain.Id);
+
+                    foreach (Entities.Role role in roles)
+                    {
+                        user.Authorizations.Add(new Entities.Authorization() { Domain = domain, Role = role });
+                    }
+                }
+            }
+
+            return users;
+        }
+
+        internal static void HardDelete(Guid id)
+        {
+            StorageManager.Instance.HardDeleteUser(id);
+        }
+
+        internal static void Delete(Guid id)
+        {
+            StorageManager.Instance.DeleteUser(id);
+        }
+
+        internal static void Add(Entities.User user)
+        {
+            StorageManager.Instance.Add(user);
+        }
+
         internal static void ChangePassword(Guid id, string oldPassword, string password)
         {
             StorageManager.Instance.ChangePassword(id, oldPassword, password);
@@ -40,7 +115,7 @@ namespace Zesty.Core.Business
             return StorageManager.Instance.GetDomains(username);
         }
 
-        public static List<string> GetRoles(string username, Guid domain)
+        public static List<Entities.Role> GetRoles(string username, Guid domain)
         {
             return StorageManager.Instance.GetRoles(username, domain);
         }

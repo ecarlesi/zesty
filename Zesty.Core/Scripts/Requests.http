@@ -88,3 +88,61 @@ Content-Type: application/json
 GET {{protocol}}://{{hostname}}:{{port}}/system.setresettoken.api?email=emiliano.carlesi@gmail.com
 ### get the client settings
 GET {{protocol}}://{{hostname}}:{{port}}/system.clientsettings.api
+
+### add a user
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.add.api
+Content-Type: application/json
+
+{
+    "username": "mrosso",
+    "email": "mrosso666@gmail.com",
+    "firstname": "Mario",
+    "lastname": "Rossi"
+}
+
+### delete a user
+DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.delete.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+
+### hard delete a user
+DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.harddelete.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+
+### get the list of users
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.user.list.api
+
+### get a user
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.user.get.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+
+### add a user
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.update.api
+Content-Type: application/json
+
+{
+    "id": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "username": "mrosso",
+    "email": "mrosso@gmail.com",
+    "firstname": "Mario",
+    "lastname": "Rosso"
+}
+
+### authorize a user
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.authorize.api
+Content-Type: application/json
+
+{
+    "user": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "domain" : "bc89e749-784b-479f-91e6-85708326558e",
+    "role" : "62ef76b8-e39e-41c7-86dc-4801642dc655"
+}
+
+### deauthorize a user
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.deauthorize.api
+Content-Type: application/json
+
+{
+    "user": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "domain" : "bc89e749-784b-479f-91e6-85708326558e",
+    "role" : "62ef76b8-e39e-41c7-86dc-4801642dc655"
+}
+
+### get the list of roles
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.role.list.api

@@ -66,6 +66,15 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('d70
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('bea3ee18-85c5-43ba-b969-a437cd4b4348','/system.setresettoken.api',1,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8','/system.property.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb','/system.password.api',1,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30616','/system.admin.user.add.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30655','/system.admin.user.delete.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-579ea3330655','/system.admin.user.harddelete.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-579233330655','/system.admin.user.list.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233330655','/system.admin.user.get.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233332222','/system.admin.user.update.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335522','/system.admin.user.authorize.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335521','/system.admin.user.deauthorize.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('78ca437d-dd1b-4f72-ca33-544233335521','/system.admin.role.list.api',0,0);
 
 --admin
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('28757f88-c9f3-40e0-ab28-f073fef63522', '62ef76b8-e39e-41c7-86dc-4801642dc655');
@@ -79,6 +88,15 @@ INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ceb38502-f544-
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('1457b879-8dbc-424d-974d-67f5abc08d97', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30616', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-579ea3330655', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30655', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-579233330655', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233330655', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233332222', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335522', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335521', '62ef76b8-e39e-41c7-86dc-4801642dc655');
+INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('78ca437d-dd1b-4f72-ca33-544233335521', '62ef76b8-e39e-41c7-86dc-4801642dc655');
 
 --user
 INSERT INTO [dbo].[ResourceRole] ([ResourceId],[RoleId]) VALUES ('ba86180d-11db-4778-81ff-6e1f13a4b7a2', '9e73b89c-e645-4084-b925-742818275df5');
@@ -114,6 +132,15 @@ INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('bea3ee18-85c5-43
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('a4029d34-afef-49c9-89b3-cab33176a6a7','Zesty.Core.Api.System.ClientSettings, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('01e9a142-e8eb-404a-b69f-04557fac2eb8','Zesty.Core.Api.System.Property, Zesty.Core');
 INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('9e5375ed-7d2c-4ce0-afc0-37cc62e3bfeb','Zesty.Core.Api.System.Password, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30616','Zesty.Core.Api.System.Admin.User.Add, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-579233330655','Zesty.Core.Api.System.Admin.User.List, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233330655','Zesty.Core.Api.System.Admin.User.Get, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233332222','Zesty.Core.Api.System.Admin.User.Update, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335522','Zesty.Core.Api.System.Admin.User.Authorize, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-544233335521','Zesty.Core.Api.System.Admin.User.Deauthorize, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-ca33-544233335521','Zesty.Core.Api.System.Admin.Role.List, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-579eabc30655','Zesty.Core.Api.System.Admin.User.Delete, Zesty.Core');
+INSERT INTO [dbo].[ResourceType] ([ResourceId],[Type]) VALUES ('78ca437d-dd1b-4f72-bbe1-579ea3330655','Zesty.Core.Api.System.Admin.User.HardDelete, Zesty.Core');
 
 INSERT INTO [dbo].[UserPassword] ([Id],[UserId],[Password],[Deleted],[Created]) VALUES ('1afeb587-1849-4044-a0cc-cbd2e2de8346', 'b81d0335-c175-4af8-89f1-ff4ccc79c666','5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8',null,getdate());
 

@@ -588,6 +588,37 @@ namespace Zesty.Core.Storage
             return true;
         }
 
+        public List<Domain> GetDomainsList()
+        {
+            List<Domain> all = new List<Domain>();
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("GetDomainsList", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Domain domain = new Domain();
+
+                            domain.Name = reader.Get<string>("Name");
+                            domain.Id = reader.Get<Guid>("Id");
+                            domain.ParentDomainId = reader.Get<Guid>("ParentDomainId");
+
+                            all.Add(domain);
+                        }
+                    }
+                }
+            }
+
+            return all;
+        }
+
         public List<Domain> GetDomains(string username)
         {
             List<Domain> all = new List<Domain>();

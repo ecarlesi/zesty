@@ -36,6 +36,7 @@ namespace Zesty.Core
         Entities.User Login(string username, string password);
         Dictionary<string, string> LoadProperties(Entities.User user);
         List<Entities.Domain> GetDomains(string username);
+        List<Entities.Domain> GetDomainsList();
         List<Entities.Role> GetRoles(string username, Guid domainId);
         bool ChangePassword(string username, string currentPassword, string newPassword);
     }

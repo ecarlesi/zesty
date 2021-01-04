@@ -146,3 +146,5 @@ Content-Type: application/json
 
 ### get the list of roles
 GET {{protocol}}://{{hostname}}:{{port}}/system.admin.role.list.api
+### get the list of domains
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.domain.list.api

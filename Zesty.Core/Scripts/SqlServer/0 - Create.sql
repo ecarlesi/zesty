@@ -1451,7 +1451,7 @@ BEGIN
 	delete from [dbo].[Authorization] where [userid] = @userid;
 	delete from [dbo].[Token] where [userid] = @userid;
 	delete from [dbo].[UserPassword] where [userid] = @userid;
-	delete from [dbo].[UserProperties]  where [userid] = @userid;
+	delete from [dbo].[UserProperty]  where [userid] = @userid;
 	delete from [dbo].[User] where [id] = @userid;
 END
 GO

@@ -14,6 +14,39 @@ namespace Zesty.Core
 
         public abstract ApiHandlerOutput Process(ApiInputHandler input);
 
+        protected void RequireContext()
+        {
+            if (Context.Current == null)
+            {
+                throw new ApiApplicationErrorException("Context is null");
+            }
+        }
+
+        protected void RequireDomain()
+        {
+            RequireUser();
+
+            if (Context.Current.User.Domain == null)
+            {
+                throw new ApiApplicationErrorException("Domain is null");
+            }
+        }
+
+        protected void RequireUser()
+        {
+            RequireContext();
+
+            if (Context.Current.User == null)
+            {
+                throw new ApiApplicationErrorException("User is null");
+            }
+
+            if (String.IsNullOrWhiteSpace(Context.Current.User.Username))
+            {
+                throw new ApiApplicationErrorException("Username is empty");
+            }
+        }
+
         protected string Get(ApiInputHandler input, string parameterName, bool required = true)
         {
             string s = input.Context.Request.Query[parameterName];

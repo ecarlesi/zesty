@@ -5,7 +5,7 @@ namespace Zesty.Core.Common
 {
     public class JsonHelper
     {
-        private static JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, AllowTrailingCommas = true };
+        private static readonly JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, AllowTrailingCommas = true };
 
         public static T Deserialize<T>(string json)
         {

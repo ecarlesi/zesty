@@ -2,7 +2,7 @@
 @protocol = https
 @port = 47084
 
-@token = edeee1972d3c48cd97f1627c88c2c3ffc69fa7cc5b944502988d30517e77b888
+@token = cdd457debb604e6e9ef59f016ac8e7a46504c918196946b282947eb6fbcd2ba6
 
 ### invoke a public api that return a GUID
 GET {{protocol}}://{{hostname}}:{{port}}/sample.free.api
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "username": "eca",
-    "password": "password"
+    "password": "password.1"
 }
 ### change password
 ### username is optional, if not specified us the session user
@@ -101,23 +101,23 @@ Content-Type: application/json
 }
 
 ### delete a user
-DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.delete.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.delete.api?id=15127af6-f41a-443b-8197-40e8b1a86315
 
 ### hard delete a user
-DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.harddelete.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+DELETE {{protocol}}://{{hostname}}:{{port}}/system.admin.user.harddelete.api?id=15127af6-f41a-443b-8197-40e8b1a86315
 
 ### get the list of users
 GET {{protocol}}://{{hostname}}:{{port}}/system.admin.user.list.api
 
 ### get a user
-GET {{protocol}}://{{hostname}}:{{port}}/system.admin.user.get.api?id=5984add5-e473-49ad-bd66-dcea2fa5cce1
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.user.get.api?id=b81d0335-c175-4af8-89f1-ff4ccc79c666
 
 ### add a user
 POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.update.api
 Content-Type: application/json
 
 {
-    "id": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "id": "15127af6-f41a-443b-8197-40e8b1a86315",
     "username": "mrosso",
     "email": "mrosso@gmail.com",
     "firstname": "Mario",
@@ -129,7 +129,7 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.authorize.api
 Content-Type: application/json
 
 {
-    "user": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "user": "15127af6-f41a-443b-8197-40e8b1a86315",
     "domain" : "bc89e749-784b-479f-91e6-85708326558e",
     "role" : "62ef76b8-e39e-41c7-86dc-4801642dc655"
 }
@@ -139,7 +139,7 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.admin.user.deauthorize.api
 Content-Type: application/json
 
 {
-    "user": "5984add5-e473-49ad-bd66-dcea2fa5cce1",
+    "user": "15127af6-f41a-443b-8197-40e8b1a86315",
     "domain" : "bc89e749-784b-479f-91e6-85708326558e",
     "role" : "62ef76b8-e39e-41c7-86dc-4801642dc655"
 }
@@ -172,14 +172,14 @@ POST {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.authorize.api
 Content-Type: application/json
 
 {
-    "resource" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4",
-    "role" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4"
+    "resource" : "01e9a142-e8eb-404a-b69f-04557fac2eb8",
+    "role" : "1567af5a-c2fa-4651-ada8-e852b3008689"
 }
 ### deauthorize resource
 POST {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.deauthorize.api
 Content-Type: application/json
 
 {
-    "resource" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4",
-    "role" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4"
+    "resource" : "01e9a142-e8eb-404a-b69f-04557fac2eb8",
+    "role" : "1567af5a-c2fa-4651-ada8-e852b3008689"
 }

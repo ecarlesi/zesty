@@ -8,7 +8,7 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            Guid token = Guid.Parse(input.Context.Request.Query["token"]);
+            Guid token = Guid.Parse(Get(input, "token"));
 
             UserByResetTokenResponse response = new UserByResetTokenResponse()
             {

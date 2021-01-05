@@ -10,28 +10,40 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
-        internal static void Authorize(Entities.User user, Entities.Authorization authorization)
+        private static IStorage storage = StorageManager.Instance;
+
+        public static void SetProperty(Entities.User user, string key, string value)
         {
-            StorageManager.Instance.Add(user, authorization);
+            storage.SetProperty(key, value, user);
         }
 
-        internal static void Deauthorize(Entities.User user, Entities.Authorization authorization)
+        public static void Authorize(Entities.User user, Entities.Authorization authorization)
         {
-            StorageManager.Instance.Remove(user, authorization);
+            storage.Add(user, authorization);
         }
 
-        internal static void Update(Entities.User user)
+        public static void Deauthorize(Entities.User user, Entities.Authorization authorization)
         {
-            StorageManager.Instance.Update(user);
+            storage.Remove(user, authorization);
         }
 
-        internal static Entities.User Get(string user)
+        public static void Update(Entities.User user)
         {
-            Entities.User u = StorageManager.Instance.GetUser(user);
+            storage.Update(user);
+        }
+
+        public static Entities.User Get(string user)
+        {
+            Entities.User u = storage.GetUser(user);
+
+            if (u == null)
+            {
+                return null;
+            }
 
             u.Authorizations = new List<Entities.Authorization>();
 
-            List<Entities.Domain> domains = StorageManager.Instance.GetDomains(u.Username);
+            List<Entities.Domain> domains = storage.GetDomains(u.Username);
 
             foreach (Entities.Domain domain in domains)
             {
@@ -46,15 +58,15 @@ namespace Zesty.Core.Business
             return u;
         }
 
-        internal static List<Entities.User> List()
+        public static List<Entities.User> List()
         {
-            List<Entities.User> users = StorageManager.Instance.Users();
+            List<Entities.User> users = storage.Users();
 
             foreach (Entities.User user in users)
             {
                 user.Authorizations = new List<Entities.Authorization>();
 
-                List<Entities.Domain> domains = StorageManager.Instance.GetDomains(user.Username);
+                List<Entities.Domain> domains = storage.GetDomains(user.Username);
 
                 foreach (Entities.Domain domain in domains)
                 {
@@ -70,54 +82,54 @@ namespace Zesty.Core.Business
             return users;
         }
 
-        internal static void HardDelete(Guid id)
+        public static void HardDelete(Guid id)
         {
-            StorageManager.Instance.HardDeleteUser(id);
+            storage.HardDeleteUser(id);
         }
 
-        internal static void Delete(Guid id)
+        public static void Delete(Guid id)
         {
-            StorageManager.Instance.DeleteUser(id);
+            storage.DeleteUser(id);
         }
 
-        internal static void Add(Entities.User user)
+        public static void Add(Entities.User user)
         {
-            StorageManager.Instance.Add(user);
+            storage.Add(user);
         }
 
-        internal static void ChangePassword(Guid id, string oldPassword, string password)
+        public static void ChangePassword(Guid id, string oldPassword, string password)
         {
-            StorageManager.Instance.ChangePassword(id, oldPassword, password);
+            storage.ChangePassword(id, oldPassword, password);
         }
 
         public static Guid SetResetToken(string email)
         {
-            return StorageManager.Instance.SetResetToken(email);
+            return storage.SetResetToken(email);
         }
 
         public static bool ResetPassword(Guid token, string password)
         {
-            return StorageManager.Instance.ResetPassword(token, password);
+            return storage.ResetPassword(token, password);
         }
 
         public static Entities.User Get(Guid resetToken)
         {
-            return StorageManager.Instance.GetUserByResetToken(resetToken);
+            return storage.GetUserByResetToken(resetToken);
         }
 
         public static bool ChangePassword(string username, string currentPassword, string newPassword)
         {
-            return StorageManager.Instance.ChangePassword(username, currentPassword, newPassword);
+            return storage.ChangePassword(username, currentPassword, newPassword);
         }
 
         public static List<Entities.Domain> GetDomains(string username)
         {
-            return StorageManager.Instance.GetDomains(username);
+            return storage.GetDomains(username);
         }
 
         public static List<Entities.Role> GetRoles(string username, Guid domain)
         {
-            return StorageManager.Instance.GetRoles(username, domain);
+            return storage.GetRoles(username, domain);
         }
 
         public static LoginOutput Login(string username, string password)
@@ -127,7 +139,7 @@ namespace Zesty.Core.Business
             LoginOutput output = new LoginOutput()
             {
                 Result = LoginResult.Success,
-                User = StorageManager.Instance.Login(username, password)
+                User = storage.Login(username, password)
             };
 
             if (output.User == null)
@@ -144,7 +156,7 @@ namespace Zesty.Core.Business
                 }
                 else
                 {
-                    output.User.Properties = StorageManager.Instance.LoadProperties(output.User);
+                    output.User.Properties = storage.LoadProperties(output.User);
                 }
             }
 

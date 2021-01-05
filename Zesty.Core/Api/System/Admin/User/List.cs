@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System.Admin.User
@@ -8,12 +7,10 @@ namespace Zesty.Core.Api.System.Admin.User
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            ListResposne response = new ListResposne()
+            return GetOutput(new ListResposne()
             {
                 Users = Business.User.List()
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

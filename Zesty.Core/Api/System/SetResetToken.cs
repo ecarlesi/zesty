@@ -17,8 +17,6 @@ namespace Zesty.Core.Api.System
                 throw new ApiInvalidArgumentException("email");
             }
 
-            SetResetTokenResponse response = new SetResetTokenResponse();
-
             Guid token = Business.User.SetResetToken(email);
 
             List<Translation> translations = StorageManager.Instance.GetTranslations("en");
@@ -30,14 +28,7 @@ namespace Zesty.Core.Api.System
 
             Common.SmtpClient.Send(email, subject, body);
 
-            response.Message = Messages.Success;
-
-            return GetOutput(response);
+            return GetOutput();
         }
-    }
-
-    public class SetResetTokenResponse
-    {
-        public string Message { get; set; }
     }
 }

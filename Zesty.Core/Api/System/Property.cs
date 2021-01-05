@@ -9,7 +9,7 @@ namespace Zesty.Core.Api.System
         {
             PropertyRequest request = base.GetEntity<PropertyRequest>(input);
 
-            StorageManager.Instance.SetProperty(request.Name, request.Value, Context.Current.User);
+            Business.User.SetProperty(Context.Current.User, request.Name, request.Value);
 
             if (string.IsNullOrWhiteSpace(request.Value))
             {
@@ -32,16 +32,8 @@ namespace Zesty.Core.Api.System
 
             input.Context.Session.Set(Context.Current.User);
 
-            return GetOutput(new PropertyResponse()
-            {
-                Message = Messages.Success
-            });
+            return GetOutput();
         }
-    }
-
-    public class PropertyResponse
-    {
-        public string Message { get; set; }
     }
 
     public class PropertyRequest

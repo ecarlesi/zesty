@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Zesty.Core.Business
 {
     static class ClientSettings
     {
+        private static IStorage storage = StorageManager.Instance;
+
         internal static Dictionary<string, string> All()
         {
-            return StorageManager.Instance.GetClientSettings();
+            return storage.GetClientSettings();
         }
     }
 }

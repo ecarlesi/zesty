@@ -12,7 +12,7 @@ namespace Zesty.Core.Controllers
     [ResponseCache(Duration = -1, Location = ResponseCacheLocation.None, NoStore = true)]
     public class SecureController : AnonymousController
     {
-        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {

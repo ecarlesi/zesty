@@ -26,7 +26,7 @@ namespace Zesty.Core.Api.System.Admin.User
                     }
                 });
 
-            return GetOutput(new { });
+            return GetOutput();
         }
     }
 

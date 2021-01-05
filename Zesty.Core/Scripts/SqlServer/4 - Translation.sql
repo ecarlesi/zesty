@@ -1,0 +1,10 @@
+﻿INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (1, 1, 'Username', 'Username');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (2, 1, 'Access denied', 'Access denied');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (3, 1, 'Invalid credentials', 'Invalid credentials');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (4, 1, 'Password reset token: {0}', 'Password reset token: {0}');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (5, 1, 'Reset password', 'Reset password');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (6, 2, 'Username', 'Nome utente');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (7, 2, 'Access denied', 'Accesso negato');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (8, 2, 'Invalid credentials', 'Nome utente o password errati');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (9, 2, 'Password reset token: {0}', 'Token per il reset della password: {0}');
+INSERT INTO [dbo].[Translation] ([Id], [LanguageId],[Original],[Translated]) VALUES (10, 2, 'Reset password', 'Password reset');

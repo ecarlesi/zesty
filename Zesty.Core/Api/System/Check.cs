@@ -6,17 +6,7 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            CheckResponse response = new CheckResponse()
-            {
-                Message = Messages.Success
-            };
-
-            return GetOutput(response);
+            return GetOutput(new { Message = Messages.Success });
         }
-    }
-
-    public class CheckResponse
-    {
-        public string Message { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Zesty.Core.Api.System.Admin.User
         {
             Business.User.HardDelete(Guid.Parse(Get(input, "id")));
 
-            return GetOutput(new { });
+            return GetOutput();
         }
     }
 }

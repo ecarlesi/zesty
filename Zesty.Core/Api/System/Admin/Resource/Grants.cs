@@ -10,12 +10,10 @@ namespace Zesty.Core.Api.System.Admin.Resource
         {
             Guid roleId = Guid.Parse(Get(input, "r"));
 
-            GrantsResponse response = new GrantsResponse()
+            return GetOutput(new GrantsResponse()
             {
                 Resources = Business.Resource.ResourceList(roleId)
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

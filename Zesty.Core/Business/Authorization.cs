@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Zesty.Core.Business
 {
-    public class Authorization
+    public static class Authorization
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
+        private static IStorage storage = StorageManager.Instance;
 
         public static void Logout(HttpContext context)
         {
@@ -19,7 +21,7 @@ namespace Zesty.Core.Business
 
         internal static bool CanAccess(string path, Entities.User user)
         {
-            //TODO add cache support
+            //TODO add cache
 
             bool isPublic = StorageManager.Instance.IsPublicResource(path);
 
@@ -37,30 +39,30 @@ namespace Zesty.Core.Business
                 throw new SecurityException(Messages.AccessDenied);
             }
 
-            //TODO add cache support
+            //TODO add cache
 
-            return StorageManager.Instance.CanAccess(path, user);
+            return storage.CanAccess(path, user);
         }
 
-        public static string GetToken(string sessionId, bool reusable)
+        internal static string GetToken(string sessionId, bool reusable)
         {
             string tokenValue = (Guid.NewGuid().ToString() + Guid.NewGuid().ToString()).Replace("-", "");
 
-            StorageManager.Instance.SaveToken(Context.Current.User, sessionId, tokenValue, reusable);
+            storage.SaveToken(Context.Current.User, sessionId, tokenValue, reusable);
 
             return tokenValue;
         }
 
         internal static bool RequireToken(string path)
         {
-            //TODO add cache support
+            //TODO add cache
 
-            return StorageManager.Instance.RequireToken(path);
+            return storage.RequireToken(path);
         }
 
         internal static bool IsValid(Guid userId, string sessionId, string tokenValue)
         {
-            return StorageManager.Instance.IsValid(userId, sessionId, tokenValue);
+            return storage.IsValid(userId, sessionId, tokenValue);
         }
     }
 }

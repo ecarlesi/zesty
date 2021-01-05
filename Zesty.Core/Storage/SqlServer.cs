@@ -14,13 +14,11 @@ namespace Zesty.Core.Storage
 
         public void AuthorizeResource(Guid resourceId, Guid roleId)
         {
-            string statement = @"ResourceAuthorize";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResourceAuthorize", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -34,13 +32,11 @@ namespace Zesty.Core.Storage
 
         public void DeauthorizeResource(Guid resourceId, Guid roleId)
         {
-            string statement = @"ResourceDeauthorize";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResourceDeauthorize", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -54,13 +50,11 @@ namespace Zesty.Core.Storage
 
         public List<Entities.Resource> GetResources(Guid roleId)
         {
-            string statement = @"ResourceListGrant";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResourceListGrant", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -87,13 +81,11 @@ namespace Zesty.Core.Storage
 
         public List<Entities.Resource> GetResources()
         {
-            string statement = @"ResourceList";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResourceList", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -126,13 +118,11 @@ namespace Zesty.Core.Storage
 
         public void Add(Entities.Role role)
         {
-            string statement = @"RoleAdd";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Role_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -146,13 +136,11 @@ namespace Zesty.Core.Storage
 
         public void Add(Entities.Domain domain)
         {
-            string statement = @"DomainAdd";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Domain_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -167,15 +155,13 @@ namespace Zesty.Core.Storage
 
         public List<Entities.Role> GetRoles()
         {
-            string statement = @"GetRolesList";
-
             List<Entities.Role> list = new List<Entities.Role>();
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Role_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -203,7 +189,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(@"UserDeauthorize", connection))
+                using (SqlCommand command = new SqlCommand(@"Zesty_User_Deauthorize", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -222,7 +208,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(@"UserAuthorize", connection))
+                using (SqlCommand command = new SqlCommand(@"Zesty_User_Authorize", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -241,7 +227,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(@"UserUpdate", connection))
+                using (SqlCommand command = new SqlCommand(@"Zesty_User_Update", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -262,7 +248,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("UserGet", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Get", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -298,7 +284,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("UserList", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -333,7 +319,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("UserHardDelete", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_HardDelete", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -350,7 +336,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("UserDelete", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Delete", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -367,7 +353,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("UserAlreadyExists", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_AlreadyExists", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -383,7 +369,7 @@ namespace Zesty.Core.Storage
                     }
                 }
 
-                using (SqlCommand command = new SqlCommand(@"UserAdd", connection))
+                using (SqlCommand command = new SqlCommand(@"Zesty_User_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -399,13 +385,11 @@ namespace Zesty.Core.Storage
 
         public void ChangePassword(Guid id, string oldPassword, string password)
         {
-            string statement = @"ChangePassword";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ChangePassword", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -420,13 +404,11 @@ namespace Zesty.Core.Storage
 
         public List<SettingValue> GetSettingsValues()
         {
-            string statement = "GetServerSettings";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ServerSetting_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -454,11 +436,11 @@ namespace Zesty.Core.Storage
 
         public void SetProperty(string name, string value, Entities.User user)
         {
-            string statement = "SetProperty";
+            string statement = "Zesty_UserProperty_Set";
 
             if (String.IsNullOrWhiteSpace(value))
             {
-                statement = "DeleteProperty";
+                statement = "Zesty_UserProperty_Delete";
             }
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
@@ -480,13 +462,11 @@ namespace Zesty.Core.Storage
 
         public Dictionary<string, string> GetClientSettings()
         {
-            string statement = @"GetClientSettings";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ClientSetting_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -510,13 +490,11 @@ namespace Zesty.Core.Storage
 
         public Guid SetResetToken(string email)
         {
-            string statement = @"SetResetToken";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Update_ResetToken", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -529,8 +507,6 @@ namespace Zesty.Core.Storage
 
         public bool ResetPassword(Guid resetToken, string password)
         {
-            string statement = @"ResetPassword";
-
             string hash = HashHelper.GetSha256(password);
 
 #if DEBUG
@@ -541,7 +517,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResetPassword", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -565,13 +541,11 @@ namespace Zesty.Core.Storage
 
         public User GetUserByResetToken(Guid resetToken)
         {
-            string statement = @"GetUserByResetToken";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Get_ByResetToken", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -600,13 +574,11 @@ namespace Zesty.Core.Storage
 
         public List<Translation> GetTranslations(string language)
         {
-            string statement = @"GetTranslations";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Translation_List_ByLanguage", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -635,13 +607,11 @@ namespace Zesty.Core.Storage
 
         public List<Language> GetLanguages()
         {
-            string statement = @"GetLanguages";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Language_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -669,13 +639,11 @@ namespace Zesty.Core.Storage
 
         public List<Resource> GetResources(string username, Guid domainId)
         {
-            string statement = @"GetResources";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Resource_List_ByUsernameDomain", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -716,7 +684,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("GetUserByUsername", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Get_ByUsername", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -749,7 +717,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("GetDomainsList", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Domain_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -781,7 +749,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("GetDomains", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Domain_List_ByUsername", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -802,7 +770,7 @@ namespace Zesty.Core.Storage
                     }
                 }
 
-                using (SqlCommand command = new SqlCommand("GetDomainsList", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Domain_List", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -847,15 +815,13 @@ namespace Zesty.Core.Storage
 
         public List<Entities.Role> GetRoles(string username, Guid domainId)
         {
-            string statement = @"GetRoles";
-
             List<Entities.Role> list = new List<Entities.Role>();
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Role_List_ByUsernameDomain", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -882,13 +848,11 @@ namespace Zesty.Core.Storage
 
         public bool CanAccess(string path, User user)
         {
-            string statement = @"CanAccess";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_CanAccess", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -905,13 +869,11 @@ namespace Zesty.Core.Storage
 
         public string GetType(string resourceName)
         {
-            string statement = @"GetResourceType";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_ResourceType_List_ByResourceName", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -932,13 +894,11 @@ namespace Zesty.Core.Storage
 
         public bool IsPublicResource(string path)
         {
-            string statement = @"IsPublicResource";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Resource_IsPublic", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -961,13 +921,11 @@ namespace Zesty.Core.Storage
 
         public bool IsValid(Guid userId, string sessionId, string tokenValue)
         {
-            string statement = @"IsValid";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_IsValid", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -992,13 +950,11 @@ namespace Zesty.Core.Storage
 
         public Dictionary<string, string> LoadProperties(User user)
         {
-            string statement = @"GetProperties";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_UserProperty_List_ByUserid", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -1024,8 +980,6 @@ namespace Zesty.Core.Storage
 
         public User Login(string username, string password)
         {
-            string statement = @"Login";
-
             string hash = HashHelper.GetSha256(password);
 
 #if DEBUG
@@ -1036,7 +990,7 @@ namespace Zesty.Core.Storage
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Login", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -1067,13 +1021,11 @@ namespace Zesty.Core.Storage
 
         public bool RequireToken(string path)
         {
-            string statement = @"RequireToken";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_RequireToken", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -1096,13 +1048,11 @@ namespace Zesty.Core.Storage
 
         public void Save(HistoryItem resource)
         {
-            string statement = @"SaveHistory";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_History_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -1118,13 +1068,11 @@ namespace Zesty.Core.Storage
 
         public void SaveToken(User user, string sessionId, string tokenValue, bool reusable)
         {
-            string statement = @"SaveToken";
-
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand(statement, connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Token_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 

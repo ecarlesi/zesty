@@ -18,12 +18,10 @@ namespace Zesty.Core.Api.System.Admin.Domain
 
             Business.Domain.Add(domain);
 
-            AddResponse response = new AddResponse()
+            return GetOutput(new AddResponse()
             {
                 Domain = domain
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

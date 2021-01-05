@@ -15,10 +15,7 @@ namespace Zesty.Core.Api.System
                 throw new ApiInvalidArgumentException(Messages.TokenMissing);
             }
 
-            return GetOutput(new ResetPasswordResponse()
-            {
-                Result = Messages.Success
-            });
+            return GetOutput();
         }
     }
 
@@ -28,10 +25,5 @@ namespace Zesty.Core.Api.System
         public string Token { get; set; }
         [Required]
         public string Password { get; set; }
-    }
-
-    public class ResetPasswordResponse
-    {
-        public string Result { get; set; }
     }
 }

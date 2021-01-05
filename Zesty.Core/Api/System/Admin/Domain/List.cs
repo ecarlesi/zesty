@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System.Admin.Domain
@@ -8,12 +7,10 @@ namespace Zesty.Core.Api.System.Admin.Domain
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            ListResponse response = new ListResponse()
+            return GetOutput(new ListResponse()
             {
                 Domains = Business.Domain.List()
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

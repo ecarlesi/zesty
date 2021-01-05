@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core.Api.System.Admin.Resource
@@ -8,12 +7,10 @@ namespace Zesty.Core.Api.System.Admin.Resource
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            ListResponse response = new ListResponse()
+            return GetOutput(new ListResponse()
             {
                 Resources = Business.Resource.ResourceList()
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

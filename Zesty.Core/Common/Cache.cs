@@ -10,8 +10,8 @@ namespace Zesty.Core.Common
     {
         private static object Lock = new object();
         private static int LifetimeInMinutes = 5;
-        private static List<CacheItem> items = new List<CacheItem>();
-        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        private static readonly List<CacheItem> items = new List<CacheItem>();
+        private static readonly NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
         static Cache()
         {

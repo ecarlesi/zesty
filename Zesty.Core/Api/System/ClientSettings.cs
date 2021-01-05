@@ -7,18 +7,10 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            ClientSettingsResponse response = new ClientSettingsResponse()
+            return GetOutput(new ClientSettingsResponse()
             {
                 Settings = Business.ClientSettings.All()
-            };
-
-            return new ApiHandlerOutput()
-            {
-                Output = response,
-                Type = ApiHandlerOutputType.JSon,
-                ResourceHistoryOutput = null,
-                CachePolicy = ApiCachePolicy.Enable
-            };
+            }, true);
         }
     }
 

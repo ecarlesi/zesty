@@ -43,7 +43,7 @@ namespace Zesty.Web.Controllers
 
         public ActionResult Logout()
         {
-            Authorization.Logout(base.CurrentHttpContext);
+            Zesty.Core.Business.Authorization.Logout(base.CurrentHttpContext);
 
             return Content($"Logged out :)", "text/html");
         }

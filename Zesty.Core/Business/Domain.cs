@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Zesty.Core.Business
 {
-    public class Domain
+    class Domain
     {
-        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        private static IStorage storage = StorageManager.Instance;
 
-        public static List<Entities.Domain> List()
+        internal static List<Entities.Domain> List()
         {
-            return StorageManager.Instance.GetDomainsList();
+            return storage.GetDomainsList();
         }
 
-        public static void Add(Entities.Domain domain)
+        internal static void Add(Entities.Domain domain)
         {
-            StorageManager.Instance.Add(domain);
+            storage.Add(domain);
         }
     }
 }

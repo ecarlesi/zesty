@@ -52,7 +52,6 @@ namespace Zesty.Core.Common
 
             builder.UseSession(new SessionOptions() { Cookie = new CookieBuilder() { Name = ".AspNetCore.Session.MyApp1" } });
 
-
             builder.UseCookiePolicy();
 
             builder.MapWhen(context => context.Request.Path.ToString().EndsWith(".api"), appBranch => {

@@ -1,0 +1,18 @@
+﻿INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('c62a6f65-e324-4d9c-9e36-45a5f1bf5203', 1, 'ThrowsOnAccessDenied' , 'true');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('d84ad49f-89ff-4ff6-a56e-1ca47cc333fc', 2, 'RedirectPathOnAccessDenied' , '/');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('2b43d7bb-f54c-4130-8722-4c8b6ecc998e', 3, 'ThrowsOnAuthorizationFailed' , 'true');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('ed5f3407-c25b-4da9-99af-ebeed7bd3508', 4, 'CorsOrigins' , 'https://localhost:4200');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('b57bb065-f9fe-4b33-9227-7d35d83aadaf', 5, 'CorsOrigins' , 'https://localhost:1099');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('3823bd90-c229-48c3-8136-d1cd008aa2f6', 6, 'PasswordLifetimeInDays' , '10');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('815f81c9-104a-46f5-94f9-3e8eec9f32e7', 7, 'ApiCacheLifetimeInMinutes' , '15');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('f50c79f6-beca-4cbb-a929-94070913b007', 8, 'SessionLifetimeInMinutes' , '30');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('a724bc0a-55c8-4298-b98d-6c71a989b428', 9, 'UrlWhitelist' , '/Secured/Login');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('c0aeb6ff-2089-49a1-8bba-2c3d05d5f7bb', 10, 'UrlWhitelist' , '/Secured/Logout');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('e9a86ed4-a6b4-4928-b352-33de8710d914', 11, 'PreExecutionHandler' , 'Zesty.Core.Handlers.PreLogger, Zesty.Core');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('fdb9e236-9cf5-4acb-ad90-4d0dab64c419', 12, 'PostExecutionHandler' , 'Zesty.Core.Handlers.PostLogger, Zesty.Core');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('b442eb75-84fb-4e9a-bfcf-647337398046', 13, 'SmtpClient.Host' , 'smtp.office365.com');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('082ca1aa-e9ad-4cfb-9e93-2d18a72b6aa6', 14, 'SmtpClient.Port' , '587');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('a837b293-9a6b-4c81-8000-943d0f1fd22a', 15, 'SmtpClient.Ssl' , 'true');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('aea0bfe5-a600-49e6-9804-48d4ff8aeb4b', 16, 'SmtpClient.Username' , '');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('638dac90-fd75-435a-9b8c-bf9221fe027d', 17, 'SmtpClient.Password' , '');
+INSERT INTO [dbo].[ServerSetting] ([Id], [Order], [Key] ,[Value]) VALUES ('0678d08c-ca66-4479-9d6b-2758d88f3536', 18, 'PropagateApplicationErrorInFault' , 'true');

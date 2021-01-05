@@ -7,12 +7,19 @@ namespace Zesty.Core.Api.System.Admin.User
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            GetResponse response = new GetResponse()
-            {
-                User = Business.User.Get(Get(input, "id"))
-            };
+            string userId = Get(input, "id");
 
-            return GetOutput(response);
+            Entities.User user = Business.User.Get(userId);
+
+            if (user == null)
+            {
+                ThrowNotFound(userId);
+            }
+
+            return GetOutput(new GetResponse()
+            {
+                User = user
+            });
         }
     }
 

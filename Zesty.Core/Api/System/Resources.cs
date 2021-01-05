@@ -7,14 +7,12 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            IsNotNull(Context.Current.User.Domain, "domain");
+            RequireDomain();
 
-            ResourcesResponse response = new ResourcesResponse()
+            return GetOutput(new ResourcesResponse()
             {
                 Resources = Business.Resource.GetResources(Context.Current.User.Username, Context.Current.User.Domain.Id)
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

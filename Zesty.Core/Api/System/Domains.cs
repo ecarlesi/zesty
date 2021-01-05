@@ -9,16 +9,12 @@ namespace Zesty.Core.Api.System
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            DomainsResponse response = new DomainsResponse();
+            RequireUser();
 
-            if (Context.Current == null || Context.Current.User == null || String.IsNullOrWhiteSpace(Context.Current.User.Username))
+            return GetOutput(new DomainsResponse()
             {
-                throw new ApiApplicationErrorException("User not found");
-            }
-
-            response.Domains = Business.User.GetDomains(Context.Current.User.Username);
-
-            return GetOutput(response);
+                Domains = Business.User.GetDomains(Context.Current.User.Username)
+            });
         }
     }
 

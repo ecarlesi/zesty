@@ -19,7 +19,7 @@ namespace Zesty.Core.Api.System.Admin.User
 
             Business.User.Add(user);
 
-            return GetOutput(new { });
+            return GetOutput();
         }
     }
 

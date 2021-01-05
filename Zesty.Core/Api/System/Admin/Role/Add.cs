@@ -17,12 +17,10 @@ namespace Zesty.Core.Api.System.Admin.Role
 
             Business.Role.Add(role);
 
-            AddResponse response = new AddResponse()
+            return GetOutput(new AddResponse()
             {
                 Role = role
-            };
-
-            return GetOutput(response);
+            });
         }
     }
 

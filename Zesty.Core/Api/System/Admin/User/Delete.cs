@@ -7,9 +7,18 @@ namespace Zesty.Core.Api.System.Admin.User
     {
         public override ApiHandlerOutput Process(ApiInputHandler input)
         {
-            Business.User.Delete(Guid.Parse(Get(input, "id")));
+            RequireUser();
 
-            return GetOutput(new { });
+            Guid userId = Guid.Parse(Get(input, "id"));
+
+            if (Context.Current.User.Id == userId)
+            {
+                ThrowApplicationError("Cannot delete current user");
+            }
+
+            Business.User.Delete(userId);
+
+            return GetOutput();
         }
     }
 }

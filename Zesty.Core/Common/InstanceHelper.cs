@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Zesty.Core.Common
 {
-    class InstanceHelper
+    static class InstanceHelper
     {
         internal static T Create<T>(string typeName)
         {

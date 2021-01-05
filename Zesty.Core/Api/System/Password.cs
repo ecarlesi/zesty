@@ -36,10 +36,7 @@ namespace Zesty.Core.Api.System
 
             Business.User.ChangePassword(username, request.Old, request.New);
 
-            return GetOutput(new PasswordResponse()
-            {
-                Message = "Success"
-            });
+            return GetOutput();
         }
     }
 

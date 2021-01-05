@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Zesty.Core.Business
 {
-    public class Role
+    class Role
     {
-        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        private static IStorage storage = StorageManager.Instance;
 
-        public static List<Entities.Role> List()
+        internal static List<Entities.Role> List()
         {
-            return StorageManager.Instance.GetRoles();
+            return storage.GetRoles();
         }
 
-        public static void Add(Entities.Role role)
+        internal static void Add(Entities.Role role)
         {
-            StorageManager.Instance.Add(role);
+            storage.Add(role);
         }
     }
 }

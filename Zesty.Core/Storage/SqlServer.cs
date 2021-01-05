@@ -12,6 +12,159 @@ namespace Zesty.Core.Storage
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        public void AuthorizeResource(Guid resourceId, Guid roleId)
+        {
+            string statement = @"ResourceAuthorize";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@resource", Value = resourceId });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@role", Value = roleId });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeauthorizeResource(Guid resourceId, Guid roleId)
+        {
+            string statement = @"ResourceDeauthorize";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@resource", Value = resourceId });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@role", Value = roleId });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Entities.Resource> GetResources(Guid roleId)
+        {
+            string statement = @"ResourceListGrant";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@role", Value = roleId });
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Entities.Resource> list = new List<Resource>();
+
+                        while (reader.Read())
+                        {
+                            Entities.Resource resource = new Resource();
+
+                            resource.Id = reader.Get<Guid>("Id");
+
+                            list.Add(resource);
+                        }
+
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public List<Entities.Resource> GetResources()
+        {
+            string statement = @"ResourceList";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Entities.Resource> list = new List<Resource>();
+
+                        while (reader.Read())
+                        {
+                            Entities.Resource resource = new Resource();
+
+                            resource.Id = reader.Get<Guid>("Id");
+                            resource.ParentId = reader.Get<Guid>("ParentId");
+                            resource.IsPublic = reader.Get<bool>("IsPublic");
+                            resource.RequireToken = reader.Get<bool>("RequireToken");
+                            resource.Order = reader.Get<int>("Order");
+                            resource.Url = reader.Get<string>("Url");
+                            resource.Label = reader.Get<string>("Label");
+                            resource.Image = reader.Get<string>("Image");
+                            resource.Title = reader.Get<string>("Title");
+
+                            list.Add(resource);
+                        }
+
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public void Add(Entities.Role role)
+        {
+            string statement = @"RoleAdd";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@id", Value = role.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@name", Value = role.Name });
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Add(Entities.Domain domain)
+        {
+            string statement = @"DomainAdd";
+
+            using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(statement, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@id", Value = domain.Id });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@name", Value = domain.Name });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@parent", Value = domain.ParentDomainId == Guid.Empty ? DBNull.Value : (Object)domain.ParentDomainId});
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<Entities.Role> GetRoles()
         {
             string statement = @"GetRolesList";

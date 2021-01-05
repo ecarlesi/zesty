@@ -18,5 +18,29 @@ namespace Zesty.Core.Business
 
             return StorageManager.Instance.GetResources(username, domainId);
         }
+
+        internal static List<Entities.Resource> ResourceList()
+        {
+            //TODO add cache support
+
+            return StorageManager.Instance.GetResources();
+        }
+
+        internal static List<Entities.Resource> ResourceList(Guid roleId)
+        {
+            //TODO add cache support
+
+            return StorageManager.Instance.GetResources(roleId);
+        }
+
+        internal static void Authorize(Guid resourceId, Guid roleId)
+        {
+            StorageManager.Instance.AuthorizeResource(resourceId, roleId);
+        }
+
+        internal static void Deauthorize(Guid resourceId, Guid roleId)
+        {
+            StorageManager.Instance.DeauthorizeResource(resourceId, roleId);
+        }
     }
 }

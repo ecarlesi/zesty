@@ -11,5 +11,10 @@ namespace Zesty.Core.Business
         {
             return StorageManager.Instance.GetDomainsList();
         }
+
+        public static void Add(Entities.Domain domain)
+        {
+            StorageManager.Instance.Add(domain);
+        }
     }
 }

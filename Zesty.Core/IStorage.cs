@@ -15,7 +15,17 @@ namespace Zesty.Core
         void DeleteUser(Guid userId);
         void Add(Entities.User user);
 
+        void Add(Entities.Domain domain);
+
+        void Add(Entities.Role role);
+
+        void AuthorizeResource(Guid resourceId, Guid roleId);
+        void DeauthorizeResource(Guid resourceId, Guid roleId);
+
+        List<Entities.Resource> GetResources();
+        List<Entities.Resource> GetResources(Guid roleId);
         List<Entities.Role> GetRoles();
+
         void ChangePassword(Guid id, string oldPassword, string password);
         List<SettingValue> GetSettingsValues();
         void SetProperty(string name, string value, Entities.User user);

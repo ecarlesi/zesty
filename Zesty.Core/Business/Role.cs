@@ -11,5 +11,10 @@ namespace Zesty.Core.Business
         {
             return StorageManager.Instance.GetRoles();
         }
+
+        public static void Add(Entities.Role role)
+        {
+            StorageManager.Instance.Add(role);
+        }
     }
 }

@@ -26,6 +26,11 @@ namespace Zesty.Core
             return s;
         }
 
+        protected ApiHandlerOutput GetOutput(bool cache = false)
+        {
+            return GetOutput(new { }, cache);
+        }
+
         protected ApiHandlerOutput GetOutput(object response, bool cache = false)
         {
             return new ApiHandlerOutput()

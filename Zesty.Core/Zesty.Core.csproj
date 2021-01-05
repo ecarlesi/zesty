@@ -22,6 +22,7 @@
     <Folder Include="Api\System\Admin\User\" />
     <Folder Include="Api\System\Admin\Role\" />
     <Folder Include="Api\System\Admin\Domain\" />
+    <Folder Include="Api\System\Admin\Resource\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -148,3 +148,38 @@ Content-Type: application/json
 GET {{protocol}}://{{hostname}}:{{port}}/system.admin.role.list.api
 ### get the list of domains
 GET {{protocol}}://{{hostname}}:{{port}}/system.admin.domain.list.api
+### add domain
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.domain.add.api
+Content-Type: application/json
+
+{
+    "name" : "test domain 1",
+    "parent" : ""
+}
+### add role
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.role.add.api
+Content-Type: application/json
+
+{
+    "name" : "test role 1",
+}
+### get the list of resources
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.list.api
+### get the list of grants
+GET {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.grants.api?r=62ef76b8-e39e-41c7-86dc-4801642dc655
+### authorize resource
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.authorize.api
+Content-Type: application/json
+
+{
+    "resource" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4",
+    "role" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4"
+}
+### deauthorize resource
+POST {{protocol}}://{{hostname}}:{{port}}/system.admin.resource.deauthorize.api
+Content-Type: application/json
+
+{
+    "resource" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4",
+    "role" : "b01826ba-d5ab-4d0f-a78d-02bc5cad5da4"
+}

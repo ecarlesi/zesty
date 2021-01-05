@@ -9,6 +9,7 @@ namespace Zesty.Core.Entities
         public string Title { get; set; }
         public string Image { get; set; }
         public string Label { get; set; }
+        public int Order { get; set; }
         public bool IsPublic { get; set; }
         public bool RequireToken { get; set; }
     }

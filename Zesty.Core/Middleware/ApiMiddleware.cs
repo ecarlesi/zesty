@@ -94,6 +94,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (ApiNotFoundException e)
             {
@@ -103,6 +105,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (ApiAccessDeniedException e)
             {
@@ -112,6 +116,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (MissingRequiredProperty e)
             {
@@ -121,6 +127,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (CustomJsonException e)
             {
@@ -130,6 +138,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (SecurityException e)
             {
@@ -139,6 +149,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             catch (Exception e)
             {
@@ -148,6 +160,8 @@ namespace Zesty.Core.Middleware
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
             finally
             {
@@ -160,7 +174,11 @@ namespace Zesty.Core.Middleware
                 context.Session = session;
                 await context.Response.WriteAsync(content);
 
-                logger.Info($"Request completed in {timeKeeper.Stop().TotalMilliseconds} ms");
+                double ms = timeKeeper.Stop().TotalMilliseconds;
+
+                Trace.Write(new TraceItem() { Millis = ms }, context);
+
+                logger.Info($"Request completed in {ms} ms");
             }
         }
 

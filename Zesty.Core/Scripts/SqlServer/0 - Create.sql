@@ -1646,3 +1646,74 @@ BEGIN
 
 END
 GO
+
+
+
+
+CREATE TABLE [dbo].[Trace] (
+    [Created]   DATETIME      NOT NULL,
+    [Class]     VARCHAR (200) NOT NULL,
+    [Method]    VARCHAR (100) NOT NULL,
+    [Hostname]  VARCHAR (200) NULL,
+    [ClientIP]  VARCHAR (50)  NULL,
+    [SessionID] VARCHAR (100) NULL,
+    [Username]  VARCHAR (100) NULL,
+    [Domain]    VARCHAR (100) NULL,
+    [Resource]  VARCHAR (200) NULL,
+    [Message]   VARCHAR (300) NULL,
+    [Error]     VARCHAR (500) NULL,
+    [Millis]    INT           NOT NULL
+);
+GO
+
+
+
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[DeviceDetail]
+
+	@domain uniqueidentifier,
+	@device uniqueidentifier
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+
+
+
+	select 
+		d.*
+		,dm.[Name] as Model
+		,dm.[Properties] as Properties
+		,db.[Name] as Brand
+		,dt.[Id] as DeviceTypeId
+		,dt.[Name] as DeviceTypeName
+		,dt.[Icon] as DeviceTypeIcon
+		,dt.[MapPin] as DeviceTypeMapPin
+		,dt.[Color] as DeviceTypeColor
+		,dp.[Key] as Property
+		,dp.[Value] as PropertyValue
+	from Device d
+	join DeviceModel dm on dm.Id = d.DeviceModelId
+	join DeviceBrand db on db.Id = dm.DeviceBrandId
+	join DeviceType dt on dt.Id = dm.DeviceTypeId
+	left join DeviceProperty dp on dp.DeviceId = d.Id
+	where
+	d.DomainId = @domain
+	and d.Id = @device
+	and d.deleted is null
+	
+
+
+
+
+END
+GO
+

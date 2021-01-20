@@ -46,10 +46,24 @@ namespace Zesty.Core.Controllers
                 {
                     logger.Warn($"Access denied for resource {path}");
 
+                    Trace.Write(new TraceItem()
+                    {
+                        Error = Messages.AccessDenied
+                    },
+                    context.HttpContext);
+
                     throw new SecurityException(Messages.AccessDenied);
                 }
                 else
                 {
+                    logger.Warn($"Access denied for resource {path}");
+
+                    Trace.Write(new TraceItem()
+                    {
+                        Error = Messages.AccessDenied
+                    },
+                    context.HttpContext);
+
                     ErrorMessage = Messages.AccessDenied;
 
                     Redirect(Settings.Get("RedirectPathOnAccessDenied"));
@@ -69,11 +83,25 @@ namespace Zesty.Core.Controllers
                     {
                         logger.Warn($"Access denied for resource {path}");
 
+                        Trace.Write(new TraceItem()
+                        {
+                            Error = Messages.AuthorizationFailed
+                        },
+                        context.HttpContext);
+
                         throw new SecurityException(Messages.AuthorizationFailed);
                     }
                     else
                     {
                         ErrorMessage = Messages.AuthorizationFailed;
+
+                        logger.Warn($"Access denied for resource {path}");
+
+                        Trace.Write(new TraceItem()
+                        {
+                            Error = Messages.AuthorizationFailed
+                        },
+                        context.HttpContext);
 
                         Redirect(Settings.Get("RedirectPathOnAccessDenied"));
                     }
@@ -94,10 +122,24 @@ namespace Zesty.Core.Controllers
                             {
                                 logger.Warn($"Access denied for resource {path}");
 
+                                Trace.Write(new TraceItem()
+                                {
+                                    Error = Messages.AuthorizationFailed
+                                },
+                                context.HttpContext);
+
                                 throw new SecurityException(Messages.TokenMissing);
                             }
                             else
                             {
+                                logger.Warn($"Access denied for resource {path}");
+
+                                Trace.Write(new TraceItem()
+                                {
+                                    Error = Messages.AuthorizationFailed
+                                },
+                                context.HttpContext);
+
                                 ErrorMessage = Messages.AuthorizationFailed;
 
                                 Redirect(Settings.Get("RedirectPathOnAccessDenied"));

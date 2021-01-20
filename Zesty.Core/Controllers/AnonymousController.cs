@@ -82,6 +82,12 @@ namespace Zesty.Core.Controllers
 
             logger.Info($"Execution require {executionMS} ms");
 
+            Trace.Write(new TraceItem()
+            {
+                Millis = executionMS
+            },
+            context.HttpContext);
+
             HandlerProcessor.Process(Settings.List("PostExecutionHandler"), context.HttpContext);
         }
     }

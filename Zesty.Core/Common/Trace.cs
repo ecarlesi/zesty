@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
 
 namespace Zesty.Core.Common
@@ -65,12 +66,5 @@ namespace Zesty.Core.Common
                 }
             }
         }
-    }
-
-    public class TraceItem
-    {
-        public string Message { get; set; }
-        public string Error { get; set; }
-        public double Millis { get; set; }
     }
 }

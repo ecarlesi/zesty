@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Zesty.Core.Common;
+using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
 
 namespace Zesty.Core.Controllers

@@ -3,8 +3,8 @@ using System.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Zesty.Core.Business;
 using Zesty.Core.Common;
+using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
 
 namespace Zesty.Core.Controllers
@@ -71,7 +71,7 @@ namespace Zesty.Core.Controllers
             }
             else
             {
-                bool canAccess = Authorization.CanAccess(path, user);
+                bool canAccess = Business.Authorization.CanAccess(path, user);
 
                 logger.Info($"User {user.Username} can access path {path}: {canAccess}");
 
@@ -110,13 +110,13 @@ namespace Zesty.Core.Controllers
                 {
                     Context.Current.User = user;
 
-                    if (Authorization.RequireToken(path))
+                    if (Business.Authorization.RequireToken(path))
                     {
                         string tokenValue = CurrentHttpContext.Request.Query["t"];
 
                         logger.Info($"Token: {tokenValue}");
 
-                        if (!Authorization.IsValid(user.Id, CurrentHttpContext.Session.Id, tokenValue))
+                        if (!Business.Authorization.IsValid(user.Id, CurrentHttpContext.Session.Id, tokenValue))
                         {
                             if (Settings.GetBool("ThrowsOnAuthorizationFailed"))
                             {

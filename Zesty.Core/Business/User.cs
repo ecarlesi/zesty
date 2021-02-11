@@ -92,9 +92,9 @@ namespace Zesty.Core.Business
             storage.DeleteUser(id);
         }
 
-        public static void Add(Entities.User user)
+        public static Guid Add(Entities.User user)
         {
-            storage.Add(user);
+            return storage.Add(user);
         }
 
         public static void ChangePassword(Guid id, string oldPassword, string password)

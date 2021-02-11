@@ -13,7 +13,7 @@ namespace Zesty.Core
         List<Entities.User> Users();
         void HardDeleteUser(Guid userId);
         void DeleteUser(Guid userId);
-        void Add(Entities.User user);
+        Guid Add(Entities.User user);
         void Add(Entities.Domain domain);
         void Add(Entities.Role role);
         void AuthorizeResource(Guid resourceId, Guid roleId);

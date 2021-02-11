@@ -17,9 +17,9 @@ namespace Zesty.Core.Api.System.Admin.User
                 Lastname = request.Lastname
             };
 
-            Business.User.Add(user);
+            Guid id = Business.User.Add(user);
 
-            return GetOutput();
+            return GetOutput(new { Id = id });
         }
     }
 

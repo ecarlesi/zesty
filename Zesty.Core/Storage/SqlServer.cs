@@ -347,7 +347,7 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public void Add(Entities.User user)
+        public Guid Add(Entities.User user)
         {
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
@@ -369,10 +369,13 @@ namespace Zesty.Core.Storage
                     }
                 }
 
+                Guid id = Guid.NewGuid();
+
                 using (SqlCommand command = new SqlCommand(@"Zesty_User_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@id", Value = id });
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@username", Value = user.Username });
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = user.Email });
                     command.Parameters.Add(new SqlParameter() { ParameterName = "@firstname", Value = user.Firstname });
@@ -380,6 +383,8 @@ namespace Zesty.Core.Storage
 
                     command.ExecuteNonQuery();
                 }
+
+                return id;
             }
         }
 

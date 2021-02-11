@@ -1171,6 +1171,7 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[Zesty_User_Add]
 
+	@id uniqueidentifier,
 	@username varchar(200),
 	@email varchar(200),
 	@firstname varchar(50),
@@ -1183,9 +1184,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 
-INSERT INTO [dbo].[User] ([Id],[Username],[Email],[Firstname],[Lastname],[ResetToken],[Deleted],[Created]) VALUES (newid(),@username,@email,@firstname,@lastname,null,null,getdate());
-
-
+INSERT INTO [dbo].[User] ([Id],[Username],[Email],[Firstname],[Lastname],[ResetToken],[Deleted],[Created]) VALUES (@id,@username,@email,@firstname,@lastname,null,null,getdate());
 
 END
 GO

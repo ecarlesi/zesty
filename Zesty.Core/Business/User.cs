@@ -41,6 +41,8 @@ namespace Zesty.Core.Business
                 return null;
             }
 
+            u.Properties = storage.LoadProperties(u);
+
             u.Authorizations = new List<Entities.Authorization>();
 
             List<Entities.Domain> domains = storage.GetDomains(u.Username);

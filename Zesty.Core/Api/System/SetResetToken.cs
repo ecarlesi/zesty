@@ -19,14 +19,19 @@ namespace Zesty.Core.Api.System
 
             Guid token = Business.User.SetResetToken(email);
 
-            List<Translation> translations = StorageManager.Instance.GetTranslations("en");
+            if (token != Guid.Empty)
+            {
+                List<Translation> translations = StorageManager.Instance.GetTranslations("en");
 
-            string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
-            string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;
+                string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
+                string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;
 
-            body = String.Format(body, token.ToString());
+                body = String.Format(body, token.ToString());
 
-            Common.SmtpClient.Send(email, subject, body);
+                Common.SmtpClient.Send(email, subject, body);
+
+                logger.Info($"Password reset email set to email address {email}");
+            }
 
             return GetOutput();
         }

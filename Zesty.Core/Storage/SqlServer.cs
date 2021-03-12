@@ -267,8 +267,8 @@ namespace Zesty.Core.Storage
                             u.Email = reader.Get<string>("Email");
                             u.Firstname = reader.Get<string>("Firstname");
                             u.Lastname = reader.Get<string>("Lastname");
-                            u.Deleted = reader.Get<DateTime>("Deleted");
-                            u.Created = reader.Get<DateTime>("Created");
+                            u.Deleted = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Deleted"));
+                            u.Created = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Created"));
                         }
 
                         return u;
@@ -301,8 +301,8 @@ namespace Zesty.Core.Storage
                             user.Email = reader.Get<string>("Email");
                             user.Firstname = reader.Get<string>("Firstname");
                             user.Lastname = reader.Get<string>("Lastname");
-                            user.Deleted = reader.Get<DateTime>("Deleted");
-                            user.Created = reader.Get<DateTime>("Created");
+                            user.Deleted = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Deleted"));
+                            user.Created = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Created"));
 
                             users.Add(user);
                         }
@@ -1015,7 +1015,7 @@ namespace Zesty.Core.Storage
                             user.Email = reader.Get<string>("Email");
                             user.Firstname = reader.Get<string>("Firstname");
                             user.Lastname = reader.Get<string>("Lastname");
-                            user.PasswordChanged = reader.Get<DateTime>("Created");
+                            user.PasswordChanged = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Created"));
                         }
 
                         return user;

@@ -150,7 +150,7 @@ namespace Zesty.Core.Business
             }
             else
             {
-                int passwordDays = (int)DateTime.Now.Subtract(output.User.PasswordChanged).TotalDays;
+                int passwordDays = (int)DateTime.Now.Subtract(DateTimeHelper.GetFromUnixTimestamp(output.User.PasswordChanged)).TotalDays;
 
                 if (passwordDays >= Settings.GetInt("PasswordLifetimeInDays"))
                 {

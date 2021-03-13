@@ -4,7 +4,7 @@ namespace Zesty.Core.Business
 {
     static class History
     {
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         internal static void Save(Entities.HistoryItem resource)
         {

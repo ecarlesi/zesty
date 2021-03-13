@@ -50,7 +50,7 @@ namespace Zesty.Core.Common
                 .AllowAnyHeader()
                 .AllowCredentials());
 
-            builder.UseSession(new SessionOptions() { Cookie = new CookieBuilder() { Name = ".AspNetCore.Session.MyApp1" } });
+            builder.UseSession(new SessionOptions() { Cookie = new CookieBuilder() { Name = "ZestyId" } });
 
             builder.UseCookiePolicy();
 

@@ -5,7 +5,7 @@ namespace Zesty.Core.Business
 {
     static class Resource
     {
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         internal static string GetType(string resourceName)
         {

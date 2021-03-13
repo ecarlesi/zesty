@@ -1,0 +1,12 @@
+﻿curl --header "Content-Type: application/json" \
+  --request POST \
+  -H "ZestyApiBearer: 9f3db895ccd749d6a9837b31fc9b95b333ed136ab71240879dd78ecb031486e0da5e24102b2c482bbbc71a237b92db95316188f0ae7145ebae1af4f3aaa067be6c478884e4fc43c6b9e355aabb85cc1a" \
+  --data '{ "domain": "bc89e749-784b-479f-91e6-85708326558e" }' \
+  https://localhost:61522/system.domain.api
+
+
+
+curl --request GET \
+  -H "ZestyApiBearer: 9f3db895ccd749d6a9837b31fc9b95b333ed136ab71240879dd78ecb031486e0da5e24102b2c482bbbc71a237b92db95316188f0ae7145ebae1af4f3aaa067be6c478884e4fc43c6b9e355aabb85cc1a" \
+  https://localhost:61522/system.resources.api
+

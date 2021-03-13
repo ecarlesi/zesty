@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
@@ -10,7 +11,7 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         public static void SetProperty(Entities.User user, string key, string value)
         {
@@ -167,6 +168,29 @@ namespace Zesty.Core.Business
             logger.Info(json);
 
             return output;
+        }
+
+        internal static void CreateBearer(Guid userId, string sessionId, string bearer)
+        {
+            logger.Info($"User ID: {userId}");
+            logger.Info($"Session ID: {sessionId}");
+            logger.Info($"Bearer: {bearer}");
+
+            storage.CreateBearer(userId, sessionId, bearer);
+        }
+
+        internal static Dictionary<string, byte[]> GetSession(string bearer)
+        {
+            logger.Info($"Bearer: {bearer}");
+
+            return storage.GetSession(bearer);
+        }
+
+        internal static void SaveSession(string bearer, ISession session)
+        {
+            logger.Info($"Bearer: {bearer}");
+
+            storage.SaveSession(bearer, session.Id, session);
         }
     }
 }

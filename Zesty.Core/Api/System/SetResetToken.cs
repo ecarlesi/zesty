@@ -21,7 +21,7 @@ namespace Zesty.Core.Api.System
 
             if (token != Guid.Empty)
             {
-                List<Translation> translations = StorageManager.Instance.GetTranslations("en");
+                List<Translation> translations = Business.Languages.GetTranslations("en");
 
                 string subject = translations.Where(x => x.Original == "Reset password").FirstOrDefault().Translated;
                 string body = translations.Where(x => x.Original == "Password reset token: {0}").FirstOrDefault().Translated;

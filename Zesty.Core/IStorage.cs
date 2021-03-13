@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Zesty.Core.Entities;
 
 namespace Zesty.Core
 {
     public interface IStorage
     {
+        void CreateBearer(Guid userId, string sessionId, string bearer);
+        Dictionary<string, byte[]> GetSession(string bearer);
+        void SaveSession(string bearer, string sessionId, ISession session);
         void Remove(User user, Authorization authorization);
         void Add(User user, Authorization authorization);
         void Update(Entities.User user);

@@ -4,7 +4,7 @@ namespace Zesty.Core.Business
 {
     class Role
     {
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         internal static List<Entities.Role> List()
         {

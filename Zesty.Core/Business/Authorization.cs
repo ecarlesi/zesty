@@ -8,7 +8,7 @@ namespace Zesty.Core.Business
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         public static void Logout(HttpContext context)
         {
@@ -23,7 +23,7 @@ namespace Zesty.Core.Business
         {
             //TODO add cache
 
-            bool isPublic = StorageManager.Instance.IsPublicResource(path);
+            bool isPublic = StorageManager.Storage.IsPublicResource(path);
 
             if (isPublic)
             {

@@ -11,6 +11,7 @@ namespace Zesty.Core
         { }
 
         public Entities.User User { get; set; }
+        public string Bearer { get; set; }
 
         public void Reset()
         {

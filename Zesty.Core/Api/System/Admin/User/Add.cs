@@ -21,7 +21,7 @@ namespace Zesty.Core.Api.System.Admin.User
 
             Guid id = Business.User.Add(user);
 
-            List<Translation> translations = StorageManager.Instance.GetTranslations("en");
+            List<Translation> translations = Business.Languages.GetTranslations("en");
 
             string subject = translations.Where(x => x.Original == "User created").FirstOrDefault().Translated;
             string body = translations.Where(x => x.Original == "Go to the portal and reset your password to grant access").FirstOrDefault().Translated;

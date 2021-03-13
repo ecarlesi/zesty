@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Threading.Tasks;
@@ -27,6 +28,33 @@ namespace Zesty.Core.Middleware
             ISession session = context.Session;
 
             Context.Current.User = session.Get<Entities.User>(Keys.SessionUser);
+
+            string bearer = null;
+
+            if (Context.Current.User == null)
+            {
+                bearer = context.Request.Headers["ZestyApiBearer"];
+
+                if (!String.IsNullOrWhiteSpace(bearer))
+                {
+                    logger.Info($"Bearer received: {bearer}");
+
+                    Dictionary<string, byte[]> values = Business.User.GetSession(bearer);
+
+                    if (values != null && values.Count > 0)
+                    {
+                        foreach (string key in values.Keys)
+                        {
+                            byte[] b = values[key];
+
+                            session.Set(key, b);
+                        }
+                    }
+
+                    Context.Current.User = session.Get<User>(Keys.SessionUser);
+                    Context.Current.Bearer = bearer;
+                }
+            }
 
             bool propagateApplicationErrorInFault = Settings.GetBool("PropagateApplicationErrorInFault", false);
 
@@ -172,6 +200,17 @@ namespace Zesty.Core.Middleware
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;
                 context.Session = session;
+
+                if (!String.IsNullOrWhiteSpace(bearer))
+                {
+                    Business.User.SaveSession(bearer, session);
+                }
+
+                if (!String.IsNullOrWhiteSpace(Context.Current.Bearer))
+                {
+                    Business.User.SaveSession(Context.Current.Bearer, session);
+                }
+
                 await context.Response.WriteAsync(content);
 
                 double ms = timeKeeper.Stop().TotalMilliseconds;

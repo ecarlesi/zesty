@@ -2,9 +2,9 @@
 
 namespace Zesty.Core.Business
 {
-    static class Languages
+    public static class Languages
     {
-        private static IStorage storage = StorageManager.Instance;
+        private static IStorage storage = StorageManager.Storage;
 
         public static List<Entities.Language> List()
         {

@@ -39,7 +39,7 @@ namespace Zesty.Core.Entities.Settings
                 {
                     if (settingValues == null)
                     {
-                        settingValues = StorageManager.Instance.GetSettingsValues();
+                        settingValues = StorageManager.Storage.GetSettingsValues();
 
                         Cache.Store<List<SettingValue>>(cacheKey, settingValues, StorePolicy.SkipIfExists);
                     }

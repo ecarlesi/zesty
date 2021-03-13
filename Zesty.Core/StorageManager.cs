@@ -3,13 +3,13 @@ using Zesty.Core.Entities.Settings;
 
 namespace Zesty.Core
 {
-    public class StorageManager
+    internal class StorageManager
     {
-        public static IStorage Instance { get; private set; }
+        internal static IStorage Storage { get; private set; }
 
         static StorageManager()
         {
-            Instance = InstanceHelper.Create<IStorage>(Settings.Current.StorageImplementationType);
+            Storage = InstanceHelper.Create<IStorage>(Settings.Current.StorageImplementationType);
         }
     }
 }

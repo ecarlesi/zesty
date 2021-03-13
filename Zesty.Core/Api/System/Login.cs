@@ -1,4 +1,6 @@
-﻿using Zesty.Core.Common;
+﻿using System;
+using System.Text;
+using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Exceptions;
 
@@ -26,9 +28,31 @@ namespace Zesty.Core.Api.System
                 Output = loginOutput
             };
 
+            if (request.Bearer == "true")
+            {
+                string bearer = GetNewBearer();
+                Business.User.CreateBearer(response.Output.User.Id, input.Context.Session.Id, bearer);
+                response.Bearer = bearer;
+                Context.Current.Bearer = bearer;
+
+                logger.Info($"Bearer created: {bearer}");
+            }
+
             input.Context.Session.Set(response.Output.User);
 
             return GetOutput(response);
+        }
+
+        private static string GetNewBearer()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < 5; i++)
+            {
+                sb.Append(Guid.NewGuid().ToString().Replace("-", ""));
+            }
+
+            return sb.ToString();
         }
     }
 
@@ -41,10 +65,12 @@ namespace Zesty.Core.Api.System
         public string Password { get; set; }
         [Required]
         public int Number { get; set; }
+        public string Bearer { get; set; }
     }
 
     public class LoginResponse
     {
         public LoginOutput Output { get; set; }
+        public string Bearer { get; set; }
     }
 }

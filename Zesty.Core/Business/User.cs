@@ -13,6 +13,21 @@ namespace Zesty.Core.Business
 
         private static IStorage storage = StorageManager.Storage;
 
+        public static void SetDomain(Guid userid, Guid domainid)
+        {
+            storage.SetDomain(userid, domainid);
+        }
+
+        public static void SaveBearer(Guid userid, string token)
+        {
+            storage.SaveBearer(userid, token);
+        }
+
+        public static string GetSecret(string bearer)
+        {
+            return storage.GetSecret(bearer);
+        }
+
         public static void SetProperty(Entities.User user, string key, string value)
         {
             storage.SetProperty(key, value, user);
@@ -168,29 +183,6 @@ namespace Zesty.Core.Business
             logger.Info(json);
 
             return output;
-        }
-
-        internal static void CreateBearer(Guid userId, string sessionId, string bearer)
-        {
-            logger.Info($"User ID: {userId}");
-            logger.Info($"Session ID: {sessionId}");
-            logger.Info($"Bearer: {bearer}");
-
-            storage.CreateBearer(userId, sessionId, bearer);
-        }
-
-        internal static Dictionary<string, byte[]> GetSession(string bearer)
-        {
-            logger.Info($"Bearer: {bearer}");
-
-            return storage.GetSession(bearer);
-        }
-
-        internal static void SaveSession(string bearer, ISession session)
-        {
-            logger.Info($"Bearer: {bearer}");
-
-            storage.SaveSession(bearer, session.Id, session);
         }
     }
 }

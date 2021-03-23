@@ -27,6 +27,9 @@ namespace Zesty.Core.Api.System
                 }
             }
 
+            Business.User.SetDomain(Context.Current.User.Id, domain.Id);
+
+            Context.Current.User.DomainId = domain.Id;
             Context.Current.User.Domain = domain;
 
             DomainResponse response = new DomainResponse()

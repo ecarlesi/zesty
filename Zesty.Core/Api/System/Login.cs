@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using JWT.Algorithms;
+using JWT.Builder;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Exceptions;
@@ -28,14 +30,22 @@ namespace Zesty.Core.Api.System
                 Output = loginOutput
             };
 
-            if (request.Bearer == "true")
+            if (request.Bearer == "true" && loginOutput.User != null)
             {
-                string bearer = GetNewBearer();
-                Business.User.CreateBearer(response.Output.User.Id, input.Context.Session.Id, bearer);
-                response.Bearer = bearer;
-                Context.Current.Bearer = bearer;
+                string secret = HashHelper.GetSha256(request.Password);
 
-                logger.Info($"Bearer created: {bearer}");
+                string token = JwtBuilder.Create()
+                      .WithAlgorithm(new HMACSHA256Algorithm())
+                      .WithSecret(secret)
+                      .AddClaim("exp", DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds())
+                      .AddClaim("user", response.Output.User)
+                      .Encode();
+
+                logger.Debug($"token generated: {token}");
+
+                Business.User.SaveBearer(loginOutput.User.Id, token);
+
+                response.Bearer = token;
             }
 
             input.Context.Session.Set(response.Output.User);

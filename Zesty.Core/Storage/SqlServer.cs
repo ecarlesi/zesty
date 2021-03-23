@@ -1017,6 +1017,12 @@ namespace Zesty.Core.Storage
                             user.Firstname = reader.Get<string>("Firstname");
                             user.Lastname = reader.Get<string>("Lastname");
                             user.PasswordChanged = DateTimeHelper.GetUnixTimestamp(reader.Get<DateTime>("Created"));
+                            Guid? g = reader.Get<Guid?>("DomainId");
+
+                            if (g != null && g.HasValue)
+                            {
+                                user.DomainId = g.Value;
+                            }
                         }
 
                         return user;
@@ -1092,92 +1098,57 @@ namespace Zesty.Core.Storage
             }
         }
 
-        public Dictionary<string, byte[]> GetSession(string bearer)
+        public string GetSecret(string bearer)
         {
-            Dictionary<string, byte[]> dictionary = new Dictionary<string, byte[]>();
+            string b = HashHelper.GetSha256(bearer);
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("Zesty_Session_Get", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Bearer_GetSecret", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@bearer", Value = bearer });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@bearer", Value = b });
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            string json = reader.Get<string>("Body");
-
-                            Dictionary<string, string> d = JsonHelper.Deserialize<Dictionary<string, string>>(json);
-
-                            if (d != null && d.Keys.Count > 0)
-                            {
-                                foreach (string key in d.Keys)
-                                {
-                                    string s = d[key];
-
-                                    byte[] b = Convert.FromBase64String(s);
-
-                                    dictionary.Add(key, b);
-                                }
-                            }
-                        }
-                    }
+                    return command.ExecuteScalar() as string;
                 }
             }
-
-            return dictionary;
         }
 
-        public void SaveSession(string bearer, string sessionId, ISession session)
+        public void SaveBearer(Guid userid, string bearer)
         {
-            Dictionary<string, string> plain = new Dictionary<string, string>();
-
-            if (session != null && session.Keys != null && session.Keys.Count() > 0)
-            {
-                foreach (string key in session.Keys)
-                {
-                    string b = Convert.ToBase64String(session.Get(key));
-
-                    plain.Add(key, b);
-                }
-            }
-
-            string json = JsonHelper.Serialize(plain);
+            string b = HashHelper.GetSha256(bearer);
 
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("Zesty_Session_Save", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_Bearer_Add", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@bearer", Value = bearer });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@body", Value = json });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = userid });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@bearer", Value = b });
 
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void CreateBearer(Guid userId, string sessionId, string bearer)
+        public void SetDomain(Guid userid, Guid domainid)
         {
             using (SqlConnection connection = new SqlConnection(Settings.Current.StorageSource))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("Zesty_Session_Create", connection))
+                using (SqlCommand command = new SqlCommand("Zesty_User_Domain", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@bearer", Value = bearer });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = userId });
-                    command.Parameters.Add(new SqlParameter() { ParameterName = "@sessionid", Value = sessionId });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@userid", Value = userid });
+                    command.Parameters.Add(new SqlParameter() { ParameterName = "@domainid", Value = domainid });
 
                     command.ExecuteNonQuery();
                 }

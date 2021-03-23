@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
+using System.Text;
 using System.Threading.Tasks;
+using JWT.Algorithms;
+using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
@@ -29,30 +33,41 @@ namespace Zesty.Core.Middleware
 
             Context.Current.User = session.Get<Entities.User>(Keys.SessionUser);
 
-            string bearer = null;
 
             if (Context.Current.User == null)
             {
-                bearer = context.Request.Headers["ZestyApiBearer"];
+                string bearer = context.Request.Headers["ZestyApiBearer"];
 
                 if (!String.IsNullOrWhiteSpace(bearer))
                 {
                     logger.Info($"Bearer received: {bearer}");
 
-                    Dictionary<string, byte[]> values = Business.User.GetSession(bearer);
+                    string secret = Business.User.GetSecret(bearer);
 
-                    if (values != null && values.Count > 0)
+                    var json = JwtBuilder.Create()
+                     .WithAlgorithm(new HMACSHA256Algorithm())
+                     .WithSecret(secret)
+                     .MustVerifySignature()
+                     .Decode(bearer);
+
+                    Entities.Bearer b  = JsonHelper.Deserialize<Entities.Bearer>(json);
+
+                    if (b != null)
                     {
-                        foreach (string key in values.Keys)
+                        if (b.User != null)
                         {
-                            byte[] b = values[key];
+                            Guid domainId = b.User.DomainId;
 
-                            session.Set(key, b);
+                            if (domainId != Guid.Empty)
+                            {
+                                List<Domain> domains = Business.User.GetDomains(b.User.Username);
+
+                                b.User.Domain = domains.Where(x => x.Id == domainId).FirstOrDefault();
+                            }
                         }
-                    }
 
-                    Context.Current.User = session.Get<User>(Keys.SessionUser);
-                    Context.Current.Bearer = bearer;
+                        Context.Current.User = b.User;
+                    }
                 }
             }
 
@@ -200,16 +215,6 @@ namespace Zesty.Core.Middleware
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;
                 context.Session = session;
-
-                if (!String.IsNullOrWhiteSpace(bearer))
-                {
-                    Business.User.SaveSession(bearer, session);
-                }
-
-                if (!String.IsNullOrWhiteSpace(Context.Current.Bearer))
-                {
-                    Business.User.SaveSession(Context.Current.Bearer, session);
-                }
 
                 await context.Response.WriteAsync(content);
 

@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using Zesty.Core.Entities.Settings;
 
 namespace Zesty.Core.Common
 {

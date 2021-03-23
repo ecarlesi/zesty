@@ -36,3 +36,4 @@ INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('626
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('6262c0fe-aa8f-443c-9349-7e6e38e06003','/system.admin.resource.grants.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('6262c0fe-aa8f-443c-9349-7e6e38e06004','/system.admin.resource.authorize.api',0,0);
 INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('6262c0fe-aa8f-443c-9349-7e6e38e06005','/system.admin.resource.deauthorize.api',0,0);
+INSERT INTO [dbo].[Resource] ([Id],[Url],[IsPublic],[RequireToken]) VALUES ('6262c0fe-aa8f-443c-9349-7e6e38e12345','/system.refresh.api',1,0);

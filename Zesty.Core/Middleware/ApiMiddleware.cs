@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 using JWT.Algorithms;
 using JWT.Builder;
@@ -19,6 +18,9 @@ namespace Zesty.Core.Middleware
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
+        bool propagateApplicationErrorInFault = Settings.GetBool("PropagateApplicationErrorInFault", false);
+        string refreshResource = Settings.Get("RefreshResourceName", "/system.refresh.api");
+
         public ApiMiddleware(RequestDelegate next)
         {
         }
@@ -27,73 +29,30 @@ namespace Zesty.Core.Middleware
         {
             TimeKeeper timeKeeper = new TimeKeeper();
 
-            Context.Current.Reset();
-
-            ISession session = context.Session;
-
-            Context.Current.User = session.Get<Entities.User>(Keys.SessionUser);
-
-
-            if (Context.Current.User == null)
-            {
-                string bearer = context.Request.Headers["ZestyApiBearer"];
-
-                if (!String.IsNullOrWhiteSpace(bearer))
-                {
-                    logger.Info($"Bearer received: {bearer}");
-
-                    string secret = Business.User.GetSecret(bearer);
-
-                    var json = JwtBuilder.Create()
-                     .WithAlgorithm(new HMACSHA256Algorithm())
-                     .WithSecret(secret)
-                     .MustVerifySignature()
-                     .Decode(bearer);
-
-                    Entities.Bearer b  = JsonHelper.Deserialize<Entities.Bearer>(json);
-
-                    if (b != null)
-                    {
-                        if (b.User != null)
-                        {
-                            Guid domainId = b.User.DomainId;
-
-                            if (domainId != Guid.Empty)
-                            {
-                                List<Domain> domains = Business.User.GetDomains(b.User.Username);
-
-                                b.User.Domain = domains.Where(x => x.Id == domainId).FirstOrDefault();
-                            }
-                        }
-
-                        Context.Current.User = b.User;
-                    }
-                }
-            }
-
-            bool propagateApplicationErrorInFault = Settings.GetBool("PropagateApplicationErrorInFault", false);
-
-            string resourceName = context.Request.Path.Value;
-            string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
-
-            logger.Info($"Resource: {resourceName}");
-            logger.Debug($"Body: {body}");
-            logger.Info($"Session ID: {session.Id}");
-            logger.Info($"HTTP method: {context.Request.Method}");
-
-            ApiInputHandler input = new ApiInputHandler()
-            {
-                Body = body,
-                Context = context,
-                Resource = resourceName
-            };
-
             string contentType = null;
             string content = null;
             int statusCode = 200;
 
             try
             {
+                LoadUser(context);
+
+                string resourceName = context.Request.Path.Value;
+                string body = new StreamReader(context.Request.Body).ReadToEndAsync().Result;
+
+                logger.Info($"User: {Context.Current.User?.Username}");
+                logger.Info($"Resource: {resourceName}");
+                logger.Debug($"Body: {body}");
+                logger.Info($"Session ID: {context.Session.Id}");
+                logger.Info($"HTTP method: {context.Request.Method}");
+
+                ApiInputHandler input = new ApiInputHandler()
+                {
+                    Body = body,
+                    Context = context,
+                    Resource = resourceName
+                };
+
                 if (context.Request.Method == "OPTIONS")
                 {
                     //TODO improve this poor code :D
@@ -129,6 +88,9 @@ namespace Zesty.Core.Middleware
                     }
                 }
             }
+
+            #region catches
+
             catch (ApiInvalidArgumentException e)
             {
                 logger.Error(e);
@@ -145,6 +107,17 @@ namespace Zesty.Core.Middleware
                 logger.Error(e);
 
                 statusCode = 404;
+                contentType = ContentType.ApplicationJson;
+                string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
+                content = JsonHelper.Serialize(new { Message = message });
+
+                Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
+            }
+            catch (ApiTokenExpiredException e)
+            {
+                logger.Error(e);
+
+                statusCode = 401;
                 contentType = ContentType.ApplicationJson;
                 string message = propagateApplicationErrorInFault ? e.Message : Messages.GenericFailure;
                 content = JsonHelper.Serialize(new { Message = message });
@@ -206,6 +179,9 @@ namespace Zesty.Core.Middleware
 
                 Trace.Write(new TraceItem() { Error = e.Message, Millis = timeKeeper.Stop().TotalMilliseconds }, context);
             }
+
+            #endregion
+
             finally
             {
                 logger.Debug($"ContentType: {contentType}");
@@ -214,7 +190,6 @@ namespace Zesty.Core.Middleware
 
                 context.Response.ContentType = contentType;
                 context.Response.StatusCode = statusCode;
-                context.Session = session;
 
                 await context.Response.WriteAsync(content);
 
@@ -224,6 +199,60 @@ namespace Zesty.Core.Middleware
 
                 logger.Info($"Request completed in {ms} ms");
             }
+        }
+
+        private void LoadUser(HttpContext context)
+        {
+            Context.Current.Reset();
+
+            Context.Current.User = context.Session.Get<Entities.User>(Keys.SessionUser);
+
+            if (Context.Current.User != null)
+            {
+                return;
+            }
+
+            string bearer = context.Request.Headers["ZestyApiBearer"];
+
+            if (String.IsNullOrWhiteSpace(bearer))
+            {
+                return;
+            }
+
+            logger.Info($"Bearer received: {bearer}");
+
+            string secret = Business.User.GetSecret(bearer);
+
+            var json = JwtBuilder.Create()
+                .WithAlgorithm(new HMACSHA256Algorithm())
+                .WithSecret(secret)
+                .MustVerifySignature()
+                .Decode(bearer);
+
+            logger.Debug($"Json from bearer: {json}");
+
+            Bearer b = JsonHelper.Deserialize<Bearer>(json);
+
+            if (b == null || b.User == null)
+            {
+                return;
+            }
+
+            DateTime expiration = DateTimeHelper.GetFromUnixTimestamp(b.Exp);
+
+            if (expiration < DateTime.Now && context.Request.Path != refreshResource)
+            {
+                throw new ApiTokenExpiredException("Token expired");
+            }
+
+            if (b.User.DomainId != Guid.Empty)
+            {
+                List<Domain> domains = Business.User.GetDomains(b.User.Username);
+
+                b.User.Domain = domains.Where(x => x.Id == b.User.DomainId).FirstOrDefault();
+            }
+
+            Context.Current.User = b.User;
         }
 
         private ApiHandlerOutput Process(ApiInputHandler input)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;

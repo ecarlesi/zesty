@@ -18,12 +18,6 @@ namespace Zesty.Core.Api.System
 
             string secret = Business.User.GetSecret(bearer);
 
-            var json = JwtBuilder.Create()
-                .WithAlgorithm(new HMACSHA256Algorithm())
-                .WithSecret(secret)
-                .MustVerifySignature()
-                .Decode(bearer);
-
             string token = JwtBuilder.Create()
                 .WithAlgorithm(new HMACSHA256Algorithm())
                 .WithSecret(secret)

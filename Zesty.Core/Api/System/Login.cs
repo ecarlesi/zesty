@@ -34,6 +34,10 @@ namespace Zesty.Core.Api.System
             {
                 string secret = HashHelper.GetSha256(request.Password);
 
+                var p = loginOutput.User.Properties;
+
+                loginOutput.User.Properties.Clear();
+
                 string token = JwtBuilder.Create()
                       .WithAlgorithm(new HMACSHA256Algorithm())
                       .WithSecret(secret)
@@ -46,6 +50,8 @@ namespace Zesty.Core.Api.System
                 Business.User.SaveBearer(loginOutput.User.Id, token);
 
                 response.Bearer = token;
+
+                loginOutput.User.Properties = p;
             }
 
             input.Context.Session.Set(response.Output.User);

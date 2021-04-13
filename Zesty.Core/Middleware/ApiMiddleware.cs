@@ -223,6 +223,11 @@ namespace Zesty.Core.Middleware
 
             string secret = Business.User.GetSecret(bearer);
 
+            if (String.IsNullOrWhiteSpace(secret))
+            {
+                throw new SecurityException("Invalid token");
+            }
+
             var json = JwtBuilder.Create()
                 .WithAlgorithm(new HMACSHA256Algorithm())
                 .WithSecret(secret)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Zesty.Core.Common;
 using Zesty.Core.Entities;
 using Zesty.Core.Entities.Settings;
@@ -165,6 +166,13 @@ namespace Zesty.Core.Business
             }
             else
             {
+                List<Entities.Domain> domains = storage.GetDomains(output.User.Username);
+
+                if (domains != null && domains.Count > 0 && output.User.DomainId != Guid.Empty)
+                {
+                    output.User.Domain = domains.Where(x => x.Id == output.User.DomainId).FirstOrDefault();
+                }
+
                 int passwordDays = (int)DateTime.Now.Subtract(DateTimeHelper.GetFromUnixTimestamp(output.User.PasswordChanged)).TotalDays;
 
                 if (passwordDays >= Settings.GetInt("PasswordLifetimeInDays"))
